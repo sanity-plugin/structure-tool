@@ -1,0 +1,62 @@
+{
+  "name": "@structure-tool/project",
+  "version": "0.0.1",
+  "description": "JSON based powerful structure tool for Sanity Studio",
+  "homepage": "https://sanity-structure-tool.nishargshah.dev",
+  "bugs": {
+    "url": "https://github.com/sanity-plugin/structure-tool/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanity-plugin/structure-tool.git"
+  },
+  "license": "MIT",
+  "author": "Nisharg Shah <nishargshah3101@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "bootstrap": "pnpm build",
+    "build": "pnpm -r build",
+    "clean:all": "pnpm clean:node_modules && pnpm clean:generated-folders",
+    "clean:dist": "pnpx rimraf dist && pnpm -r exec pnpx rimraf dist",
+    "clean:generated-folders": "pnpm clean:dist && pnpm clean:next",
+    "clean:next": "pnpx rimraf .next && pnpm -r exec pnpx rimraf .next",
+    "clean:node_modules": "pnpx rimraf node_modules && pnpm -r exec pnpx rimraf node_modules",
+    "clean:workspace": "pnpm clean:node_modules && pnpx rimraf pnpm-lock.yaml",
+    "format": "pnpm root:format && pnpm -r format",
+    "format:fix": "pnpm root:format:fix && pnpm -r format:fix",
+    "fresh:init": "pnpm clean:workspace && pnpm clean:generated-folders",
+    "lint": "pnpm root:lint && pnpm -r lint",
+    "lint:fix": "pnpm root:lint:fix && pnpm -r lint:fix",
+    "pkg:prepare": "pnpm changeset && pnpm changeset version",
+    "pkg:publish": "pnpm -r build && pnpm changeset publish",
+    "prepare": "husky || true",
+    "root:format": "prettier . --check --log-level silent",
+    "root:format:fix": "prettier . --write --log-level silent",
+    "root:lint": "eslint .",
+    "root:lint:fix": "eslint . --fix",
+    "script:lint": "bash -e ./scripts/lint.sh",
+    "studio:dev": "pnpm --filter @structure-tool/studio dev",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "@structure-tool/eslint-config": "workspace:*",
+    "@structure-tool/lint-staged-config": "workspace:*",
+    "@structure-tool/prettier-config": "workspace:*",
+    "@types/node": "^24.12.3",
+    "eslint": "^9.39.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4",
+    "prettier": "^3.8.3",
+    "prettier-plugin-packagejson": "^3.0.2",
+    "tsc-files": "^1.1.4",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@11.0.9",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": "please-use-pnpm",
+    "pnpm": ">=10.26.0",
+    "yarn": "please-use-pnpm"
+  }
+}

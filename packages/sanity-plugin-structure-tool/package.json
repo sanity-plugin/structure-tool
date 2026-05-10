@@ -1,0 +1,86 @@
+{
+  "name": "sanity-plugin-structure-tool",
+  "version": "0.0.1",
+  "description": "JSON based powerful structure tool for Sanity Studio",
+  "keywords": [
+    "structure",
+    "structure tool",
+    "structure builder",
+    "sanity structure",
+    "sanity structure tool",
+    "sanity structure builder"
+  ],
+  "homepage": "https://sanity-structure-tool.nishargshah.dev",
+  "bugs": {
+    "url": "https://github.com/sanity-plugin/structure-tool/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanity-plugin/structure-tool.git",
+    "directory": "packages/sanity-plugin-structure-tool"
+  },
+  "license": "MIT",
+  "author": "Nisharg Shah <nishargshah3101@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "sanity.json",
+    "v2-incompatible.js"
+  ],
+  "scripts": {
+    "build": "pkg-utils build --strict --check --clean",
+    "format": "prettier . --check --log-level silent --ignore-path ../../.gitignore",
+    "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "pnpm build",
+    "script:lint": "bash -e ../../scripts/lint.sh --filter=sanity-plugin-structure-tool",
+    "typecheck": "tsc --noEmit"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "devDependencies": {
+    "@sanity/icons": "^3.7.4",
+    "@sanity/pkg-utils": "^10.4.18",
+    "@sanity/plugin-kit": "^4.0.20",
+    "@structure-tool/typescript-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "sanity": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "react": {
+      "optional": false
+    },
+    "sanity": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  }
+}

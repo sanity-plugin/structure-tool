@@ -1,0 +1,1 @@
+# sanity-plugin-structure-tool

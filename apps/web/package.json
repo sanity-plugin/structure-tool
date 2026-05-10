@@ -1,0 +1,38 @@
+{
+  "name": "@structure-tool/studio",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Structure Builder Examples",
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbopack",
+    "format": "prettier . --check --log-level silent --ignore-path ../../.gitignore",
+    "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "script:lint": "bash -e ../../scripts/lint.sh --filter=@structure-tool/studio",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/assist": "^6.0.5",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/vision": "^5.24.0",
+    "next": "^16.2.6",
+    "next-sanity": "^12.4.5",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanity": "^5.24.0",
+    "sanity-plugin-structure-tool": "workspace:*"
+  },
+  "devDependencies": {
+    "@structure-tool/typescript-config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "type-fest": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}
