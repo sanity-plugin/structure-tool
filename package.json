@@ -14,7 +14,7 @@
   "author": "Nisharg Shah <nishargshah3101@gmail.com>",
   "type": "module",
   "scripts": {
-    "bootstrap": "pnpm build",
+    "bootstrap": "pnpm --filter @structure-tool/tsdown-config build && pnpm --filter sanity-plugin-structure-tool build",
     "build": "pnpm -r build",
     "clean:all": "pnpm clean:node_modules && pnpm clean:generated-folders",
     "clean:dist": "pnpx rimraf dist && pnpm -r exec pnpx rimraf dist",

@@ -8,7 +8,7 @@ const getActionName: GetActionName = (action) =>
   // Check for action to be both the type promised by Types while maintaining current function type check for historical purposes
   (typeof action === 'function' ? action.action : '') as string;
 
-export const documentActions: DocumentActionsResolver = (prev, context) => {
+export const SingletonAction: DocumentActionsResolver = (prev, context) => {
   const { documentId } = context;
 
   if (documentId?.endsWith(constants.SINGLETON_KEY)) {

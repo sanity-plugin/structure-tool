@@ -1,7 +1,7 @@
 import { assist } from '@sanity/assist';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
-import { structureToolPlugin } from 'sanity-plugin-structure-tool';
+import { SingletonAction, structureToolPlugin } from 'sanity-plugin-structure-tool';
 
 import { envs } from '@/config';
 import constants from '@/constants';
@@ -22,4 +22,7 @@ export default defineConfig({
     templates,
   },
   plugins: [structure(), assist(), visionTool()],
+  document: {
+    actions: SingletonAction,
+  },
 });
