@@ -22,12 +22,14 @@ export type RenderContentType = (
 
 // Structure
 
-export type Structure = (contentTypes: ContentTypes[]) => StructureResolver;
+export type Structure = (params: StructureToolPluginParams) => StructureResolver;
 
 // Structure Tool
 
-interface StructureToolPluginParams {
+export interface StructureToolPluginParams {
   contentTypes: ContentTypes[];
+  roles?: string[];
+  defaultRoles?: string[];
 }
 
 interface StructureToolPluginOutput {

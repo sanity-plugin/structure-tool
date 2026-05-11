@@ -17,8 +17,8 @@ export interface ContentTypes {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
-  roles: UserRole[];
-  workspaces: WorkspaceType[];
+  roles?: UserRole[];
+  workspaces?: WorkspaceType[];
   children?: ContentTypes[];
   raw?: ContentTypeRaw;
   singleton?: boolean;

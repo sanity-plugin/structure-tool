@@ -7,7 +7,9 @@ import { templates } from '@/structure/templates';
 
 import type { StructureToolPlugin } from '@/structure/types/common.types';
 
-export const structureToolPlugin: StructureToolPlugin = ({ contentTypes }) => {
+export const structureToolPlugin: StructureToolPlugin = (params) => {
+  const { contentTypes, defaultRoles, roles } = params;
+
   const allContentTypes = getAllContentTypes(contentTypes);
 
   return {
@@ -18,7 +20,7 @@ export const structureToolPlugin: StructureToolPlugin = ({ contentTypes }) => {
         name: 'sanity-plugin-structure-tool',
         plugins: [
           structureTool({
-            structure: structure(contentTypes),
+            structure: structure(params),
           }),
         ],
         schema: {

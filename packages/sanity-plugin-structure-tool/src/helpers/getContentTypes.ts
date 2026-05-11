@@ -3,18 +3,21 @@ import { getUserRoles } from '@/structure/userRoles';
 
 import type { CurrentUser } from 'sanity';
 
-import type { ContentTypes, ContentTypesExtended } from '@/structure/types/contentTypes.types';
+import type { StructureToolPluginParams } from '@/structure/types/common.types';
+import type { ContentTypesExtended } from '@/structure/types/contentTypes.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
 export type GetContentTypes = (
   workspace: WorkspaceType,
-  contentTypes: ContentTypes[],
   currentUser: CurrentUser,
   id: string,
+  params: StructureToolPluginParams,
 ) => ContentTypesExtended[];
 
-export const getContentTypes: GetContentTypes = (workspace, types, currentUser, id) =>
-  types.reduce<ReturnType<GetContentTypes>>((acc, contentType, index) => {
+export const getContentTypes: GetContentTypes = (workspace, currentUser, id, params) => {
+  const { contentTypes, defaultRoles } = params;
+
+  return contentTypes.reduce<ReturnType<GetContentTypes>>((acc, contentType, index) => {
     const { workspaces: contentTypeWorkspaces, roles, children } = contentType;
 
     const contentTypeObj = {
@@ -23,7 +26,7 @@ export const getContentTypes: GetContentTypes = (workspace, types, currentUser, 
     };
 
     const userHasAccess = getUserRoles({ currentUser }).some((role) =>
-      getRolesWithDefaults(roles).includes(role),
+      getRolesWithDefaults(defaultRoles, roles).includes(role),
     );
 
     if (!userHasAccess) return acc;
@@ -32,7 +35,10 @@ export const getContentTypes: GetContentTypes = (workspace, types, currentUser, 
       if ((contentTypeWorkspaces as string[]).includes(workspace)) {
         acc.push({
           ...contentTypeObj,
-          children: getContentTypes(workspace, children, currentUser, contentTypeObj.id),
+          children: getContentTypes(workspace, currentUser, contentTypeObj.id, {
+            ...params,
+            contentTypes: children,
+          }),
         });
       }
 
@@ -45,3 +51,4 @@ export const getContentTypes: GetContentTypes = (workspace, types, currentUser, 
 
     return acc;
   }, []);
+};
