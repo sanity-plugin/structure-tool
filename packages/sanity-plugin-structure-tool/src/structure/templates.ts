@@ -1,11 +1,11 @@
 import type { TemplateResolver } from 'sanity';
 
-import type { ContentTypes } from '@/structure/types/contentTypes.types';
+import type { ListItem } from '@/structure/types/listItem.types';
 
-type Templates = (allContentTypes: ContentTypes[]) => TemplateResolver;
+type Templates = (flatListItems: ListItem[]) => TemplateResolver;
 
-export const templates: Templates = (allContentTypes) => (prev) => {
-  const templatesContentTypes = allContentTypes
+export const templates: Templates = (flatListItems) => (prev) => {
+  const templatesItems = flatListItems
     .map((item) => {
       const { schemaType, templates: template } = item;
 
@@ -30,5 +30,5 @@ export const templates: Templates = (allContentTypes) => (prev) => {
     })
     .filter((item) => item !== null);
 
-  return [...prev, ...templatesContentTypes];
+  return [...prev, ...templatesItems];
 };

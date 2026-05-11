@@ -1,29 +1,29 @@
-import { getWorkspaceContentTypes } from '@/helpers/getWorkspaceContentTypes';
-import renderContentType from '@/structure/renderContentType';
+import { getWorkspaceListItems } from '@/helpers/getWorkspaceListItems';
+import { renderListItem } from '@/structure/renderListItem';
 
 import type { Structure } from '@/structure/types/common.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
 export const structure: Structure = (params) => (S, context) => {
-  const { contentTypes, roles, defaultRoles } = params;
+  const { title, emptyListTitle, ...restParams } = params;
 
   const { currentUser, schema } = context;
   const { _original: original } = schema;
   const workspace = original?.name as WorkspaceType;
 
-  if (!workspace || !currentUser) return S.list().title('Content').items([]);
+  if (!workspace || !currentUser) return S.list().title(title).items([]);
 
-  const workspaceContentTypes = getWorkspaceContentTypes(workspace, currentUser, params);
+  const workspaceListItems = getWorkspaceListItems(workspace, currentUser, restParams);
 
-  if (!workspaceContentTypes || workspaceContentTypes.length === 0) {
-    return S.list().title('Content Types Not Configured');
+  if (!workspaceListItems || workspaceListItems.length === 0) {
+    return S.list().title(emptyListTitle ?? `${title} Not Configured`);
   }
 
   return S.list()
-    .title('Content Types')
+    .title(title)
     .items(
-      workspaceContentTypes
-        .map((contentType) => renderContentType(S, { ...context, currentUser }, contentType))
+      workspaceListItems
+        .map((listItem) => renderListItem(S, { ...context, currentUser }, listItem))
         .filter((item) => item !== null),
     );
 };

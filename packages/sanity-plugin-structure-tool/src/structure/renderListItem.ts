@@ -2,9 +2,9 @@ import pluralize from 'pluralize-esm';
 
 import { constants } from '@/constants';
 
-import type { RenderContentType } from '@/structure/types/common.types';
+import type { RenderListItem } from '@/structure/types/common.types';
 
-const renderContentType: RenderContentType = (S, context, contentType) => {
+export const renderListItem: RenderListItem = (S, context, listItem) => {
   const { currentUser } = context;
 
   const {
@@ -21,7 +21,7 @@ const renderContentType: RenderContentType = (S, context, contentType) => {
     icon = '',
     hideAddButton = false,
     isDivider = false,
-  } = contentType;
+  } = listItem;
 
   if (raw) return raw(S, context);
 
@@ -40,7 +40,7 @@ const renderContentType: RenderContentType = (S, context, contentType) => {
           .title(title)
           .items(
             children
-              .map((child) => renderContentType(S, context, child))
+              .map((child) => renderListItem(S, context, child))
               .filter((child) => child !== null),
           ),
       );
@@ -120,5 +120,3 @@ const renderContentType: RenderContentType = (S, context, contentType) => {
       })(),
     );
 };
-
-export default renderContentType;

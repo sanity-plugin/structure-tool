@@ -1,16 +1,16 @@
 import { definePlugin } from 'sanity';
 import { structureTool } from 'sanity/structure';
 
-import { getAllContentTypes } from '@/helpers/getAllContentTypes';
+import { getAllListItems } from '@/helpers/getAllListItems';
 import { structure } from '@/structure/structure';
 import { templates } from '@/structure/templates';
 
 import type { StructureToolPlugin } from '@/structure/types/common.types';
 
 export const structureToolPlugin: StructureToolPlugin = (params) => {
-  const { contentTypes, defaultRoles, roles } = params;
+  const { listItems } = params;
 
-  const allContentTypes = getAllContentTypes(contentTypes);
+  const flatListItems = getAllListItems(listItems);
 
   return {
     structure: definePlugin(() => {
@@ -24,10 +24,10 @@ export const structureToolPlugin: StructureToolPlugin = (params) => {
           }),
         ],
         schema: {
-          templates: templates(allContentTypes),
+          templates: templates(flatListItems),
         },
       };
     }),
-    templates: templates(allContentTypes),
+    templates: templates(flatListItems),
   };
 };

@@ -1,13 +1,12 @@
 import { userRoles } from '@/constants';
 
 import type { StructureToolPluginParams } from '@/structure/types/common.types';
-import type { ContentTypes } from '@/types';
-import type { UserRole } from '@/types/constants.types';
+import type { ListItem } from '@/structure/types/listItem.types';
 
 type GetRolesWithDefaults = (
   defaultRoles: StructureToolPluginParams['defaultRoles'],
-  roles: ContentTypes['roles'],
-) => UserRole[];
+  roles: ListItem['roles'],
+) => string[];
 
 export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {
   const defaults = (() => {

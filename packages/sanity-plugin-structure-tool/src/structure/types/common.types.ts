@@ -6,19 +6,15 @@ import type {
 } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
-import type {
-  ContentTypeRaw,
-  ContentTypes,
-  ContentTypesExtended,
-} from '@/structure/types/contentTypes.types';
+import type { ListItem, ListItemExtended, ListItemRaw } from '@/structure/types/listItem.types';
 
 // Render content type
 
-export type RenderContentType = (
+export type RenderListItem = (
   S: StructureBuilder,
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
-  contentType: ContentTypesExtended,
-) => ReturnType<ContentTypeRaw>;
+  listItem: ListItemExtended,
+) => ReturnType<ListItemRaw>;
 
 // Structure
 
@@ -27,10 +23,14 @@ export type Structure = (params: StructureToolPluginParams) => StructureResolver
 // Structure Tool
 
 export interface StructureToolPluginParams {
-  contentTypes: ContentTypes[];
+  title: string;
+  emptyListTitle?: string;
+  listItems: ListItem[];
   roles?: string[];
   defaultRoles?: string[];
 }
+
+export type StructureToolItemParams = Omit<StructureToolPluginParams, 'title' | 'emptyListTitle'>;
 
 interface StructureToolPluginOutput {
   structure: Plugin;

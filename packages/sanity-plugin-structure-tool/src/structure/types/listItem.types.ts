@@ -6,23 +6,23 @@ import type { SetNonNullable } from 'type-fest';
 
 import type { UserRole, WorkspaceType } from '@/types/constants.types';
 
-export type ContentTypeFilters = string[] | ((currentUser: CurrentUser) => string[]);
+export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
 
-export type ContentTypeRaw = (
+export type ListItemRaw = (
   S: StructureBuilder,
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ContentTypes {
+export interface ListItem {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
   roles?: UserRole[];
   workspaces?: WorkspaceType[];
-  children?: ContentTypes[];
-  raw?: ContentTypeRaw;
+  children?: ListItem[];
+  raw?: ListItemRaw;
   singleton?: boolean;
-  filters?: ContentTypeFilters;
+  filters?: ListItemFilters;
   filterParams?: Record<string, unknown>;
   hideAddButton?: boolean;
   isDivider?: boolean;
@@ -30,7 +30,7 @@ export interface ContentTypes {
   templates?: Record<string, unknown>;
 }
 
-export interface ContentTypesExtended extends ContentTypes {
+export interface ListItemExtended extends ListItem {
   id: string;
-  children: ContentTypesExtended[];
+  children: ListItemExtended[];
 }
