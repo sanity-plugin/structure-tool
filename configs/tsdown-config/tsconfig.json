@@ -1,0 +1,10 @@
+{
+  "extends": "@structure-tool/typescript-config/base",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
