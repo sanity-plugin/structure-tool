@@ -1,3 +1,3 @@
 export const constants = {
-  SINGLETON: 'singleton',
+  SINGLETON_KEY: 'singleton',
 } as const;

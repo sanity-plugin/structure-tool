@@ -1,19 +1,31 @@
-import { constants } from '../constants/objects';
+import pluralize from 'pluralize-esm';
 
-import type { RenderContentType } from './@types/common.types';
+import { constants } from '@/constants';
 
-const renderContentType: RenderContentType = (S, contentType) => {
+import type { RenderContentType } from '@/structure/types/common.types';
+
+const renderContentType: RenderContentType = (S, context, contentType) => {
+  const { currentUser } = context;
+
   const {
     id,
     schemaType,
     children,
+    raw,
     singleton,
-    filter = [],
+    isPlural,
+    templates,
+    filters = [],
     filterParams = {},
     title = '',
     icon = '',
+    hideAddButton = false,
     isDivider = false,
   } = contentType;
+
+  if (raw) return raw(S, context);
+
+  const roleFilter = typeof filters === 'function' ? filters(currentUser) : filters;
 
   if (isDivider) return S.divider().title(title);
 
@@ -27,30 +39,84 @@ const renderContentType: RenderContentType = (S, contentType) => {
         S.list()
           .title(title)
           .items(
-            children.map((child) => renderContentType(S, child)).filter((child) => child !== null),
+            children
+              .map((child) => renderContentType(S, context, child))
+              .filter((child) => child !== null),
           ),
+      );
+  }
+
+  if (!schemaType && filters.length > 0) {
+    return S.listItem()
+      .title(title)
+      .id(id)
+      .icon(icon)
+      .child(
+        S.documentList()
+          .title(title)
+          .filter([...(roleFilter ?? [])].join(' && '))
+          .params({ ...filterParams })
+          .menuItems([])
+          .initialValueTemplates([]),
       );
   }
 
   if (!schemaType) return null;
 
+  const schemaTitle = (() => {
+    const sanityTitle = S.documentTypeListItem(schemaType).getTitle();
+    const isItPlural = title ? false : (isPlural ?? !singleton);
+    const mainTitle = title || (sanityTitle ?? '');
+
+    return isItPlural ? pluralize(mainTitle) : mainTitle;
+  })();
+
   // Handle Document Types
   return S.listItem()
-    .title(title)
+    .title(schemaTitle)
     .id(id)
     .icon(icon)
     .schemaType(schemaType)
     .child(
       (() => {
         if (singleton) {
-          return S.editor().id([schemaType, constants.SINGLETON].join('-')).schemaType(schemaType);
+          const schemaBuilder = S.editor()
+            .id([schemaType, constants.SINGLETON_KEY].join('-'))
+            .schemaType(schemaType);
+
+          if (templates) {
+            return schemaBuilder.initialValueTemplate(
+              [schemaType, ...Object.keys(templates)].join('-'),
+              templates,
+            );
+          }
+
+          return schemaBuilder;
         }
 
-        return S.documentTypeList(schemaType)
+        const schemaBuilder = S.documentTypeList(schemaType)
+          .title(schemaTitle)
           .id(id)
-          .title(title)
-          .filter(['_type == $schemaType', ...(filter ?? [])].join(' && '))
-          .params({ schemaType, ...filterParams });
+          .filter(['_type == $schemaType', ...(roleFilter ?? [])].join(' && '))
+          .params({
+            schemaType,
+            ...filterParams,
+          });
+
+        if (hideAddButton) {
+          return schemaBuilder.menuItems([]).initialValueTemplates([]);
+        }
+
+        if (templates) {
+          return schemaBuilder.initialValueTemplates([
+            S.initialValueTemplateItem(
+              [schemaType, ...Object.keys(templates)].join('-'),
+              templates,
+            ),
+          ]);
+        }
+
+        return schemaBuilder;
       })(),
     );
 };
