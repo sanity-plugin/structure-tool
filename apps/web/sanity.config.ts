@@ -8,6 +8,8 @@ import constants from '@/constants';
 import contentTypes from '@/sanity/contentTypes/contentTypes';
 import schemaTypes from '@/sanity/schemas';
 
+const { structure, templates } = structureToolPlugin({ contentTypes });
+
 const { NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET } = envs;
 
 export default defineConfig({
@@ -17,6 +19,7 @@ export default defineConfig({
   dataset: NEXT_PUBLIC_SANITY_DATASET,
   schema: {
     types: schemaTypes,
+    templates,
   },
-  plugins: [structureToolPlugin({ contentTypes }), assist(), visionTool()],
+  plugins: [structure(), assist(), visionTool()],
 });

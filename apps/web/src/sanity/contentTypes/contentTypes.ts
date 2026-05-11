@@ -2,23 +2,27 @@ import { ComponentIcon } from '@sanity/icons';
 
 import { authorType } from '@/sanity/schemas/documents/authorType';
 
+import type { ContentTypes } from 'sanity-plugin-structure-tool';
+
 const contentTypes = [
   {
-    title: authorType.title,
     schemaType: authorType.name,
-    icon: authorType.icon,
+    roles: [],
+    workspaces: [],
   },
   {
     title: 'Drawer Example',
     icon: ComponentIcon,
+    roles: [],
+    workspaces: [],
     children: [
       {
-        title: authorType.title,
         schemaType: authorType.name,
-        icon: authorType.icon,
+        roles: [],
+        workspaces: [],
       },
     ],
   },
-];
+] satisfies ContentTypes[];
 
 export default contentTypes;
