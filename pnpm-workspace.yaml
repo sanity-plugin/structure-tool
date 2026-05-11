@@ -3,6 +3,9 @@ packages:
   - configs/*
   - packages/*
 
+catalog:
+  tsdown: ^0.22.0
+
 allowBuilds:
   esbuild: true
   sharp: true
