@@ -1,10 +1,9 @@
+import { defineListItems } from '@/structure';
 import { ComponentIcon } from '@sanity/icons';
 
 import { authorType } from '@/sanity/schemas/documents/authorType';
 
-import type { ContentTypes } from 'sanity-plugin-structure-tool';
-
-const contentTypes = [
+const listItems = defineListItems([
   {
     schemaType: authorType.name,
     roles: [],
@@ -23,6 +22,6 @@ const contentTypes = [
       },
     ],
   },
-] satisfies ContentTypes[];
+]);
 
-export default contentTypes;
+export default listItems;

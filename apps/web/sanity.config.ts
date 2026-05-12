@@ -1,14 +1,12 @@
+import constants from '@/constants';
 import { assist } from '@sanity/assist';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
-import { SingletonAction, structureToolPlugin } from 'sanity-plugin-structure-tool';
+import { SingletonAction } from 'sanity-plugin-structure-tool';
 
 import { envs } from '@/config';
-import constants from '@/constants';
-import contentTypes from '@/sanity/contentTypes/contentTypes';
 import schemaTypes from '@/sanity/schemas';
-
-const { structure, templates } = structureToolPlugin({ contentTypes });
+import { templates, structure } from '@/structure'
 
 const { NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET } = envs;
 
