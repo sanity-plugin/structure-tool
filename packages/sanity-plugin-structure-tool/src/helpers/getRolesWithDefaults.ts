@@ -1,11 +1,8 @@
 import { userRoles } from '@/constants';
 
-import type { StructureToolPluginParams } from '@/structure/types/common.types';
-import type { ListItem } from '@/structure/types/listItem.types';
-
 type GetRolesWithDefaults = (
-  defaultRoles: StructureToolPluginParams['defaultRoles'],
-  roles: ListItem['roles'],
+  defaultRoles: string[] | undefined,
+  roles: string[] | undefined,
 ) => string[];
 
 export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {
@@ -13,7 +10,7 @@ export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) 
     if (!defaultRoles) return null;
     if (Array.isArray(defaultRoles) && defaultRoles.length === 0) return null;
     return defaultRoles;
-  })() ?? [userRoles.ADMINISTRATOR];
+  })();
 
-  return [...defaults, ...(roles ?? [])];
+  return [...new Set([...(defaults ?? []), ...(roles ?? []), userRoles.ADMINISTRATOR])];
 };

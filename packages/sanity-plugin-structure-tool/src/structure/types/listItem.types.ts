@@ -4,7 +4,7 @@ import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
-import type { UserRole, WorkspaceType } from '@/types/constants.types';
+import type { WorkspaceType } from '@/types/constants.types';
 
 export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
 
@@ -13,13 +13,13 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ListItem {
+export interface ListItem<Roles extends string[]> {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
-  roles?: UserRole[];
+  roles?: Roles;
   workspaces?: WorkspaceType[];
-  children?: ListItem[];
+  children?: ListItem<Roles>[];
   raw?: ListItemRaw;
   singleton?: boolean;
   filters?: ListItemFilters;
@@ -30,7 +30,7 @@ export interface ListItem {
   templates?: Record<string, unknown>;
 }
 
-export interface ListItemExtended extends ListItem {
+export interface ListItemExtended<Roles extends string[]> extends ListItem<Roles> {
   id: string;
-  children: ListItemExtended[];
+  children: ListItemExtended<Roles>[];
 }

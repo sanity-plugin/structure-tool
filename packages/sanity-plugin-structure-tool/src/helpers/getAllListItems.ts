@@ -1,13 +1,11 @@
 import type { ListItem } from '@/structure/types/listItem.types';
 
-type GetAllListItems = (listItems: ListItem[]) => ListItem[];
+export const getAllListItems = <Roles extends string[]>(
+  listItems: ListItem<Roles>[],
+): ListItem<Roles>[] => {
+  const schemaTypes = [] as ListItem<Roles>[];
 
-type GetListItems = (items: ListItem[]) => void;
-
-export const getAllListItems: GetAllListItems = (listItems) => {
-  const schemaTypes = [] as ListItem[];
-
-  const getListItems: GetListItems = (items) => {
+  const getListItems = (items: ListItem<Roles>[]): void => {
     for (const item of items) {
       if (item?.schemaType) {
         schemaTypes.push(item);

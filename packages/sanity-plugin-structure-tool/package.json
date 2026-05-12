@@ -40,6 +40,7 @@
   ],
   "scripts": {
     "build": "tsdown",
+    "build:dev": "tsdown --watch",
     "format": "prettier . --check --log-level silent --ignore-path ../../.gitignore",
     "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
     "lint": "eslint .",

@@ -7,17 +7,15 @@ import type { StructureToolItemParams } from '@/structure/types/common.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
-export type GetListItems = (
+export const getListItems = <Roles extends string[], DefaultRoles extends string[]>(
   workspace: WorkspaceType,
   currentUser: CurrentUser,
   id: string,
-  params: StructureToolItemParams,
-) => ListItemExtended[];
-
-export const getListItems: GetListItems = (workspace, currentUser, id, params) => {
+  params: StructureToolItemParams<Roles, DefaultRoles>,
+): ListItemExtended<Roles>[] => {
   const { listItems, defaultRoles } = params;
 
-  return listItems.reduce<ReturnType<GetListItems>>((acc, listItem, index) => {
+  return listItems.reduce<ListItemExtended<Roles>[]>((acc, listItem, index) => {
     const { workspaces, roles, children } = listItem;
 
     const listItemObj = {
