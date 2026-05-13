@@ -19,12 +19,13 @@ export const getListItems = <
   const { listItems, defaultRoles } = params;
 
   return listItems.reduce<ListItemExtended<Roles>[]>((acc, listItem, index) => {
-    const { workspaces, roles, children } = listItem;
+    const { workspaces, children } = listItem;
+    const roles = 'roles' in listItem ? (listItem.roles ?? []) : [];
 
     const listItemObj = {
       ...listItem,
       id: [...id.split('.'), index + 1].join('.'),
-    };
+    } as ListItemExtended<Roles>;
 
     const userHasAccess = getUserRoles({ currentUser }).some((role) =>
       getRolesWithDefaults(defaultRoles, roles).includes(role),

@@ -5,6 +5,7 @@ import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sa
 import type { Merge, SetNonNullable } from 'type-fest';
 
 import type { WorkspaceType } from '@/types/constants.types';
+import type { SimpleMerge } from '@/types/lib.types';
 
 export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
 
@@ -27,18 +28,25 @@ export interface ListItemCore {
   templates?: Record<string, unknown>;
 }
 
-export type ListItem<Roles extends readonly string[] | undefined> = Merge<
-  ListItemCore,
-  {
-    roles?: Roles extends readonly string[] ? Roles[number][] : never;
-    workspaces?: WorkspaceType[];
-    children?: ListItem<Roles>[];
-  }
+export type ListItem<Roles extends readonly string[] | undefined> = SimpleMerge<
+  [
+    ListItemCore,
+    Roles extends readonly string[]
+      ? {
+          roles?: Roles[number][];
+        }
+      : Record<string, never>,
+    {
+      workspaces?: WorkspaceType[];
+      children?: ListItem<Roles>[];
+    },
+  ]
 >;
 
-export interface ListItemExtended<
-  Roles extends readonly string[] | undefined,
-> extends ListItem<Roles> {
-  id: string;
-  children: ListItemExtended<Roles>[];
-}
+export type ListItemExtended<Roles extends readonly string[] | undefined> = Merge<
+  ListItem<Roles>,
+  {
+    id: string;
+    children: ListItemExtended<Roles>[];
+  }
+>;

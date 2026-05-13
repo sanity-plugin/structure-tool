@@ -1,10 +1,11 @@
 import type { Plugin, TemplateResolver } from 'sanity';
-import type { Merge, RequireAllOrNone } from 'type-fest';
+import type { RequireAllOrNone } from 'type-fest';
 
 import type { userRoles } from '@/constants';
 import type { DefineListItemType } from '@/factories/defineListItem';
 import type { DefineListItemsType } from '@/factories/defineListItems';
 import type { ListItem } from '@/structure/types/listItem.types';
+import type { SimpleMerge } from '@/types/lib.types';
 
 export interface StructureToolCoreParams {
   title: string;
@@ -28,7 +29,9 @@ export interface StructureToolRoleParams<
 export type StructureToolPluginParams<
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
-> = Merge<RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>, StructureToolCoreParams>;
+> = SimpleMerge<
+  [RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>, StructureToolCoreParams]
+>;
 
 interface StructureToolPluginOutputParams<Roles extends readonly string[] | undefined> {
   listItems: ListItem<Roles>[];
