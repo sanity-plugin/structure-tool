@@ -21,9 +21,10 @@ export const getListItems = <
 
   return listItems.reduce<ListItemExtended<Workspaces, Roles, DefaultRoles>[]>(
     (acc, listItem, index) => {
-      const { workspaces, children } = listItem;
-      const roles = 'roles' in listItem ? listItem.roles : [];
+      const { children } = listItem;
 
+      const workspaces = 'workspaces' in listItem ? listItem.workspaces : [];
+      const roles = 'roles' in listItem ? listItem.roles : [];
       const listItemObj = {
         ...listItem,
         id: [...id.split('.'), index + 1].join('.'),
@@ -42,7 +43,7 @@ export const getListItems = <
       if (isRbac && !userHasAccess) return acc;
 
       if (children && children.length > 0) {
-        if ((workspaces as string[]).includes(workspace)) {
+        if (!workspaces || workspaces.includes(workspace)) {
           acc.push({
             ...listItemObj,
             children: getListItems(workspace, currentUser, listItemObj.id, {
@@ -55,7 +56,7 @@ export const getListItems = <
         return acc;
       }
 
-      if ((workspaces as string[]).includes(workspace)) {
+      if (!workspaces || workspaces.includes(workspace)) {
         acc.push({ ...listItemObj, children: [] });
       }
 
