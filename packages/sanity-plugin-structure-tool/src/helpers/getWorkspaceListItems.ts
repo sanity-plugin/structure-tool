@@ -13,5 +13,5 @@ export const getWorkspaceListItems = <
   workspace: WorkspaceType,
   currentUser: CurrentUser,
   params: StructureListItemsParams<Roles, DefaultRoles>,
-): ListItemExtended<Roles>[] =>
+): ListItemExtended<Roles, DefaultRoles>[] =>
   getListItems<Roles, DefaultRoles>(workspace, currentUser, '1', params);

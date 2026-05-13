@@ -13,7 +13,7 @@ export type StructureParams<
     StructureToolRoleParams<Roles, DefaultRoles>,
     StructureToolCoreParams,
     {
-      listItems: ListItem<Roles>[];
+      listItems: ListItem<Roles, DefaultRoles>[];
     },
   ]
 >;
@@ -25,7 +25,7 @@ export type StructureListItemsParams<
   [
     StructureToolRoleParams<Roles, DefaultRoles>,
     {
-      listItems: ListItem<Roles>[];
+      listItems: ListItem<Roles, DefaultRoles>[];
     },
   ]
 >;

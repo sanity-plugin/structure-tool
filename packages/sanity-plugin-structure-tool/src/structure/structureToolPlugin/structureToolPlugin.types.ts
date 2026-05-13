@@ -33,13 +33,19 @@ export type StructureToolPluginParams<
   [RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>, StructureToolCoreParams]
 >;
 
-interface StructureToolPluginOutputParams<Roles extends readonly string[] | undefined> {
-  listItems: ListItem<Roles>[];
+interface StructureToolPluginOutputParams<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> {
+  listItems: ListItem<Roles, DefaultRoles>[];
 }
 
-export interface StructureToolPluginOutput<Roles extends readonly string[] | undefined> {
-  structure: Plugin<StructureToolPluginOutputParams<Roles>>;
-  templates: (params: StructureToolPluginOutputParams<Roles>) => TemplateResolver;
-  defineListItems: DefineListItemsType<Roles>;
-  defineListItem: DefineListItemType<Roles>;
+export interface StructureToolPluginOutput<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> {
+  structure: Plugin<StructureToolPluginOutputParams<Roles, DefaultRoles>>;
+  templates: (params: StructureToolPluginOutputParams<Roles, DefaultRoles>) => TemplateResolver;
+  defineListItems: DefineListItemsType<Roles, DefaultRoles>;
+  defineListItem: DefineListItemType<Roles, DefaultRoles>;
 }

@@ -14,6 +14,15 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
+interface ListItemRolesParams<DefaultRoles extends readonly string[]> {
+  defaultRoles: DefaultRoles;
+}
+
+export type ListItemRoles<
+  Roles extends readonly string[],
+  DefaultRoles extends readonly string[],
+> = Roles[number][] | ((params: ListItemRolesParams<DefaultRoles>) => Roles[number][]);
+
 export interface ListItemCore {
   title?: string;
   schemaType?: string;
@@ -28,25 +37,33 @@ export interface ListItemCore {
   templates?: Record<string, unknown>;
 }
 
-export type ListItem<Roles extends readonly string[] | undefined> = SimpleMerge<
+export type ListItem<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> = SimpleMerge<
   [
     ListItemCore,
     Roles extends readonly string[]
-      ? {
-          roles?: Roles[number][];
-        }
+      ? DefaultRoles extends readonly string[]
+        ? {
+            roles: ListItemRoles<Roles, DefaultRoles>;
+          }
+        : Record<string, never>
       : Record<string, never>,
     {
       workspaces?: WorkspaceType[];
-      children?: ListItem<Roles>[];
+      children?: ListItem<Roles, DefaultRoles>[];
     },
   ]
 >;
 
-export type ListItemExtended<Roles extends readonly string[] | undefined> = Merge<
-  ListItem<Roles>,
+export type ListItemExtended<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> = Merge<
+  ListItem<Roles, DefaultRoles>,
   {
     id: string;
-    children: ListItemExtended<Roles>[];
+    children: ListItemExtended<Roles, DefaultRoles>[];
   }
 >;

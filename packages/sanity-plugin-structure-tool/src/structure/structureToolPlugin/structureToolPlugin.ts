@@ -17,12 +17,12 @@ export const structureToolPlugin = <
   const DefaultRoles extends readonly string[] | undefined = undefined,
 >(
   params: StructureToolPluginParams<Roles, DefaultRoles>,
-): StructureToolPluginOutput<Roles> => {
+): StructureToolPluginOutput<Roles, DefaultRoles> => {
   console.log('hello from sanity-plugin-structure-tool');
 
   return {
     structure: definePlugin(({ listItems }) => {
-      const flatListItems = getAllListItems<Roles>(listItems);
+      const flatListItems = getAllListItems<Roles, DefaultRoles>(listItems);
 
       return {
         name: 'sanity-plugin-structure-tool',
@@ -32,16 +32,16 @@ export const structureToolPlugin = <
           }),
         ],
         schema: {
-          templates: templates<Roles>(flatListItems),
+          templates: templates<Roles, DefaultRoles>(flatListItems),
         },
       };
     }),
     templates: ({ listItems }) => {
-      const flatListItems = getAllListItems<Roles>(listItems);
+      const flatListItems = getAllListItems<Roles, DefaultRoles>(listItems);
 
-      return templates<Roles>(flatListItems);
+      return templates<Roles, DefaultRoles>(flatListItems);
     },
-    defineListItems: (listItems) => defineListItems<Roles>(listItems),
-    defineListItem: (listItem) => defineListItem<Roles>(listItem),
+    defineListItems: (listItems) => defineListItems<Roles, DefaultRoles>(listItems),
+    defineListItem: (listItem) => defineListItem<Roles, DefaultRoles>(listItem),
   };
 };

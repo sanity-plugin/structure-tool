@@ -33,7 +33,9 @@ export const structure =
       .title(title)
       .items(
         workspaceListItems
-          .map((listItem) => renderListItem<Roles>(S, { ...context, currentUser }, listItem))
+          .map((listItem) =>
+            renderListItem<Roles, DefaultRoles>(S, { ...context, currentUser }, listItem),
+          )
           .filter((item) => item !== null),
       );
   };

@@ -1,11 +1,15 @@
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export type DefineListItemType<T extends readonly string[] | undefined> = (
-  listItem: ListItem<T>,
-) => ListItem<T>;
+export type DefineListItemType<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> = (listItem: ListItem<Roles, DefaultRoles>) => ListItem<Roles, DefaultRoles>;
 
-export type DefineListItem = <T extends readonly string[] | undefined>(
-  listItem: ListItem<T>,
-) => ListItem<T>;
+export type DefineListItem = <
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+>(
+  listItem: ListItem<Roles, DefaultRoles>,
+) => ListItem<Roles, DefaultRoles>;
 
 export const defineListItem: DefineListItem = (listItem) => listItem;
