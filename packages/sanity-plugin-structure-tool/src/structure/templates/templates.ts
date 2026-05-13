@@ -1,8 +1,4 @@
-import type { TemplateResolver } from 'sanity';
-
-import type { ListItem } from '@/structure/types/listItem.types';
-
-type Templates = <Roles extends string[]>(flatListItems: ListItem<Roles>[]) => TemplateResolver;
+import type { Templates } from '@/structure/templates/templates.types';
 
 export const templates: Templates = (flatListItems) => (prev) => {
   const templatesItems = flatListItems

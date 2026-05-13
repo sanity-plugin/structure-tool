@@ -2,7 +2,7 @@ import pluralize from 'pluralize-esm';
 
 import { constants } from '@/constants';
 
-import type { RenderListItem } from '@/structure/types/common.types';
+import type { RenderListItem } from '@/structure/renderListItem/renderListItem.types';
 
 export const renderListItem: RenderListItem = (S, context, listItem) => {
   const { currentUser } = context;

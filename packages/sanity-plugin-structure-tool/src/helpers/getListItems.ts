@@ -1,9 +1,9 @@
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
-import { getUserRoles } from '@/structure/userRoles';
+import { getUserRoles } from '@/helpers/getUserRoles';
 
 import type { CurrentUser } from 'sanity';
 
-import type { StructureToolItemParams } from '@/structure/types/common.types';
+import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
@@ -11,7 +11,7 @@ export const getListItems = <Roles extends string[], DefaultRoles extends string
   workspace: WorkspaceType,
   currentUser: CurrentUser,
   id: string,
-  params: StructureToolItemParams<Roles, DefaultRoles>,
+  params: StructureListItemsParams<Roles, DefaultRoles>,
 ): ListItemExtended<Roles>[] => {
   const { listItems, defaultRoles } = params;
 

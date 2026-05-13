@@ -1,1 +1,1 @@
-export { structureToolPlugin } from '@/structure/structureToolPlugin';
+export { structureToolPlugin } from '@/structure/structureToolPlugin/structureToolPlugin';

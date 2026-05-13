@@ -1,14 +1,14 @@
 import { getWorkspaceListItems } from '@/helpers/getWorkspaceListItems';
-import { renderListItem } from '@/structure/renderListItem';
+import { renderListItem } from '@/structure/renderListItem/renderListItem';
 
 import type { StructureResolver } from 'sanity/structure';
 
-import type { StructureToolPluginParams } from '@/structure/types/common.types';
+import type { StructureParams } from '@/structure/structure/structure.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
 export const structure =
   <Roles extends string[], DefaultRoles extends string[]>(
-    params: StructureToolPluginParams<Roles, DefaultRoles>,
+    params: StructureParams<Roles, DefaultRoles>,
   ): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;

@@ -4,13 +4,13 @@ import { structureTool } from 'sanity/structure';
 import { defineListItem } from '@/factories/defineListItem';
 import { defineListItems } from '@/factories/defineListItems';
 import { getAllListItems } from '@/helpers/getAllListItems';
-import { structure } from '@/structure/structure';
-import { templates } from '@/structure/templates';
+import { structure } from '@/structure/structure/structure';
+import { templates } from '@/structure/templates/templates';
 
 import type {
   StructureToolPluginOutput,
   StructureToolPluginParams,
-} from '@/structure/types/common.types';
+} from '@/structure/structureToolPlugin/structureToolPlugin.types';
 
 export const structureToolPlugin = <
   const Roles extends string[],
@@ -28,7 +28,7 @@ export const structureToolPlugin = <
         name: 'sanity-plugin-structure-tool',
         plugins: [
           structureTool({
-            structure: structure<Roles, DefaultRoles>(params),
+            structure: structure<Roles, DefaultRoles>({ ...params, listItems }),
           }),
         ],
         schema: {
@@ -38,6 +38,7 @@ export const structureToolPlugin = <
     }),
     templates: ({ listItems }) => {
       const flatListItems = getAllListItems<Roles>(listItems);
+
       return templates<Roles>(flatListItems);
     },
     defineListItems: (listItems) => defineListItems<Roles>(listItems),
