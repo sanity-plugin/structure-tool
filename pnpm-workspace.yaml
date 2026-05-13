@@ -5,6 +5,7 @@ packages:
 
 catalog:
   tsdown: ^0.22.0
+  type-fest: ^5.6.0
 
 allowBuilds:
   esbuild: true
