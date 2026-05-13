@@ -8,7 +8,7 @@ export default defineConfig((options, context) => {
     ...defaultOptions,
     entry: './src/index.ts',
     deps: {
-      onlyBundle: ['type-fest'],
+      alwaysBundle: ['type-fest'],
     },
   };
 });
