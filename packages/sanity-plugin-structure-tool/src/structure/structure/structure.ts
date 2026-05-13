@@ -7,8 +7,12 @@ import type { StructureParams } from '@/structure/structure/structure.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
 export const structure =
-  <Roles extends readonly string[] | undefined, DefaultRoles extends readonly string[] | undefined>(
-    params: StructureParams<Roles, DefaultRoles>,
+  <
+    Workspaces extends readonly string[] | undefined,
+    Roles extends readonly string[] | undefined,
+    DefaultRoles extends readonly string[] | undefined,
+  >(
+    params: StructureParams<Workspaces, Roles, DefaultRoles>,
   ): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;
@@ -19,7 +23,7 @@ export const structure =
 
     if (!workspace || !currentUser) return S.list().title(title).items([]);
 
-    const workspaceListItems = getWorkspaceListItems<Roles, DefaultRoles>(
+    const workspaceListItems = getWorkspaceListItems<Workspaces, Roles, DefaultRoles>(
       workspace,
       currentUser,
       restParams,
@@ -34,7 +38,11 @@ export const structure =
       .items(
         workspaceListItems
           .map((listItem) =>
-            renderListItem<Roles, DefaultRoles>(S, { ...context, currentUser }, listItem),
+            renderListItem<Workspaces, Roles, DefaultRoles>(
+              S,
+              { ...context, currentUser },
+              listItem,
+            ),
           )
           .filter((item) => item !== null),
       );

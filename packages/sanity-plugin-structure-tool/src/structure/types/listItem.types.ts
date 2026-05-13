@@ -3,7 +3,6 @@ import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import type { Merge, SetNonNullable } from 'type-fest';
 
-import type { WorkspaceType } from '@/types/constants.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
 export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
@@ -37,6 +36,7 @@ export interface ListItemCore {
 }
 
 export type ListItem<
+  Workspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
@@ -51,20 +51,26 @@ export type ListItem<
           {}
       : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         {},
+    Workspaces extends readonly string[]
+      ? {
+          workspaces?: Workspaces;
+        }
+      : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+        {},
     {
-      workspaces?: WorkspaceType[];
-      children?: ListItem<Roles, DefaultRoles>[];
+      children?: ListItem<Workspaces, Roles, DefaultRoles>[];
     },
   ]
 >;
 
 export type ListItemExtended<
+  Workspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = Merge<
-  ListItem<Roles, DefaultRoles>,
+  ListItem<Workspaces, Roles, DefaultRoles>,
   {
     id: string;
-    children: ListItemExtended<Roles, DefaultRoles>[];
+    children: ListItemExtended<Workspaces, Roles, DefaultRoles>[];
   }
 >;

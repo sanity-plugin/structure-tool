@@ -13,31 +13,32 @@ import type {
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
 
 export const structureToolPlugin = <
+  const Workspaces extends readonly string[] | undefined = undefined,
   const Roles extends readonly string[] | undefined = undefined,
   const DefaultRoles extends readonly string[] | undefined = undefined,
 >(
-  params: StructureToolPluginParams<Roles, DefaultRoles>,
-): StructureToolPluginOutput<Roles, DefaultRoles> => ({
+  params: StructureToolPluginParams<Workspaces, Roles, DefaultRoles>,
+): StructureToolPluginOutput<Workspaces, Roles, DefaultRoles> => ({
   structure: definePlugin(({ listItems }) => {
-    const flatListItems = getAllListItems<Roles, DefaultRoles>(listItems);
+    const flatListItems = getAllListItems<Workspaces, Roles, DefaultRoles>(listItems);
 
     return {
       name: 'sanity-plugin-structure-tool',
       plugins: [
         structureTool({
-          structure: structure<Roles, DefaultRoles>({ ...params, listItems }),
+          structure: structure<Workspaces, Roles, DefaultRoles>({ ...params, listItems }),
         }),
       ],
       schema: {
-        templates: templates<Roles, DefaultRoles>(flatListItems),
+        templates: templates<Workspaces, Roles, DefaultRoles>(flatListItems),
       },
     };
   }),
   templates: ({ listItems }) => {
-    const flatListItems = getAllListItems<Roles, DefaultRoles>(listItems);
+    const flatListItems = getAllListItems<Workspaces, Roles, DefaultRoles>(listItems);
 
-    return templates<Roles, DefaultRoles>(flatListItems);
+    return templates<Workspaces, Roles, DefaultRoles>(flatListItems);
   },
-  defineListItems: (listItems) => defineListItems<Roles, DefaultRoles>(listItems),
-  defineListItem: (listItem) => defineListItem<Roles, DefaultRoles>(listItem),
+  defineListItems: (listItems) => defineListItems<Workspaces, Roles, DefaultRoles>(listItems),
+  defineListItem: (listItem) => defineListItem<Workspaces, Roles, DefaultRoles>(listItem),
 });

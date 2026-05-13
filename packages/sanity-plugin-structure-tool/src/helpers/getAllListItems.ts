@@ -1,14 +1,15 @@
 import type { ListItem } from '@/structure/types/listItem.types';
 
 export const getAllListItems = <
+  Workspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
-  listItems: ListItem<Roles, DefaultRoles>[],
-): ListItem<Roles, DefaultRoles>[] => {
-  const schemaTypes = [] as ListItem<Roles, DefaultRoles>[];
+  listItems: ListItem<Workspaces, Roles, DefaultRoles>[],
+): ListItem<Workspaces, Roles, DefaultRoles>[] => {
+  const schemaTypes = [] as ListItem<Workspaces, Roles, DefaultRoles>[];
 
-  const getListItems = (items: ListItem<Roles, DefaultRoles>[]): void => {
+  const getListItems = (items: ListItem<Workspaces, Roles, DefaultRoles>[]): void => {
     for (const item of items) {
       if (item?.schemaType) {
         schemaTypes.push(item);
