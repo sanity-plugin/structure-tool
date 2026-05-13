@@ -1,11 +1,10 @@
-import type { IconComponent } from '@sanity/icons';
 import type { ComponentType, ReactNode } from 'react';
 import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import type { Merge, SetNonNullable } from 'type-fest';
 
 import type { WorkspaceType } from '@/types/constants.types';
-import type { SimpleMerge } from '@/types/lib.types';
+import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
 export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
 

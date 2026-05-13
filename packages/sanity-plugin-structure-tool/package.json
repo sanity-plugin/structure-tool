@@ -24,14 +24,9 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
+    ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
   "files": [
     "dist",
@@ -54,11 +49,10 @@
     "pluralize-esm": "^9.0.5"
   },
   "devDependencies": {
-    "@sanity/icons": "^3.7.4",
     "@structure-tool/tsdown-config": "workspace:*",
     "@structure-tool/typescript-config": "workspace:*",
     "tsdown": "catalog:",
-    "type-fest": "^5.6.0"
+    "type-fest": "catalog:"
   },
   "peerDependencies": {
     "@types/react": "^19.0.0",
@@ -78,5 +72,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "inlinedDependencies": {
+    "type-fest": "5.6.0"
   }
 }
