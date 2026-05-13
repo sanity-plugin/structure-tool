@@ -2,7 +2,7 @@ import type { IconComponent } from '@sanity/icons';
 import type { ComponentType, ReactNode } from 'react';
 import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import type { SetNonNullable } from 'type-fest';
+import type { Merge, SetNonNullable } from 'type-fest';
 
 import type { WorkspaceType } from '@/types/constants.types';
 
@@ -13,13 +13,10 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ListItem<Roles extends string[]> {
+export interface ListItemCore {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
-  roles?: Roles;
-  workspaces?: WorkspaceType[];
-  children?: ListItem<Roles>[];
   raw?: ListItemRaw;
   singleton?: boolean;
   filters?: ListItemFilters;
@@ -30,7 +27,18 @@ export interface ListItem<Roles extends string[]> {
   templates?: Record<string, unknown>;
 }
 
-export interface ListItemExtended<Roles extends string[]> extends ListItem<Roles> {
+export type ListItem<Roles extends readonly string[] | undefined> = Merge<
+  ListItemCore,
+  {
+    roles?: Roles extends readonly string[] ? Roles[number][] : never;
+    workspaces?: WorkspaceType[];
+    children?: ListItem<Roles>[];
+  }
+>;
+
+export interface ListItemExtended<
+  Roles extends readonly string[] | undefined,
+> extends ListItem<Roles> {
   id: string;
   children: ListItemExtended<Roles>[];
 }

@@ -11,25 +11,30 @@ export interface StructureToolCoreParams {
   emptyListTitle?: string;
 }
 
-type MustIncludeAdminRole<T extends string[]> = typeof userRoles.ADMINISTRATOR extends T[number]
-  ? T
+type MustIncludeAdminRole<T extends readonly string[] | undefined> = T extends readonly string[]
+  ? typeof userRoles.ADMINISTRATOR extends T[number]
+    ? T
+    : never
   : never;
 
-export interface StructureToolRoleParams<Roles extends string[], DefaultRoles extends string[]> {
+export interface StructureToolRoleParams<
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> {
   roles?: MustIncludeAdminRole<Roles>;
   defaultRoles?: MustIncludeAdminRole<DefaultRoles>;
 }
 
 export type StructureToolPluginParams<
-  Roles extends string[],
-  DefaultRoles extends string[],
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
 > = Merge<RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>, StructureToolCoreParams>;
 
-interface StructureToolPluginOutputParams<Roles extends string[]> {
+interface StructureToolPluginOutputParams<Roles extends readonly string[] | undefined> {
   listItems: ListItem<Roles>[];
 }
 
-export interface StructureToolPluginOutput<Roles extends string[]> {
+export interface StructureToolPluginOutput<Roles extends readonly string[] | undefined> {
   structure: Plugin<StructureToolPluginOutputParams<Roles>>;
   templates: (params: StructureToolPluginOutputParams<Roles>) => TemplateResolver;
   defineListItems: DefineListItemsType<Roles>;

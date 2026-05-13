@@ -6,7 +6,10 @@ import type { StructureListItemsParams } from '@/structure/structure/structure.t
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
-export const getWorkspaceListItems = <Roles extends string[], DefaultRoles extends string[]>(
+export const getWorkspaceListItems = <
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+>(
   workspace: WorkspaceType,
   currentUser: CurrentUser,
   params: StructureListItemsParams<Roles, DefaultRoles>,

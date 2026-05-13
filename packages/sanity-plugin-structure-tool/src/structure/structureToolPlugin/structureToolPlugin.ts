@@ -13,8 +13,8 @@ import type {
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
 
 export const structureToolPlugin = <
-  const Roles extends string[],
-  const DefaultRoles extends Roles[number][],
+  const Roles extends readonly string[] | undefined = undefined,
+  const DefaultRoles extends readonly string[] | undefined = undefined,
 >(
   params: StructureToolPluginParams<Roles, DefaultRoles>,
 ): StructureToolPluginOutput<Roles> => {

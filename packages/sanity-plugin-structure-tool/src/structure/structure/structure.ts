@@ -7,7 +7,7 @@ import type { StructureParams } from '@/structure/structure/structure.types';
 import type { WorkspaceType } from '@/types/constants.types';
 
 export const structure =
-  <Roles extends string[], DefaultRoles extends string[]>(
+  <Roles extends readonly string[] | undefined, DefaultRoles extends readonly string[] | undefined>(
     params: StructureParams<Roles, DefaultRoles>,
   ): StructureResolver =>
   (S, context) => {
