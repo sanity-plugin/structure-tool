@@ -48,8 +48,10 @@ export type ListItem<
         ? {
             roles: ListItemRoles<Roles, DefaultRoles>;
           }
-        : Record<string, never>
-      : Record<string, never>,
+        : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+          {}
+      : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+        {},
     {
       workspaces?: WorkspaceType[];
       children?: ListItem<Roles, DefaultRoles>[];

@@ -1,7 +1,6 @@
 import type { Plugin, TemplateResolver } from 'sanity';
 import type { RequireAllOrNone } from 'type-fest';
 
-import type { userRoles } from '@/constants';
 import type { DefineListItemType } from '@/factories/defineListItem';
 import type { DefineListItemsType } from '@/factories/defineListItems';
 import type { ListItem } from '@/structure/types/listItem.types';
@@ -12,18 +11,12 @@ export interface StructureToolCoreParams {
   emptyListTitle?: string;
 }
 
-type MustIncludeAdminRole<T extends readonly string[] | undefined> = T extends readonly string[]
-  ? typeof userRoles.ADMINISTRATOR extends T[number]
-    ? T
-    : never
-  : never;
-
 export interface StructureToolRoleParams<
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > {
-  roles?: MustIncludeAdminRole<Roles>;
-  defaultRoles?: MustIncludeAdminRole<DefaultRoles>;
+  roles?: Roles;
+  defaultRoles?: DefaultRoles;
 }
 
 export type StructureToolPluginParams<

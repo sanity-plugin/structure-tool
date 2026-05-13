@@ -1,16 +1,14 @@
-import { userRoles } from '@/constants';
+import type { ListItemRoles } from '@/structure/types/listItem.types';
 
 type GetRolesWithDefaults = (
-  defaultRoles: readonly string[] | undefined,
-  roles: readonly string[] | undefined,
+  defaultRoles: readonly string[],
+  roles: ListItemRoles<readonly string[], readonly string[]>,
 ) => string[];
 
 export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {
-  const defaults = (() => {
-    if (!defaultRoles) return null;
-    if (defaultRoles.length === 0) return null;
-    return defaultRoles;
-  })();
+  if (typeof roles === 'function') {
+    return [...new Set(roles({ defaultRoles }))];
+  }
 
-  return [...new Set([...(defaults ?? []), ...(roles ?? []), userRoles.ADMINISTRATOR])];
+  return [...new Set([...defaultRoles, ...roles])];
 };

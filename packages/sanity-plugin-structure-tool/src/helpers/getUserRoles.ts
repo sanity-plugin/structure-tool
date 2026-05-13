@@ -8,15 +8,12 @@ type GetUserRoles = (
   context:
     | Pick<DocumentActionsContext, 'currentUser'>
     | Record<'currentUser', Omit<CurrentUser, 'role'> | null>,
-) => UserRole[];
+) => string[];
 
 export const getUserRoles: GetUserRoles = (context) => {
   const { currentUser } = context;
 
   if (!currentUser) return [];
-
-  const defaultRoles =
-    'projectId' in context && currentUser.id === context.projectId ? [userRoles.ADMINISTRATOR] : [];
 
   return currentUser.roles.reduce<UserRole[]>((acc, role) => {
     const { name } = role || {};
@@ -25,5 +22,5 @@ export const getUserRoles: GetUserRoles = (context) => {
     if (Object.values(userRoles).includes(roleName)) acc.push(roleName);
 
     return acc;
-  }, defaultRoles);
+  }, []);
 };
