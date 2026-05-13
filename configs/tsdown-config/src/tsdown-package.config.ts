@@ -1,24 +1,19 @@
 import type { UserConfig, UserConfigFn } from 'tsdown';
 
 const config = (...params: Parameters<UserConfigFn>): UserConfig => {
-  const [options, context] = params;
+  const [options] = params;
   const { watch } = options;
-  const { ci } = context;
 
   return {
     entry: 'src/**/**.ts',
     dts: true,
-    format: ['esm', 'cjs'],
+    format: 'esm',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: !ci,
+    sourcemap: false,
     minify: !watch,
     exports: true,
     nodeProtocol: true,
-    deps: {
-      skipNodeModulesBundle: true,
-      neverBundle: ['type-fest'],
-    },
   };
 };
 
