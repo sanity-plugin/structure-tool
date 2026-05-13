@@ -1,12 +1,13 @@
-import constants from '@/constants';
 import { assist } from '@sanity/assist';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { SingletonAction } from 'sanity-plugin-structure-tool';
 
 import { envs } from '@/config';
+import constants from '@/constants';
+import listItems from '@/sanity/listItems';
 import schemaTypes from '@/sanity/schemas';
-import { templates, structure } from '@/structure'
+import { structure } from '@/structure';
 
 const { NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET } = envs;
 
@@ -17,9 +18,14 @@ export default defineConfig({
   dataset: NEXT_PUBLIC_SANITY_DATASET,
   schema: {
     types: schemaTypes,
-    templates,
   },
-  plugins: [structure(), assist(), visionTool()],
+  plugins: [
+    structure({
+      listItems,
+    }),
+    assist(),
+    visionTool(),
+  ],
   document: {
     actions: SingletonAction,
   },
