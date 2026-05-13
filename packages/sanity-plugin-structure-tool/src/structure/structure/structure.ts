@@ -4,7 +4,6 @@ import { renderListItem } from '@/structure/renderListItem/renderListItem';
 import type { StructureResolver } from 'sanity/structure';
 
 import type { StructureParams } from '@/structure/structure/structure.types';
-import type { WorkspaceType } from '@/types/constants.types';
 
 export const structure =
   <
@@ -19,7 +18,7 @@ export const structure =
 
     const { currentUser, schema } = context;
     const { _original: original } = schema;
-    const workspace = original?.name as WorkspaceType;
+    const workspace = original?.name as Workspaces extends string[] ? Workspaces[number] : string;
 
     if (!workspace || !currentUser) return S.list().title(title).items([]);
 

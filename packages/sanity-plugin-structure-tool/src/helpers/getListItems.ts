@@ -5,14 +5,13 @@ import type { CurrentUser } from 'sanity';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
-import type { WorkspaceType } from '@/types/constants.types';
 
 export const getListItems = <
   Workspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
-  workspace: WorkspaceType,
+  workspace: Workspaces extends string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
   id: string,
   params: StructureListItemsParams<Workspaces, Roles, DefaultRoles>,
@@ -23,12 +22,13 @@ export const getListItems = <
     (acc, listItem, index) => {
       const { children } = listItem;
 
-      const workspaces = 'workspaces' in listItem ? listItem.workspaces : [];
-      const roles = 'roles' in listItem ? listItem.roles : [];
+      const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
+      const roles = 'roles' in listItem ? listItem.roles : undefined;
+
       const listItemObj = {
         ...listItem,
         id: [...id.split('.'), index + 1].join('.'),
-      } as ListItemExtended<Workspaces, Roles, DefaultRoles>;
+      };
 
       const { isRbac, userHasAccess } = (() => {
         if (!defaultRoles || !roles) return { isRbac: false, userHasAccess: true };

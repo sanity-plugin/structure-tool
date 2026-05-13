@@ -4,14 +4,13 @@ import type { CurrentUser } from 'sanity';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
-import type { WorkspaceType } from '@/types/constants.types';
 
 export const getWorkspaceListItems = <
   Workspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
-  workspace: WorkspaceType,
+  workspace: Workspaces extends string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
   params: StructureListItemsParams<Workspaces, Roles, DefaultRoles>,
 ): ListItemExtended<Workspaces, Roles, DefaultRoles>[] =>

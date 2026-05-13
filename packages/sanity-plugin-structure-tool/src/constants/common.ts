@@ -12,7 +12,3 @@ export const sanityActions = {
   UNLINK_FROM_CANVAS: 'unlinkFromCanvas',
   SCHEDULE: 'schedule',
 } as const;
-
-export const workspaceTypes = {
-  DEFAULT: 'default',
-} as const;
