@@ -1,9 +1,8 @@
 import type { UserConfig, UserConfigFn } from 'tsdown';
 
 const config = (...params: Parameters<UserConfigFn>): UserConfig => {
-  const [options, context] = params;
+  const [options] = params;
   const { watch } = options;
-  const { ci } = context;
 
   return {
     entry: 'src/**/**.ts',
@@ -12,7 +11,7 @@ const config = (...params: Parameters<UserConfigFn>): UserConfig => {
     outDir: 'dist',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: !ci,
+    sourcemap: !watch,
     minify: !watch,
     exports: false,
     nodeProtocol: true,

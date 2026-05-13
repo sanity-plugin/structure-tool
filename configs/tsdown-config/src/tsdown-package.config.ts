@@ -10,7 +10,7 @@ const config = (...params: Parameters<UserConfigFn>): UserConfig => {
     format: 'esm',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: false,
+    sourcemap: !watch,
     minify: !watch,
     exports: true,
     nodeProtocol: true,

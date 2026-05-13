@@ -1,8 +1,7 @@
 import { defineConfig } from 'tsdown';
 
-export default defineConfig((options, context) => {
+export default defineConfig((options) => {
   const { watch } = options;
-  const { ci } = context;
 
   return {
     entry: {
@@ -13,7 +12,7 @@ export default defineConfig((options, context) => {
     format: 'esm',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: !ci,
+    sourcemap: !watch,
     minify: !watch,
     exports: true,
     nodeProtocol: true,
