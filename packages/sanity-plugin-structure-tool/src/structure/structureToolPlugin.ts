@@ -18,13 +18,11 @@ export const structureToolPlugin = <
 >(
   params: StructureToolPluginParams<Roles, DefaultRoles>,
 ): StructureToolPluginOutput<Roles> => {
-  const { listItems } = params;
-
-  const flatListItems = getAllListItems<Roles>(listItems);
+  console.log('hello from sanity-plugin-structure-tool');
 
   return {
-    structure: definePlugin(() => {
-      console.log('hello from sanity-plugin-structure-tool');
+    structure: definePlugin(({ listItems }) => {
+      const flatListItems = getAllListItems<Roles>(listItems);
 
       return {
         name: 'sanity-plugin-structure-tool',
@@ -38,8 +36,11 @@ export const structureToolPlugin = <
         },
       };
     }),
-    templates: templates<Roles>(flatListItems),
-    defineListItems: (items) => defineListItems<Roles>(items),
-    defineListItem: (items) => defineListItem<Roles>(items),
+    templates: ({ listItems }) => {
+      const flatListItems = getAllListItems<Roles>(listItems);
+      return templates<Roles>(flatListItems);
+    },
+    defineListItems: (listItems) => defineListItems<Roles>(listItems),
+    defineListItem: (listItem) => defineListItem<Roles>(listItem),
   };
 };

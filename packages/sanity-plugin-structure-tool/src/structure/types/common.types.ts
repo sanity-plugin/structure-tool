@@ -27,16 +27,15 @@ export type Structure = <Roles extends string[], DefaultRoles extends string[]>(
 
 // Structure Tool
 
-type MustIncludeUserRole<T extends string[]> = typeof userRoles.ADMINISTRATOR extends T[number]
+type MustIncludeAdminRole<T extends string[]> = typeof userRoles.ADMINISTRATOR extends T[number]
   ? T
   : never;
 
 export interface StructureToolPluginParams<Roles extends string[], DefaultRoles extends string[]> {
   title: string;
   emptyListTitle?: string;
-  listItems: ListItem<Roles>[];
-  roles?: MustIncludeUserRole<Roles>;
-  defaultRoles?: DefaultRoles;
+  roles?: MustIncludeAdminRole<Roles>;
+  defaultRoles?: MustIncludeAdminRole<DefaultRoles>;
 }
 
 export type StructureToolItemParams<Roles extends string[], DefaultRoles extends string[]> = Omit<
@@ -44,9 +43,13 @@ export type StructureToolItemParams<Roles extends string[], DefaultRoles extends
   'title' | 'emptyListTitle'
 >;
 
+interface StructureToolPluginOutputParams<Roles extends string[]> {
+  listItems: ListItem<Roles>[];
+}
+
 export interface StructureToolPluginOutput<Roles extends string[]> {
-  structure: Plugin;
-  templates: TemplateResolver;
+  structure: Plugin<StructureToolPluginOutputParams<Roles>>;
+  templates: (params: StructureToolPluginOutputParams<Roles>) => TemplateResolver;
   defineListItems: DefineListItemsType<Roles>;
   defineListItem: DefineListItemType<Roles>;
 }
