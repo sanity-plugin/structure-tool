@@ -1,5 +1,5 @@
+import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
-import { getUserRoles } from '@/helpers/getUserRoles';
 
 import type { CurrentUser } from 'sanity';
 
@@ -30,7 +30,7 @@ export const getListItems = <
     const { isRbac, userHasAccess } = (() => {
       if (!defaultRoles || !roles) return { isRbac: false, userHasAccess: true };
 
-      const hasAccess = getUserRoles({ currentUser }).some((role) =>
+      const hasAccess = getCurrentUserRoles({ currentUser }).some((role) =>
         getRolesWithDefaults(defaultRoles, roles).includes(role),
       );
 

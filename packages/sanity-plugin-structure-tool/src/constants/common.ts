@@ -13,10 +13,6 @@ export const sanityActions = {
   SCHEDULE: 'schedule',
 } as const;
 
-export const userRoles = {
-  ADMINISTRATOR: 'administrator',
-} as const;
-
 export const workspaceTypes = {
   DEFAULT: 'default',
 } as const;
