@@ -12,7 +12,7 @@ export default defineConfig((options) => {
     format: 'esm',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: !watch,
+    sourcemap: !!watch,
     minify: !watch,
     exports: true,
     nodeProtocol: true,

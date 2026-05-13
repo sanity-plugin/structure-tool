@@ -11,7 +11,7 @@ const config = (...params: Parameters<UserConfigFn>): UserConfig => {
     outDir: 'dist',
     platform: 'node',
     treeshake: !watch,
-    sourcemap: !watch,
+    sourcemap: !!watch,
     minify: !watch,
     exports: false,
     nodeProtocol: true,
