@@ -6,7 +6,7 @@ import { authorType } from '@/sanity/schemas/documents/authorType';
 const listItems = defineListItems([
   {
     schemaType: authorType.name,
-    roles: [],
+    roles: ({ defaultRoles }) => [],
     workspaces: [],
   },
   {
