@@ -13,7 +13,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     singleton,
     templates,
     displayTitle,
-    filters = [],
+    filters = '',
     filterParams = {},
     icon = '',
     hideAddButton = false,
@@ -51,7 +51,8 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
       .child(
         S.documentList()
           .title(displayTitle)
-          .filter([...(roleFilter ?? [])].join(' && '))
+          // eslint-disable-next-line unicorn/no-array-callback-reference
+          .filter(roleFilter)
           .params({ ...filterParams })
           .menuItems([])
           .initialValueTemplates([]),
@@ -86,7 +87,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
         const schemaBuilder = S.documentTypeList(schemaType)
           .title(displayTitle)
           .id(id)
-          .filter(['_type == $schemaType', ...(roleFilter ?? [])].join(' && '))
+          .filter(['_type == $schemaType', roleFilter].join(' && '))
           .params({
             schemaType,
             ...filterParams,

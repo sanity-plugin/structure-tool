@@ -9,7 +9,7 @@ interface ListItemFiltersParams {
   currentUser: CurrentUser;
 }
 
-type ListItemFilters = string[] | ((params: ListItemFiltersParams) => string[]);
+type ListItemFilters = string | ((params: ListItemFiltersParams) => string);
 
 export type ListItemRaw = (
   S: StructureBuilder,
