@@ -23,6 +23,7 @@ export const structure =
     if (!workspace || !currentUser) return S.list().title(title).items([]);
 
     const workspaceListItems = getWorkspaceListItems<Workspaces, Roles, DefaultRoles>(
+      S,
       workspace,
       currentUser,
       restParams,

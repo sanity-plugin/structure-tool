@@ -83,6 +83,7 @@ export type ListItemExtended<
     {
       id: string;
       children: ListItemExtended<Workspaces, Roles, DefaultRoles>[];
+      displayTitle: string;
     },
   ]
 >;

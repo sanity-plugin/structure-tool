@@ -1,5 +1,3 @@
-import pluralize from 'pluralize-esm';
-
 import { constants } from '@/constants';
 
 import type { RenderListItem } from '@/structure/renderListItem/renderListItem.types';
@@ -13,11 +11,10 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     children,
     raw,
     singleton,
-    isPlural,
     templates,
+    displayTitle,
     filters = [],
     filterParams = {},
-    title = '',
     icon = '',
     hideAddButton = false,
     isDivider = false,
@@ -27,17 +24,17 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
 
   const roleFilter = typeof filters === 'function' ? filters(currentUser) : filters;
 
-  if (isDivider) return S.divider().title(title);
+  if (isDivider) return S.divider().title(displayTitle);
 
   // Handle folders (items with children)
   if (children && children.length > 0) {
     return S.listItem()
-      .title(title)
+      .title(displayTitle)
       .id(id)
       .icon(icon)
       .child(
         S.list()
-          .title(title)
+          .title(displayTitle)
           .items(
             children
               .map((child) => renderListItem(S, context, child))
@@ -48,12 +45,12 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
 
   if (!schemaType && filters.length > 0) {
     return S.listItem()
-      .title(title)
+      .title(displayTitle)
       .id(id)
       .icon(icon)
       .child(
         S.documentList()
-          .title(title)
+          .title(displayTitle)
           .filter([...(roleFilter ?? [])].join(' && '))
           .params({ ...filterParams })
           .menuItems([])
@@ -63,17 +60,9 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
 
   if (!schemaType) return null;
 
-  const schemaTitle = (() => {
-    const sanityTitle = S.documentTypeListItem(schemaType).getTitle();
-    const isItPlural = title ? false : (isPlural ?? !singleton);
-    const mainTitle = title || (sanityTitle ?? '');
-
-    return isItPlural ? pluralize(mainTitle) : mainTitle;
-  })();
-
   // Handle Document Types
   return S.listItem()
-    .title(schemaTitle)
+    .title(displayTitle)
     .id(id)
     .icon(icon)
     .schemaType(schemaType)
@@ -95,7 +84,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
         }
 
         const schemaBuilder = S.documentTypeList(schemaType)
-          .title(schemaTitle)
+          .title(displayTitle)
           .id(id)
           .filter(['_type == $schemaType', ...(roleFilter ?? [])].join(' && '))
           .params({

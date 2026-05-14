@@ -1,7 +1,12 @@
+import pluralize from 'pluralize-esm';
+
+import { constants } from '@/constants';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
+import { escapeRegex } from '@/utils';
 
 import type { CurrentUser } from 'sanity';
+import type { StructureBuilder } from 'sanity/structure';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
@@ -11,6 +16,7 @@ export const getListItems = <
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
+  S: StructureBuilder,
   workspace: Workspaces extends string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
   id: string,
@@ -20,14 +26,27 @@ export const getListItems = <
 
   return listItems.reduce<ListItemExtended<Workspaces, Roles, DefaultRoles>[]>(
     (acc, listItem, index) => {
-      const { children } = listItem;
+      const { children, schemaType, singleton, isPlural, title = '' } = listItem;
 
       const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
       const roles = 'roles' in listItem ? listItem.roles : undefined;
 
+      const displayTitle = (() => {
+        const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
+        const isItPlural = title ? false : (isPlural ?? !singleton);
+        const mainTitle = title || (schemaTitle ?? '');
+
+        const finalTitle = isItPlural ? pluralize(mainTitle) : mainTitle;
+        return finalTitle || '';
+      })();
+
+      const uniqueId = [id, index + 1].join(constants.URL_PATH_SEPARATOR);
       const listItemObj = {
         ...listItem,
-        id: [...id.split('.'), index + 1].join('.'),
+        id: [uniqueId, ...escapeRegex(displayTitle).toLowerCase().split(' ')].join(
+          constants.URL_PATH_SEPARATOR,
+        ),
+        displayTitle,
       };
 
       const { isRbac, userHasAccess } = (() => {
@@ -46,7 +65,7 @@ export const getListItems = <
         if (!workspaces || workspaces.includes(workspace)) {
           acc.push({
             ...listItemObj,
-            children: getListItems(workspace, currentUser, listItemObj.id, {
+            children: getListItems(S, workspace, currentUser, uniqueId, {
               ...params,
               listItems: children,
             }),
