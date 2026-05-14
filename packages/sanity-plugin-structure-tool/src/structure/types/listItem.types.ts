@@ -5,7 +5,11 @@ import type { SetNonNullable } from 'type-fest';
 
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
-export type ListItemFilters = string[] | ((currentUser: CurrentUser) => string[]);
+interface ListItemFiltersParams {
+  currentUser: CurrentUser;
+}
+
+type ListItemFilters = string[] | ((params: ListItemFiltersParams) => string[]);
 
 export type ListItemRaw = (
   S: StructureBuilder,

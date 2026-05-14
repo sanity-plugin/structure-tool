@@ -22,7 +22,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
 
   if (raw) return raw(S, context);
 
-  const roleFilter = typeof filters === 'function' ? filters(currentUser) : filters;
+  const roleFilter = typeof filters === 'function' ? filters({ currentUser }) : filters;
 
   if (isDivider) return S.divider().title(displayTitle);
 
