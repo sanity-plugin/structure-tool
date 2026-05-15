@@ -23,6 +23,8 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
   if (raw) return raw(S, context);
 
   const roleFilter = typeof filter === 'function' ? filter({ currentUser }) : filter;
+  const roleFilterParams =
+    typeof filterParams === 'function' ? filterParams({ currentUser }) : filterParams;
 
   if (isDivider) return S.divider().title(displayTitle);
 
@@ -44,19 +46,15 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
   }
 
   if (!schemaType && filter) {
-    return S.listItem()
-      .title(displayTitle)
-      .id(id)
-      .icon(icon)
-      .child(
-        S.documentList()
-          .title(displayTitle)
-          // eslint-disable-next-line unicorn/no-array-callback-reference
-          .filter(roleFilter)
-          .params({ ...filterParams })
-          .menuItems([])
-          .initialValueTemplates([]),
-      );
+    return S.listItem().title(displayTitle).id(id).icon(icon).child(
+      S.documentList()
+        .title(displayTitle)
+        // eslint-disable-next-line unicorn/no-array-callback-reference
+        .filter(roleFilter)
+        .params(roleFilterParams)
+        .menuItems([])
+        .initialValueTemplates([]),
+    );
   }
 
   if (!schemaType) return null;
@@ -90,7 +88,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
           .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
           .params({
             schemaType,
-            ...filterParams,
+            ...roleFilterParams,
           });
 
         if (hideAddButton) {

@@ -5,11 +5,13 @@ import type { SetNonNullable } from 'type-fest';
 
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
-interface ListItemFiltersParams {
+interface ListItemFilterCallbackParams {
   currentUser: CurrentUser;
 }
 
-type ListItemFilters = string | ((params: ListItemFiltersParams) => string);
+type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
+
+type ListItemFilterParams = string | ((params: ListItemFilterCallbackParams) => string);
 
 export type ListItemRaw = (
   S: StructureBuilder,
@@ -31,8 +33,8 @@ export interface ListItemCore {
   icon?: IconComponent | ComponentType | ReactNode;
   raw?: ListItemRaw;
   singleton?: boolean;
-  filter?: ListItemFilters;
-  filterParams?: Record<string, unknown>;
+  filter?: ListItemFilter;
+  filterParams?: ListItemFilterParams;
   hideAddButton?: boolean;
   isDivider?: boolean;
   isPlural?: boolean;
