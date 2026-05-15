@@ -16,12 +16,20 @@ export const structure =
   ): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;
-
     const { currentUser, schema } = context;
     const { _original: original } = schema;
-    const workspace = original?.name as Workspaces extends string[] ? Workspaces[number] : string;
 
-    if (!workspace || !currentUser) return S.list().title(title).items([]);
+    const workspace = original?.name as Workspaces extends readonly string[]
+      ? Workspaces[number]
+      : string;
+
+    const displayTitle = typeof title === 'function' ? title({ workspace, context }) : title;
+    const displayEmptyListTitle =
+      typeof emptyListTitle === 'function'
+        ? emptyListTitle({ workspace, context })
+        : emptyListTitle;
+
+    if (!workspace || !currentUser) return S.list().title(displayTitle).items([]);
 
     const workspaceListItems = getWorkspaceListItems<
       Workspaces,
@@ -31,11 +39,11 @@ export const structure =
     >(S, workspace, currentUser, restParams);
 
     if (!workspaceListItems || workspaceListItems.length === 0) {
-      return S.list().title(emptyListTitle ?? `${title} Not Configured`);
+      return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
     }
 
     return S.list()
-      .title(title)
+      .title(displayTitle)
       .items(
         workspaceListItems
           .map((listItem) =>

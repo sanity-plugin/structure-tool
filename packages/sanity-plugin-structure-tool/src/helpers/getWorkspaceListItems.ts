@@ -13,7 +13,7 @@ export const getWorkspaceListItems = <
   DefaultRoles extends readonly string[] | undefined,
 >(
   S: StructureBuilder,
-  workspace: Workspaces extends string[] ? Workspaces[number] : string,
+  workspace: Workspaces extends readonly string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
   params: StructureListItemsParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
 ): ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] =>

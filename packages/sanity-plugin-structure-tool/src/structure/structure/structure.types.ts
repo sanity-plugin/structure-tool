@@ -22,7 +22,7 @@ export type StructureParams<
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    StructureToolCoreParams,
+    StructureToolCoreParams<Workspaces>,
     StructureToolWorkspaceParams<Workspaces, DefaultWorkspaces>,
     StructureToolRoleParams<Roles, DefaultRoles>,
     StructureListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
@@ -36,5 +36,5 @@ export type StructureListItemsParams<
   DefaultRoles extends readonly string[] | undefined,
 > = Omit<
   StructureParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-  keyof StructureToolCoreParams
+  keyof StructureToolCoreParams<Workspaces>
 >;

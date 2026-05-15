@@ -1,4 +1,5 @@
 import type { Plugin, TemplateResolver } from 'sanity';
+import type { StructureResolverContext } from 'sanity/structure';
 import type { RequireAllOrNone } from 'type-fest';
 
 import type { DefineListItemType } from '@/factories/defineListItem';
@@ -6,9 +7,14 @@ import type { DefineListItemsType } from '@/factories/defineListItems';
 import type { ListItem } from '@/structure/types/listItem.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-export interface StructureToolCoreParams {
-  title: string;
-  emptyListTitle?: string;
+interface StructureToolCoreFieldParams<Workspaces extends readonly string[] | undefined> {
+  workspace: Workspaces extends readonly string[] ? Workspaces[number] : string;
+  context: StructureResolverContext;
+}
+
+export interface StructureToolCoreParams<Workspaces extends readonly string[] | undefined> {
+  title: string | ((params: StructureToolCoreFieldParams<Workspaces>) => string);
+  emptyListTitle?: string | ((params: StructureToolCoreFieldParams<Workspaces>) => string);
 }
 
 export interface StructureToolWorkspaceParams<
@@ -36,7 +42,7 @@ export type StructureToolPluginParams<
   [
     RequireAllOrNone<StructureToolWorkspaceParams<Workspaces, DefaultWorkspaces>>,
     RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>,
-    StructureToolCoreParams,
+    StructureToolCoreParams<Workspaces>,
   ]
 >;
 
