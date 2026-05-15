@@ -11,7 +11,9 @@ interface ListItemFilterCallbackParams {
 
 type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
 
-type ListItemFilterParams = string | ((params: ListItemFilterCallbackParams) => string);
+type ListItemFilterParams =
+  | Record<string, unknown>
+  | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
 
 export type ListItemRaw = (
   S: StructureBuilder,
