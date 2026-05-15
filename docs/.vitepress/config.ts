@@ -54,120 +54,120 @@ export default defineConfig({
         ],
       },
     ],
-    // sidebar: [
-    //   {
-    //     text: 'Introduction',
-    //     items: [
-    //       {
-    //         text: 'Getting Started',
-    //         link: '/guide/getting-started',
-    //       },
-    //       {
-    //         text: 'Why',
-    //         link: '/guide/why',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     text: 'Config',
-    //     collapsed: false,
-    //     items: [
-    //       {
-    //         text: 'Installation',
-    //         link: '/config/installation',
-    //       },
-    //       {
-    //         text: 'Extended Config',
-    //         link: '/config/extended-config',
-    //         collapsed: true,
-    //         items: [
-    //           {
-    //             text: 'Rules',
-    //             link: '/config/extended-config/rules',
-    //           },
-    //           {
-    //             text: 'Plugins',
-    //             link: '/config/extended-config/plugins',
-    //           },
-    //           {
-    //             text: 'Extensions',
-    //             link: '/config/extended-config/extensions',
-    //           },
-    //           {
-    //             text: 'Configs',
-    //             link: '/config/extended-config/configs',
-    //           },
-    //           {
-    //             text: 'Helpers',
-    //             link: '/config/extended-config/helpers',
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         text: 'Legacy Config',
-    //         link: '/config/legacy-config',
-    //       },
-    //       {
-    //         text: 'Extended vs Legacy',
-    //         link: '/config/extended-vs-legacy',
-    //       },
-    //       {
-    //         text: 'Packages Used',
-    //         link: '/config/packages-used',
-    //       },
-    //       {
-    //         text: 'FAQ',
-    //         link: '/config/faq',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     text: 'CLI',
-    //     collapsed: false,
-    //     items: [
-    //       {
-    //         text: 'Guide',
-    //         link: '/cli/guide',
-    //       },
-    //       {
-    //         text: 'Options',
-    //         link: '/cli/options',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     text: 'Customization',
-    //     collapsed: false,
-    //     items: [
-    //       {
-    //         text: 'Strict Rules',
-    //         link: '/customization/strict-rules',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     text: 'Migration',
-    //     items: [
-    //       {
-    //         text: 'Upgrade to v3',
-    //         link: '/migration/upgrade-to-v3',
-    //       },
-    //       {
-    //         text: 'Upgrade to Extended',
-    //         link: '/migration/upgrade-to-extended',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     text: 'Contribute',
-    //     items: [
-    //       {
-    //         text: 'Contributing',
-    //         link: '/contribute/guide',
-    //       },
-    //     ],
-    //   },
-    // ],
+    sidebar: [
+      {
+        text: 'Introduction',
+        items: [
+          {
+            text: 'Getting Started',
+            link: '/guide/getting-started',
+          },
+          {
+            text: 'Why',
+            link: '/guide/why',
+          },
+        ],
+      },
+      {
+        text: 'Config',
+        collapsed: false,
+        items: [
+          {
+            text: 'Installation',
+            link: '/config/installation',
+          },
+          {
+            text: 'Extended Config',
+            link: '/config/extended-config',
+            collapsed: true,
+            items: [
+              {
+                text: 'Rules',
+                link: '/config/extended-config/rules',
+              },
+              {
+                text: 'Plugins',
+                link: '/config/extended-config/plugins',
+              },
+              {
+                text: 'Extensions',
+                link: '/config/extended-config/extensions',
+              },
+              {
+                text: 'Configs',
+                link: '/config/extended-config/configs',
+              },
+              {
+                text: 'Helpers',
+                link: '/config/extended-config/helpers',
+              },
+            ],
+          },
+          {
+            text: 'Legacy Config',
+            link: '/config/legacy-config',
+          },
+          {
+            text: 'Extended vs Legacy',
+            link: '/config/extended-vs-legacy',
+          },
+          {
+            text: 'Packages Used',
+            link: '/config/packages-used',
+          },
+          {
+            text: 'FAQ',
+            link: '/config/faq',
+          },
+        ],
+      },
+      {
+        text: 'CLI',
+        collapsed: false,
+        items: [
+          {
+            text: 'Guide',
+            link: '/cli/guide',
+          },
+          {
+            text: 'Options',
+            link: '/cli/options',
+          },
+        ],
+      },
+      {
+        text: 'Customization',
+        collapsed: false,
+        items: [
+          {
+            text: 'Strict Rules',
+            link: '/customization/strict-rules',
+          },
+        ],
+      },
+      {
+        text: 'Migration',
+        items: [
+          {
+            text: 'Upgrade to v3',
+            link: '/migration/upgrade-to-v3',
+          },
+          {
+            text: 'Upgrade to Extended',
+            link: '/migration/upgrade-to-extended',
+          },
+        ],
+      },
+      {
+        text: 'Contribute',
+        items: [
+          {
+            text: 'Contributing',
+            link: '/contribute/guide',
+          },
+        ],
+      },
+    ],
     socialLinks: [
       {
         icon: 'github',
