@@ -1,88 +1,46 @@
 # Getting Started {#getting-started}
 
-This guide will help you get started with `sanity-plugin-structure-tool` in your Sanity Studio.
+**Sanity Structure Tool** is a declarative, JSON based plugin for defining your Sanity Studio's desk structure. This guide provides a step-by-step roadmap to help you install the package and configure a maintainable content hierarchy.
 
 ## Installation {#installation}
 
-Install the plugin using your preferred package manager:
+Install the package using your preferred package manager.
 
-```bash
+::: code-group
+```sh [npm]
 npm install sanity-plugin-structure-tool
-# or
-pnpm add sanity-plugin-structure-tool
-# or
+```
+
+```sh [yarn]
 yarn add sanity-plugin-structure-tool
 ```
 
-## Setup {#setup}
-
-First, initialize the plugin and export its utilities. It's recommended to do this in a dedicated file, for example `src/structure/index.ts`.
-
-```typescript
-// src/structure/index.ts
-import { structureToolPlugin } from 'sanity-plugin-structure-tool';
-
-export const { structure, defineListItems } = structureToolPlugin({
-  title: 'My Studio Structure',
-});
+```sh [pnpm]
+pnpm add sanity-plugin-structure-tool
 ```
 
-## Defining List Items {#defining-list-items}
-
-Now, define your studio's structure using `defineListItems`. You can create a separate file for this, like `src/structure/listItems.ts`.
-
-```typescript
-// src/structure/listItems.ts
-import { defineListItems } from './index';
-
-const listItems = defineListItems([
-  {
-    title: 'General',
-    isDivider: true,
-  },
-  {
-    schemaType: 'post', // Automatically creates a list for 'post' documents
-  },
-  {
-    title: 'Settings',
-    schemaType: 'settings',
-    singleton: true, // Automatically handles singleton logic
-  },
-]);
-
-export default listItems;
+```sh [bun]
+bun add sanity-plugin-structure-tool
 ```
+:::
 
-## Integration {#integration}
+## Quick Roadmap {#roadmap}
 
-Finally, add the `structure` plugin to your `sanity.config.ts` and pass the `listItems` you defined.
+Once installed, follow these steps to get your studio up and running with a declarative structure:
 
-```typescript
-// sanity.config.ts
-import { defineConfig } from 'sanity';
-import { SingletonAction } from 'sanity-plugin-structure-tool';
-import { structure } from './src/structure';
-import listItems from './src/structure/listItems';
+1.  **[Follow the Setup Guide](/guide/setup)**: Learn how to initialize utilities and register the plugin.
+2.  **[Define Your Items](/guide/list-items)**: Explore the `ListItem` configuration to build your hierarchy.
+3.  **[Browse Examples](/examples/title)**: See specific examples for properties like `singleton`, `filter`, and `children`.
 
-export default defineConfig({
-  // ... other config
-  plugins: [
-    structure({
-      listItems,
-    }),
-  ],
-  document: {
-    // Optional: Add SingletonAction to handle singleton-specific document actions (e.g., hiding "Delete")
-    actions: SingletonAction,
-  },
-});
-```
+## Learn More {#learn-more}
 
-## Next Steps {#next-steps}
+- **[Why this tool?](/introduction/why)**: Understand the core philosophy and the problems it solves.
+- **[FAQ](/guide/faq)**: Find answers to common questions and troubleshooting tips.
+- **[Contributing](/contribute/guide)**: Learn how to contribute to the project.
 
-Now that you have the basic structure set up, you can explore more advanced features like:
+## Need Help? {#need-help}
 
-- **Nested Lists:** Use the `children` property to create deeply nested structures.
-- **Custom Filters:** Use `filter` and `filterParams` for specific document subsets.
-- **Role-based Access:** Control visibility based on user roles.
-- **Custom Icons:** Pass Sanity icons to your list items.
+If you run into issues or have questions:
+
+- Check the [Issues](https://github.com/sanity-plugin/structure-tool/issues) on GitHub.
+- Contributions are always welcome!
