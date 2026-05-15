@@ -165,20 +165,6 @@ When `isPlural` is set to `false`, the plugin will showcase the exact same name 
 }
 ```
 
-## `roles` {#roles}
-
-- **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
-- **Optional**: Yes
-
-Restricts the visibility of the list item to specific user roles. You must define your roles in the `structureToolPlugin` initialization to use this.
-
-```ts
-{
-  schemaType: 'settings',
-  roles: ['administrator', 'editor'],
-}
-```
-
 ## `workspaces` {#workspaces}
 
 - **Type**: `string[]`
@@ -190,6 +176,20 @@ Restricts the visibility of the list item to specific Sanity workspaces.
 {
   schemaType: 'adminSettings',
   workspaces: ['workspace1'],
+}
+```
+
+## `roles` {#roles}
+
+- **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
+- **Optional**: Yes
+
+Restricts the visibility of the list item to specific user roles. You must define your roles in the `structureToolPlugin` initialization to use this.
+
+```ts
+{
+  schemaType: 'settings',
+  roles: ['administrator', 'editor'],
 }
 ```
 

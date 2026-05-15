@@ -35,5 +35,5 @@ features:
     details: Easily integrate with existing Sanity Studio projects without complex setup or boilerplate.
   - icon: 🔄
     title: Dynamic Configuration
-    details: Customize structure layouts dynamically based on roles, workspaces, or filters.
+    details: Customize structure layouts dynamically based on workspaces, roles, or filters.
 ---

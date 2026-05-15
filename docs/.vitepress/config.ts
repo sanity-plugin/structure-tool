@@ -127,12 +127,12 @@ export default defineConfig({
             link: '/examples/is-plural',
           },
           {
-            text: 'roles',
-            link: '/examples/roles',
-          },
-          {
             text: 'workspaces',
             link: '/examples/workspaces',
+          },
+          {
+            text: 'roles',
+            link: '/examples/roles',
           },
           {
             text: 'templates',

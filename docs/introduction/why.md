@@ -11,6 +11,7 @@ When using the standard Structure Builder, you often find yourself writing a lot
 - **Singletons:** Manually creating a list item that opens a specific document ID and hiding it from the main list.
 - **Pluralization:** Repeatedly defining titles and icons for document types.
 - **Nesting:** Managing deeply nested lists with multiple `S.list().title().items([...])` calls.
+- **Workspace-based Content:** Implementing conditional logic to hide or show content based on workspaces.
 - **Role-based Access:** Implementing conditional logic to hide or show items based on user roles.
 
 This imperative approach can lead to a structure file that is hard to read and even harder to refactor.
@@ -31,9 +32,9 @@ Creating a singleton is as simple as adding `singleton: true` to your configurat
 
 By default, the plugin uses `pluralize` to generate titles for your document lists, but you can easily override this or disable it per item.
 
-### 4. Role & Workspace Awareness {#role-workspace-awareness}
+### 4. Workspace & Role Awareness {#workspace-role-awareness}
 
-The tool is built with multi-role and multi-workspace environments in mind. You can easily restrict visibility of specific list items based on the current user's roles or the active workspace.
+The tool is built with multi-role and multi-workspace environments in mind. You can easily restrict visibility of specific list items based on the workspace or the current user's roles.
 
 ### 5. Developer Experience (DX) {#developer-experience-dx}
 
