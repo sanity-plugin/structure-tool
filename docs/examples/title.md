@@ -18,10 +18,10 @@ When `children` are present, `title` becomes **mandatory** to label the parent i
 {
   title: 'Profile',
   children: [
-    { 
+    {
       schemaType: 'author',
     },
-    { 
+    {
       schemaType: 'user',
     },
   ],

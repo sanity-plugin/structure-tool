@@ -3,6 +3,7 @@
 The core of **Sanity Structure Tool** is the `ListItem` configuration. This guide explains every property you can use to define your desk structure.
 
 ## `title` {#title}
+
 - **Type**: `string`
 - **Optional**: Yes (Required if `children` is present)
 
@@ -15,6 +16,7 @@ The display name for the list item. While optional for standard items (where it 
 ```
 
 ## `schemaType` {#schema-type}
+
 - **Type**: `string`
 - **Optional**: Yes
 
@@ -27,6 +29,7 @@ The name of the document type defined in your Sanity schema. Providing this will
 ```
 
 ## `icon` {#icon}
+
 - **Type**: `IconComponent | ComponentType | ReactNode`
 - **Optional**: Yes
 
@@ -42,6 +45,7 @@ import { UserIcon } from '@sanity/icons';
 ```
 
 ## `singleton` {#singleton}
+
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
 
@@ -56,6 +60,7 @@ When set to `true`, this item is treated as a single document rather than a list
 ```
 
 ## `children` {#children}
+
 - **Type**: `ListItem[]`
 - **Optional**: Yes
 
@@ -69,10 +74,10 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 {
   title: 'Profile',
   children: [
-    { 
+    {
       schemaType: 'author',
     },
-    { 
+    {
       schemaType: 'user',
     },
   ],
@@ -80,6 +85,7 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 ```
 
 ## `isDivider` {#is-divider}
+
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
 
@@ -93,6 +99,7 @@ When set to `true`, this item renders as a visual separator in the desk list. Ot
 ```
 
 ## `filter` {#filter}
+
 - **Type**: `string | ((params: { currentUser: CurrentUser }) => string)`
 - **Optional**: Yes
 
@@ -106,6 +113,7 @@ A GROQ filter string to limit which documents are shown in the list. You can als
 ```
 
 ## `filterParams` {#filter-params}
+
 - **Type**: `Record<string, unknown> | ((params: { currentUser: CurrentUser }) => Record<string, unknown>)`
 - **Optional**: Yes
 
@@ -122,6 +130,7 @@ Parameters to be used within the `filter` GROQ string.
 ```
 
 ## `hideAddButton` {#hide-add-button}
+
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
 
@@ -135,6 +144,7 @@ When set to `true`, the "Add" button (plus icon) will be hidden for this documen
 ```
 
 ## `isPlural` {#is-plural}
+
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `true`)
 
@@ -143,7 +153,7 @@ Controls whether the auto-generated title should be pluralized when no custom `t
 ::: details Note
 For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
 ::: details Recommendation
-We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors"). 
+We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
 :::
 
 When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
@@ -156,6 +166,7 @@ When `isPlural` is set to `false`, the plugin will showcase the exact same name 
 ```
 
 ## `roles` {#roles}
+
 - **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
 - **Optional**: Yes
 
@@ -169,6 +180,7 @@ Restricts the visibility of the list item to specific user roles. You must defin
 ```
 
 ## `workspaces` {#workspaces}
+
 - **Type**: `string[]`
 - **Optional**: Yes
 
@@ -182,6 +194,7 @@ Restricts the visibility of the list item to specific Sanity workspaces.
 ```
 
 ## `templates` {#templates}
+
 - **Type**: `Record<string, unknown>`
 - **Optional**: Yes
 
@@ -197,6 +210,7 @@ Used to pass initial value templates for new documents created from this list it
 ```
 
 ## `raw` {#raw}
+
 - **Type**: `(S: StructureBuilder, context: Context) => ListItem`
 - **Optional**: Yes
 

@@ -51,7 +51,7 @@ export default defineConfig({
     actions: (prev, context) => {
       // First, let SingletonAction handle the filtering for singletons
       const actions = SingletonAction(prev, context);
-      
+
       // Then, add your custom logic if needed
       return actions;
     },

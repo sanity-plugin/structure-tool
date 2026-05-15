@@ -8,10 +8,10 @@ The `children` property allows you to create nested list structures. You can nes
 {
   title: 'Profile',
   children: [
-    { 
+    {
       schemaType: 'author',
     },
-    { 
+    {
       schemaType: 'user',
     },
   ],
@@ -31,20 +31,20 @@ The `children` property allows you to create nested list structures. You can nes
           title: 'Campaigns',
           children: [
             {
-              schemaType: 'summerSale', 
+              schemaType: 'summerSale',
             },
             {
-              schemaType: 'winterSale', 
+              schemaType: 'winterSale',
             },
           ],
         },
         {
-          schemaType: 'adChannel', 
+          schemaType: 'adChannel',
         },
       ],
     },
     {
-      schemaType: 'blogPost', 
+      schemaType: 'blogPost',
     },
   ],
 }

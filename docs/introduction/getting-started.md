@@ -7,6 +7,7 @@
 Install the package using your preferred package manager.
 
 ::: code-group
+
 ```sh [npm]
 npm install sanity-plugin-structure-tool
 ```
@@ -22,6 +23,7 @@ pnpm add sanity-plugin-structure-tool
 ```sh [bun]
 bun add sanity-plugin-structure-tool
 ```
+
 :::
 
 ## Quick Roadmap {#roadmap}

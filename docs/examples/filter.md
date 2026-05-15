@@ -71,6 +71,7 @@ You can create a mixed list of multiple document types by using a more complex G
 You can pass a function to both `filter` and `filterParams` to dynamically control the list based on the current user. The following two examples achieve the exact same result:
 
 ### 1. Using Dynamic Filter String {#using-dynamic-filter-string}
+
 In this approach, you return the entire GROQ string from the `filter` function.
 
 ```ts
@@ -82,6 +83,7 @@ In this approach, you return the entire GROQ string from the `filter` function.
 ```
 
 ### 2. Using Dynamic Filter Parameters {#using-dynamic-filter-parameters}
+
 In this approach, you keep the `filter` string static and use a function for `filterParams` to pass the user ID.
 
 ```ts
@@ -96,14 +98,15 @@ In this approach, you keep the `filter` string static and use a function for `fi
 ```
 
 ### 3. Combining Both {#combining-both}
+
 You can also combine both for more complex logic.
 
 ```ts
 {
   title: 'My Role-based Documents',
   schemaType: 'post',
-  filter: ({ currentUser }) => currentUser.roles.includes('administrator') 
-    ? 'status == $status' 
+  filter: ({ currentUser }) => currentUser.roles.includes('administrator')
+    ? 'status == $status'
     : 'author == $userId && status == $status',
   filterParams: ({ currentUser }) => ({
     status: 'published',

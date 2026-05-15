@@ -22,6 +22,7 @@ export const { structure, defineListItems, defineListItem } = structureToolPlugi
 ```
 
 ### Why initialize utilities? {#why-initialize-utilities}
+
 By initializing the plugin this way, `TypeScript` will know exactly which roles and workspaces are available throughout your structure definition, providing you with powerful `autocompletion` and preventing configuration `errors`.
 
 ## 2. Define Your Structure {#define-your-structure}
@@ -50,6 +51,7 @@ export default listItems;
 ```
 
 ### Key Item Properties {#key-item-properties}
+
 - `isDivider`: Use this to visually separate sections in your studio.
 - `schemaType`: The `name` of the document, defined in your schema.
 - `singleton`: Set to `true` to treat this item as a single document rather than a list.
