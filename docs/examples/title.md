@@ -1,4 +1,4 @@
-# `title` Example {#title}
+# `title` Example {#title-example}
 
 The `title` property sets the display name for the list item in the Sanity desk menu.
 

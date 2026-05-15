@@ -1,4 +1,4 @@
-# `schemaType` Example {#schema-type}
+# `schemaType` Example {#schema-type-example}
 
 The `schemaType` property links the list item to a specific document type defined in your Sanity schema.
 
