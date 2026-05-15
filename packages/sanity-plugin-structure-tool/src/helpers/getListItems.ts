@@ -1,8 +1,9 @@
-import { constants } from '@/constants';
 import pluralize from 'pluralize-esm';
 
+import { constants } from '@/constants';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
+import { getWorkspacesWithDefaults } from '@/helpers/getWorkspacesWithDefaults';
 import { sanitizeUrl } from '@/utils';
 
 import type { CurrentUser } from 'sanity';
@@ -23,7 +24,13 @@ export const getListItems = <
   id: string,
   params: StructureListItemsParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
 ): ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] => {
-  const { listItems, defaultRoles, roles: globalRoles } = params;
+  const {
+    workspaces: globalWorkspaces,
+    defaultWorkspaces,
+    roles: globalRoles,
+    defaultRoles,
+    listItems,
+  } = params;
 
   return listItems.reduce<ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[]>(
     (acc, listItem, index) => {
@@ -50,33 +57,42 @@ export const getListItems = <
         displayTitle,
       };
 
-      const { isRbac, userHasAccess } = (() => {
-        if (!defaultRoles || !globalRoles) return { isRbac: false, userHasAccess: true };
+      const { hasWorkspaceEnabled, hasWorkspaceAccess } = (() => {
+        if (!defaultWorkspaces || !globalWorkspaces) {
+          return { hasWorkspaceEnabled: false, hasWorkspaceAccess: true };
+        }
+
+        const isInWorkspacesList = globalWorkspaces.includes(workspace);
+        const hasAccess = getWorkspacesWithDefaults(defaultWorkspaces, workspaces).includes(
+          workspace,
+        );
+
+        return { hasWorkspaceEnabled: true, hasWorkspaceAccess: isInWorkspacesList && hasAccess };
+      })();
+
+      if (hasWorkspaceEnabled && !hasWorkspaceAccess) return acc;
+
+      const { hasRoleEnabled, hasRoleAccess } = (() => {
+        if (!defaultRoles || !globalRoles) return { hasRoleEnabled: false, hasRoleAccess: true };
 
         const hasAccess = getCurrentUserRoles<Roles>({ currentUser, roles: globalRoles }).some(
           (role) => getRolesWithDefaults(defaultRoles, roles).includes(role),
         );
 
-        return { isRbac: true, userHasAccess: hasAccess };
+        return { hasRoleEnabled: true, hasRoleAccess: hasAccess };
       })();
 
-      if (isRbac && !userHasAccess) return acc;
+      if (hasRoleEnabled && !hasRoleAccess) return acc;
 
       if (children && children.length > 0) {
-        if (!workspaces || workspaces.includes(workspace)) {
-          acc.push({
-            ...listItemObj,
-            children: getListItems(S, workspace, currentUser, uniqueId, {
-              ...params,
-              listItems: children,
-            }),
-          });
-        }
-
-        return acc;
-      }
-
-      if (!workspaces || workspaces.includes(workspace)) {
+        acc.push({
+          ...listItemObj,
+          children: getListItems(S, workspace, currentUser, uniqueId, {
+            ...params,
+            listItems: children,
+          }),
+        });
+      } else {
         acc.push({ ...listItemObj, children: [] });
       }
 
