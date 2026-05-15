@@ -18,8 +18,7 @@ This ensures that once a singleton document is created, it remains as a single, 
 
 To use it, import `SingletonAction` and add it to the `document.actions` property in your `sanity.config.ts`.
 
-```ts
-// sanity.config.ts
+```ts [sanity.config.ts]
 import { defineConfig } from 'sanity';
 import { SingletonAction } from 'sanity-plugin-structure-tool';
 import { structure } from './src/structure';
@@ -43,8 +42,7 @@ export default defineConfig({
 
 If you have other custom document actions, you can still use `SingletonAction`. Since it's a standard resolver, you can compose it with your own logic:
 
-```ts
-// sanity.config.ts
+```ts [sanity.config.ts]
 import { SingletonAction } from 'sanity-plugin-structure-tool';
 
 export default defineConfig({

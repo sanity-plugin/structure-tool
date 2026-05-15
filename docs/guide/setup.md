@@ -10,8 +10,7 @@ After [installing](/introduction/getting-started#installation) the package, foll
 
 Instead of importing directly from the package, we recommend creating a dedicated file (e.g., `src/structure/index.ts`) to initialize the plugin. This approach allows the tool to generate **typed utilities** (like `defineListItems` and `structure`) that are specific to your project's roles and workspaces.
 
-```ts
-// src/structure/index.ts
+```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
 // Initialize the plugin and export its core utilities
@@ -29,8 +28,7 @@ By initializing the plugin this way, `TypeScript` will know exactly which roles 
 
 Now, use the `defineListItems` utility to create your studio's desk hierarchy. We suggest keeping this in a separate file like `src/structure/listItems.ts` to keep your configuration clean and modular.
 
-```ts
-// src/structure/listItems.ts
+```ts [src/structure/listItems.ts]
 import { defineListItems } from './index';
 
 const listItems = defineListItems([
@@ -60,8 +58,7 @@ export default listItems;
 
 The final step is to add the `structure` plugin to your `sanity.config.ts` file. This is where you pass the `listItems` you just defined.
 
-```ts
-// sanity.config.ts
+```ts [sanity.config.ts]
 import { defineConfig } from 'sanity';
 import { SingletonAction } from 'sanity-plugin-structure-tool';
 import { structure } from './src/structure';
@@ -89,7 +86,7 @@ See the [Singleton Action](/customization/singleton-action) guide for more detai
 
 To confirm everything is working as expected:
 
-1. Start your studio using preferred command.
+1. Start your studio using your preferred command.
 2. Navigate to the **Structure** tab.
 3. You should see your list items, dividers, and singletons rendered according to your JSON configuration.
 
