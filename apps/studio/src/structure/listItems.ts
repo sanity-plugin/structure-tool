@@ -1,5 +1,6 @@
 import { AddUserIcon, ComponentIcon } from '@sanity/icons';
 
+import { userRoles } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
 
@@ -115,6 +116,7 @@ const listItems = defineListItems([
   },
   {
     title: 'Roles',
+    roles: [userRoles.EDITOR, userRoles.VIEWER],
     children: [
       {
         title: 'Admin Only',
@@ -126,18 +128,22 @@ const listItems = defineListItems([
       },
       {
         title: 'Editor Only',
+        roles: [userRoles.EDITOR],
         isDivider: true,
       },
       {
         schemaType: schemaNames.SETTING,
+        roles: [userRoles.EDITOR],
         singleton: true,
       },
       {
-        title: 'Developer Only',
+        title: 'Viewer Only',
+        roles: [userRoles.VIEWER],
         isDivider: true,
       },
       {
         schemaType: schemaNames.AUTHOR,
+        roles: [userRoles.VIEWER],
       },
       {
         title: 'Tools Workspace Only',

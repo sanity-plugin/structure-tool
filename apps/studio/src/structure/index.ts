@@ -1,11 +1,9 @@
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-// const defaultRoles = ['administrator', 'editor'] as const;
-
-// const roles = ['administrator', 'editor', 'viewer'] as const;
+import { userRoles } from '@/constants/common';
 
 export const { structure, templates, defineListItems } = structureToolPlugin({
   title: 'Sanity Plugin Structure Tool Title',
-  // defaultRoles,
-  // roles,
+  defaultRoles: [userRoles.ADMINISTRATOR],
+  roles: Object.values(userRoles),
 });
