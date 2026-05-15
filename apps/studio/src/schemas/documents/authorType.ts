@@ -1,18 +1,19 @@
 import { UserIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
-import { customImageType } from '@/sanity/schemas/objects/customImageType';
+import { schemaNames } from '@/constants/schemaNames';
+import { customImageType } from '@/schemas/objects/customImageType';
 
 export const authorType = defineType({
-  name: 'author',
   title: 'Author',
+  name: schemaNames.AUTHOR,
   type: 'document',
   icon: UserIcon,
   preview: {
     select: {
       title: 'name',
       subtitle: 'slug.current',
-      media: 'avatar',
+      media: 'avatar.image',
     },
   },
   fields: [
@@ -35,11 +36,19 @@ export const authorType = defineType({
       title: 'Description',
       name: 'description',
       type: 'text',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'Avatar',
       name: 'avatar',
       type: customImageType.name,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      title: 'Active',
+      name: 'isActive',
+      type: 'boolean',
+      initialValue: true,
       validation: (rule) => rule.required(),
     }),
   ],

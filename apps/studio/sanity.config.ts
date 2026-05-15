@@ -5,17 +5,17 @@ import { SingletonAction } from 'sanity-plugin-structure-tool';
 
 import { envs } from '@/config';
 import constants from '@/constants';
-import listItems from '@/sanity/listItems';
-import schemaTypes from '@/sanity/schemas';
+import schemaTypes from '@/schemas';
 import { structure } from '@/structure';
+import listItems from '@/structure/listItems';
 
-const { NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET } = envs;
+const { SANITY_STUDIO_PROJECT_ID, SANITY_STUDIO_DATASET } = envs;
 
 export default defineConfig({
   name: 'sanity-plugin-structure-tool',
   title: constants.APP_NAME,
-  projectId: NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: NEXT_PUBLIC_SANITY_DATASET,
+  projectId: SANITY_STUDIO_PROJECT_ID,
+  dataset: SANITY_STUDIO_DATASET,
   schema: {
     types: schemaTypes,
   },

@@ -1,6 +1,6 @@
 const envs = {
-  NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string,
-  NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET as string,
+  SANITY_STUDIO_PROJECT_ID: process.env.SANITY_STUDIO_PROJECT_ID as string,
+  SANITY_STUDIO_DATASET: process.env.SANITY_STUDIO_DATASET as string,
 } as const;
 
 export default envs;
