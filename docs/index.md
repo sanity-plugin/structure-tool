@@ -12,7 +12,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/getting-started
+      link: /introduction/getting-started
     - theme: alt
       text: Examples
       link: /config/installation

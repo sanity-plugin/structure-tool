@@ -60,21 +60,21 @@ export default defineConfig({
         items: [
           {
             text: 'Getting Started',
-            link: '/guide/getting-started',
+            link: '/introduction/getting-started',
           },
           {
             text: 'Why',
-            link: '/guide/why',
+            link: '/introduction/why',
           },
         ],
       },
       {
-        text: 'Config',
+        text: 'Guide',
         collapsed: false,
         items: [
           {
             text: 'Installation',
-            link: '/config/installation',
+            link: '/guide/installation',
           },
           {
             text: 'Extended Config',
@@ -104,34 +104,8 @@ export default defineConfig({
             ],
           },
           {
-            text: 'Legacy Config',
-            link: '/config/legacy-config',
-          },
-          {
-            text: 'Extended vs Legacy',
-            link: '/config/extended-vs-legacy',
-          },
-          {
-            text: 'Packages Used',
-            link: '/config/packages-used',
-          },
-          {
             text: 'FAQ',
-            link: '/config/faq',
-          },
-        ],
-      },
-      {
-        text: 'CLI',
-        collapsed: false,
-        items: [
-          {
-            text: 'Guide',
-            link: '/cli/guide',
-          },
-          {
-            text: 'Options',
-            link: '/cli/options',
+            link: '/guide/faq',
           },
         ],
       },
@@ -142,19 +116,6 @@ export default defineConfig({
           {
             text: 'Strict Rules',
             link: '/customization/strict-rules',
-          },
-        ],
-      },
-      {
-        text: 'Migration',
-        items: [
-          {
-            text: 'Upgrade to v3',
-            link: '/migration/upgrade-to-v3',
-          },
-          {
-            text: 'Upgrade to Extended',
-            link: '/migration/upgrade-to-extended',
           },
         ],
       },
