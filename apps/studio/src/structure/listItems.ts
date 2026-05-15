@@ -96,9 +96,10 @@ const listItems = defineListItems([
   },
   {
     title: 'Workspaces',
+    workspaces: [workspaceTypes.TESTING],
     children: [
       {
-        title: 'Custom Structure Builder Workspace Only',
+        title: 'Default',
         isDivider: true,
       },
       {
@@ -106,28 +107,56 @@ const listItems = defineListItems([
         singleton: true,
       },
       {
-        title: 'Tools Workspace Only',
+        title: 'Sanity Structure Tool Only',
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
         isDivider: true,
       },
       {
         schemaType: schemaNames.AUTHOR,
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
+        singleton: true,
+      },
+      {
+        title: 'Sanity Structure Tool + Testing Workspace',
+        workspaces: [workspaceTypes.TESTING],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        workspaces: [workspaceTypes.TESTING],
+        singleton: true,
+      },
+      {
+        title: 'Testing Workspace Only',
+        workspaces: () => [workspaceTypes.TESTING],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.AUTHOR,
+        workspaces: () => [workspaceTypes.TESTING],
       },
     ],
   },
   {
     title: 'Roles',
     roles: [userRoles.VIEWER],
-    workspaces: [workspaceTypes.TESTING],
     children: [
+      {
+        title: 'Default',
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        singleton: true,
+      },
       {
         title: 'Admin Only',
         roles: () => [userRoles.ADMINISTRATOR],
         isDivider: true,
       },
       {
-        schemaType: schemaNames.SETTING,
+        schemaType: schemaNames.AUTHOR,
         roles: () => [userRoles.ADMINISTRATOR],
-        singleton: true,
       },
       {
         title: 'Admin + Viewer',
@@ -135,11 +164,68 @@ const listItems = defineListItems([
         isDivider: true,
       },
       {
-        schemaType: schemaNames.AUTHOR,
+        schemaType: schemaNames.SETTING,
         roles: [userRoles.VIEWER],
+        singleton: true,
       },
       {
         title: 'Viewer Only',
+        roles: () => [userRoles.VIEWER],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.AUTHOR,
+        roles: () => [userRoles.VIEWER],
+      },
+    ],
+  },
+  {
+    title: 'Workspaces + Roles',
+    roles: [userRoles.VIEWER],
+    workspaces: [workspaceTypes.TESTING],
+    children: [
+      {
+        title: 'Default',
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        singleton: true,
+      },
+      {
+        title: 'Admin Only + Default Workspace',
+        roles: () => [userRoles.ADMINISTRATOR],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        roles: () => [userRoles.ADMINISTRATOR],
+        singleton: true,
+      },
+      {
+        title: 'Default Role + Sanity Structure Tool Only',
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
+        singleton: true,
+      },
+      {
+        title: 'Admin Role Only + Sanity Structure Tool Only',
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
+        roles: () => [userRoles.ADMINISTRATOR],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
+        roles: () => [userRoles.ADMINISTRATOR],
+        singleton: true,
+      },
+      {
+        title: 'Viewer Only + Default Workspace',
         roles: () => [userRoles.VIEWER],
         isDivider: true,
       },
@@ -149,13 +235,26 @@ const listItems = defineListItems([
         singleton: true,
       },
       {
-        title: 'Tools Workspace Only',
-        workspaces: [workspaceTypes.TESTING],
+        title: 'Default Role + Testing Workspace Only',
+        workspaces: () => [workspaceTypes.TESTING],
         isDivider: true,
       },
       {
-        schemaType: schemaNames.AUTHOR,
-        workspaces: [workspaceTypes.TESTING],
+        schemaType: schemaNames.SETTING,
+        workspaces: () => [workspaceTypes.TESTING],
+        singleton: true,
+      },
+      {
+        title: 'Viewer Role Only + Testing Workspace Only',
+        workspaces: () => [workspaceTypes.TESTING],
+        roles: () => [userRoles.VIEWER],
+        isDivider: true,
+      },
+      {
+        schemaType: schemaNames.SETTING,
+        workspaces: () => [workspaceTypes.TESTING],
+        roles: () => [userRoles.VIEWER],
+        singleton: true,
       },
     ],
   },
