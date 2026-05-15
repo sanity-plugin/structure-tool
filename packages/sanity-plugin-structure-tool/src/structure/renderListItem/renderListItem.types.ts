@@ -5,10 +5,11 @@ import type { ListItemExtended, ListItemRaw } from '@/structure/types/listItem.t
 
 export type RenderListItem = <
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
   S: StructureBuilder,
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
-  listItem: ListItemExtended<Workspaces, Roles, DefaultRoles>,
+  listItem: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
 ) => ReturnType<ListItemRaw>;

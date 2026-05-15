@@ -7,27 +7,29 @@ import type { SimpleMerge } from '@/types/lib.types';
 
 export type StructureParams<
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    StructureToolRoleParams<Workspaces, Roles, DefaultRoles>,
+    StructureToolRoleParams<Roles, DefaultRoles>,
     StructureToolCoreParams,
     {
-      listItems: ListItem<Workspaces, Roles, DefaultRoles>[];
+      listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
     },
   ]
 >;
 
 export type StructureListItemsParams<
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    StructureToolRoleParams<Workspaces, Roles, DefaultRoles>,
+    StructureToolRoleParams<Roles, DefaultRoles>,
     {
-      listItems: ListItem<Workspaces, Roles, DefaultRoles>[];
+      listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
     },
   ]
 >;

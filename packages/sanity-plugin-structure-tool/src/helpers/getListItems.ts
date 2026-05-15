@@ -1,6 +1,6 @@
+import { constants } from '@/constants';
 import pluralize from 'pluralize-esm';
 
-import { constants } from '@/constants';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
 import { sanitizeUrl } from '@/utils';
@@ -13,6 +13,7 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 
 export const getListItems = <
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
@@ -20,11 +21,11 @@ export const getListItems = <
   workspace: Workspaces extends string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
   id: string,
-  params: StructureListItemsParams<Workspaces, Roles, DefaultRoles>,
-): ListItemExtended<Workspaces, Roles, DefaultRoles>[] => {
-  const { listItems, roles: globalRoles, defaultRoles } = params;
+  params: StructureListItemsParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+): ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] => {
+  const { listItems, defaultRoles, roles: globalRoles } = params;
 
-  return listItems.reduce<ListItemExtended<Workspaces, Roles, DefaultRoles>[]>(
+  return listItems.reduce<ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[]>(
     (acc, listItem, index) => {
       const { children, schemaType, singleton, isPlural, title = '' } = listItem;
 

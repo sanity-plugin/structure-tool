@@ -3,33 +3,29 @@ import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
+import type { ListItemCore } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
+
+// Filter & Filter Params
 
 interface ListItemFilterCallbackParams {
   currentUser: CurrentUser;
 }
 
-type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
+export type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
 
-type ListItemFilterParams =
+export type ListItemFilterParams =
   | Record<string, unknown>
   | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
+
+// Raw
 
 export type ListItemRaw = (
   S: StructureBuilder,
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-interface ListItemRolesParams<DefaultRoles extends readonly string[]> {
-  defaultRoles: DefaultRoles;
-}
-
-export type ListItemRoles<
-  Roles extends readonly string[],
-  DefaultRoles extends readonly string[],
-> = Roles[number][] | ((params: ListItemRolesParams<DefaultRoles>) => Roles[number][]);
-
-export interface ListItemCore {
+export interface ListItemWithoutGenerics {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
@@ -43,54 +39,31 @@ export interface ListItemCore {
   templates?: Record<string, unknown>;
 }
 
-export type ListItemWithoutChildren<
-  Workspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
-  [
-    ListItemCore,
-    Roles extends readonly string[]
-      ? DefaultRoles extends readonly string[]
-        ? {
-            roles?: ListItemRoles<Roles, DefaultRoles>;
-          }
-        : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-          {}
-      : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-        {},
-    Workspaces extends readonly string[]
-      ? {
-          workspaces?: Workspaces;
-        }
-      : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-        {},
-  ]
->;
-
 export type ListItem<
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    ListItemWithoutChildren<Workspaces, Roles, DefaultRoles>,
+    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
     {
-      children?: ListItem<Workspaces, Roles, DefaultRoles>[];
+      children?: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
     },
   ]
 >;
 
 export type ListItemExtended<
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    ListItemWithoutChildren<Workspaces, Roles, DefaultRoles>,
+    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
     {
       id: string;
-      children: ListItemExtended<Workspaces, Roles, DefaultRoles>[];
+      children: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
       displayTitle: string;
     },
   ]

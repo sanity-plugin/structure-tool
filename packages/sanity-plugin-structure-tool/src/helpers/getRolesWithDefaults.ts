@@ -1,4 +1,4 @@
-import type { ListItemRoles } from '@/structure/types/listItem.types';
+import type { ListItemRoles } from '@/structure/types/listItemCore.types';
 
 type GetRolesWithDefaults = (
   defaultRoles: readonly string[],

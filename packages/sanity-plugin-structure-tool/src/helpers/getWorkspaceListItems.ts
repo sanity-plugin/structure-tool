@@ -8,12 +8,19 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 
 export const getWorkspaceListItems = <
   Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
   S: StructureBuilder,
   workspace: Workspaces extends string[] ? Workspaces[number] : string,
   currentUser: CurrentUser,
-  params: StructureListItemsParams<Workspaces, Roles, DefaultRoles>,
-): ListItemExtended<Workspaces, Roles, DefaultRoles>[] =>
-  getListItems<Workspaces, Roles, DefaultRoles>(S, workspace, currentUser, '1', params);
+  params: StructureListItemsParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+): ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] =>
+  getListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(
+    S,
+    workspace,
+    currentUser,
+    '1',
+    params,
+  );

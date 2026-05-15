@@ -8,10 +8,11 @@ import type { StructureParams } from '@/structure/structure/structure.types';
 export const structure =
   <
     Workspaces extends readonly string[] | undefined,
+    DefaultWorkspaces extends readonly string[] | undefined,
     Roles extends readonly string[] | undefined,
     DefaultRoles extends readonly string[] | undefined,
   >(
-    params: StructureParams<Workspaces, Roles, DefaultRoles>,
+    params: StructureParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
   ): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;
@@ -22,12 +23,12 @@ export const structure =
 
     if (!workspace || !currentUser) return S.list().title(title).items([]);
 
-    const workspaceListItems = getWorkspaceListItems<Workspaces, Roles, DefaultRoles>(
-      S,
-      workspace,
-      currentUser,
-      restParams,
-    );
+    const workspaceListItems = getWorkspaceListItems<
+      Workspaces,
+      DefaultWorkspaces,
+      Roles,
+      DefaultRoles
+    >(S, workspace, currentUser, restParams);
 
     if (!workspaceListItems || workspaceListItems.length === 0) {
       return S.list().title(emptyListTitle ?? `${title} Not Configured`);
@@ -38,7 +39,7 @@ export const structure =
       .items(
         workspaceListItems
           .map((listItem) =>
-            renderListItem<Workspaces, Roles, DefaultRoles>(
+            renderListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(
               S,
               { ...context, currentUser },
               listItem,
