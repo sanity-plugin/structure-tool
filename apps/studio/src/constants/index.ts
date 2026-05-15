@@ -1,5 +1,5 @@
 const constants = {
-  APP_NAME: 'Sanity Plugin Structure Tool',
+  APP_NAME: 'Sanity Structure Tool',
 } as const;
 
 export default constants;

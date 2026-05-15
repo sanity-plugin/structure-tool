@@ -1,6 +1,6 @@
 import { AddUserIcon, ComponentIcon } from '@sanity/icons';
 
-import { userRoles } from '@/constants/common';
+import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
 
@@ -116,41 +116,46 @@ const listItems = defineListItems([
   },
   {
     title: 'Roles',
-    roles: [userRoles.EDITOR, userRoles.VIEWER],
+    roles: [userRoles.VIEWER],
+    workspaces: [workspaceTypes.TESTING],
     children: [
       {
         title: 'Admin Only',
+        roles: () => [userRoles.ADMINISTRATOR],
         isDivider: true,
       },
       {
         schemaType: schemaNames.SETTING,
+        roles: () => [userRoles.ADMINISTRATOR],
         singleton: true,
       },
       {
-        title: 'Editor Only',
-        roles: [userRoles.EDITOR],
+        title: 'Admin + Viewer',
+        roles: [userRoles.VIEWER],
         isDivider: true,
       },
       {
-        schemaType: schemaNames.SETTING,
-        roles: [userRoles.EDITOR],
-        singleton: true,
+        schemaType: schemaNames.AUTHOR,
+        roles: [userRoles.VIEWER],
       },
       {
         title: 'Viewer Only',
-        roles: [userRoles.VIEWER],
+        roles: () => [userRoles.VIEWER],
         isDivider: true,
       },
       {
-        schemaType: schemaNames.AUTHOR,
-        roles: [userRoles.VIEWER],
+        schemaType: schemaNames.SETTING,
+        roles: () => [userRoles.VIEWER],
+        singleton: true,
       },
       {
         title: 'Tools Workspace Only',
+        workspaces: [workspaceTypes.TESTING],
         isDivider: true,
       },
       {
         schemaType: schemaNames.AUTHOR,
+        workspaces: [workspaceTypes.TESTING],
       },
     ],
   },
