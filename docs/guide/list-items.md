@@ -106,7 +106,7 @@ A GROQ filter string to limit which documents are shown in the list. You can als
 ```
 
 ## `filterParams` {#filter-params}
-- **Type**: `Record<string, unknown>`
+- **Type**: `Record<string, unknown> | ((params: { currentUser: CurrentUser }) => Record<string, unknown>)`
 - **Optional**: Yes
 
 Parameters to be used within the `filter` GROQ string.
@@ -140,6 +140,8 @@ When set to `true`, the "Add" button (plus icon) will be hidden for this documen
 
 Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
 
+::: details Note
+For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
 ::: details Recommendation
 We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors"). 
 :::
