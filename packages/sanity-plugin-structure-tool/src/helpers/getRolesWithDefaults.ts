@@ -2,7 +2,7 @@ import type { ListItemRoles } from '@/structure/types/listItem.types';
 
 type GetRolesWithDefaults = (
   defaultRoles: readonly string[],
-  roles: ListItemRoles<readonly string[], readonly string[]>,
+  roles: ListItemRoles<readonly string[], readonly string[]> | undefined,
 ) => string[];
 
 export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {
@@ -10,5 +10,5 @@ export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) 
     return [...new Set(roles({ defaultRoles }))];
   }
 
-  return [...new Set([...defaultRoles, ...roles])];
+  return [...new Set([...defaultRoles, ...(roles ?? [])])];
 };

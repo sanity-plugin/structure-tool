@@ -22,7 +22,7 @@ export const getListItems = <
   id: string,
   params: StructureListItemsParams<Workspaces, Roles, DefaultRoles>,
 ): ListItemExtended<Workspaces, Roles, DefaultRoles>[] => {
-  const { listItems, defaultRoles } = params;
+  const { listItems, roles: globalRoles, defaultRoles } = params;
 
   return listItems.reduce<ListItemExtended<Workspaces, Roles, DefaultRoles>[]>(
     (acc, listItem, index) => {
@@ -50,10 +50,10 @@ export const getListItems = <
       };
 
       const { isRbac, userHasAccess } = (() => {
-        if (!defaultRoles || !roles) return { isRbac: false, userHasAccess: true };
+        if (!defaultRoles || !globalRoles) return { isRbac: false, userHasAccess: true };
 
-        const hasAccess = getCurrentUserRoles({ currentUser }).some((role) =>
-          getRolesWithDefaults(defaultRoles, roles).includes(role),
+        const hasAccess = getCurrentUserRoles<Roles>({ currentUser, roles: globalRoles }).some(
+          (role) => getRolesWithDefaults(defaultRoles, roles).includes(role),
         );
 
         return { isRbac: true, userHasAccess: hasAccess };

@@ -53,7 +53,7 @@ export type ListItemWithoutChildren<
     Roles extends readonly string[]
       ? DefaultRoles extends readonly string[]
         ? {
-            roles: ListItemRoles<Roles, DefaultRoles>;
+            roles?: ListItemRoles<Roles, DefaultRoles>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
           {}
