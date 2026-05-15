@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - configs/*
+  - docs
   - packages/*
 
 catalog:

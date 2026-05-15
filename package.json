@@ -1,7 +1,7 @@
 {
   "name": "@structure-tool/project",
   "version": "0.0.1",
-  "description": "JSON based powerful structure tool for Sanity Studio",
+  "description": "A JSON based powerful structure tool for Sanity Studio",
   "homepage": "https://sanity-structure-tool.nishargshah.dev",
   "bugs": {
     "url": "https://github.com/sanity-plugin/structure-tool/issues"
@@ -22,6 +22,9 @@
     "clean:next": "pnpx rimraf .next && pnpm -r exec pnpx rimraf .next",
     "clean:node_modules": "pnpx rimraf node_modules && pnpm -r exec pnpx rimraf node_modules",
     "clean:workspace": "pnpm clean:node_modules && pnpx rimraf pnpm-lock.yaml",
+    "docs:build": "pnpm --filter @structure-tool/docs build",
+    "docs:dev": "pnpm --filter @structure-tool/docs dev",
+    "docs:preview": "pnpm --filter @structure-tool/docs preview",
     "format": "pnpm root:format && pnpm -r format",
     "format:fix": "pnpm root:format:fix && pnpm -r format:fix",
     "fresh:init": "pnpm clean:workspace && pnpm clean:generated-folders",
@@ -52,7 +55,7 @@
     "tsc-files": "^1.1.4",
     "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@11.1.1",
+  "packageManager": "pnpm@11.1.2",
   "engines": {
     "node": ">=24.0.0",
     "npm": "please-use-pnpm",

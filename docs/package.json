@@ -1,0 +1,41 @@
+{
+  "name": "@structure-tool/docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "@structure-tool/docs description",
+  "homepage": "https://sanity-structure-tool.nishargshah.dev",
+  "bugs": {
+    "url": "https://github.com/sanity-plugin/structure-tool/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanity-plugin/structure-tool.git",
+    "directory": "docs"
+  },
+  "license": "MIT",
+  "author": "Nisharg Shah <nishargshah3101@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "build": "vitepress build",
+    "dev": "vitepress dev",
+    "format": "prettier . --check --log-level silent --ignore-path ../.gitignore",
+    "format:fix": "prettier . --write --log-level silent --ignore-path ../.gitignore",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preview": "vitepress preview",
+    "script:lint": "bash -e ../scripts/lint.sh --filter=@structure-tool/docs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "@structure-tool/typescript-config": "workspace:*",
+    "vitepress": "^2.0.0-alpha.17",
+    "vitepress-plugin-group-icons": "^1.7.5",
+    "vitepress-plugin-llms": "^1.12.2"
+  },
+  "engines": {
+    "node": "^24"
+  }
+}

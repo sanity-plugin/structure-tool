@@ -1,0 +1,42 @@
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(90deg, #f36458, #ff7a70, #d94c42);
+
+  --vp-home-hero-image-background-image: linear-gradient(160deg, #fff4f2, #ffe2de, #ffc9c2);
+
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+.dark {
+  --vp-home-hero-name-background: -webkit-linear-gradient(90deg, #f36458, #ff8a80);
+
+  --vp-home-hero-image-background-image: linear-gradient(160deg, #2b1a18, #4a2420, #6a2f28);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(72px);
+  }
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-bg: #f36458;
+  --vp-button-brand-hover-bg: #e25549;
+  --vp-button-brand-active-bg: #c9473d;
+}
+
+.dark {
+  --vp-button-brand-bg: #f36458;
+  --vp-button-brand-hover-bg: #ff7a70;
+  --vp-button-brand-active-bg: #de574c;
+}

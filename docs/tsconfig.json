@@ -1,0 +1,10 @@
+{
+  "extends": "@structure-tool/typescript-config/base",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", ".vitepress/**/*.ts", "**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
