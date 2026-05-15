@@ -167,10 +167,14 @@ When `isPlural` is set to `false`, the plugin will showcase the exact same name 
 
 ## `workspaces` {#workspaces}
 
-- **Type**: `string[]`
+- **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
 - **Optional**: Yes
 
-Restricts the visibility of the list item to specific Sanity workspaces.
+Restricts the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin initialization.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ```ts
 {
@@ -184,7 +188,11 @@ Restricts the visibility of the list item to specific Sanity workspaces.
 - **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
 - **Optional**: Yes
 
-Restricts the visibility of the list item to specific user roles. You must define your roles in the `structureToolPlugin` initialization to use this.
+Restricts the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the `defaultRoles`.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ```ts
 {
