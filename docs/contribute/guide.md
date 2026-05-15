@@ -1,6 +1,6 @@
 # Contributing {#contributing}
 
-Thank you for considering contributing to `eslint-config-airbnb-extended`. We welcome all contributions, whether it’s fixing a bug, improving documentation, or suggesting new rules.
+Thank you for considering contributing to `sanity-plugin-structure-tool`. We welcome all contributions, whether it’s fixing a bug, improving documentation, or suggesting new rules.
 
 ## How to Contribute {#how-to-contribute}
 
@@ -9,13 +9,13 @@ Thank you for considering contributing to `eslint-config-airbnb-extended`. We we
 ::: code-group
 
 ```sh [SSH]
-$ git clone git@github.com:eslint-config/airbnb-extended.git
-$ cd eslint-config-airbnb-extended
+$ git clone git@github.com:sanity-plugin/structure-tool.git
+$ cd structure-tool
 ```
 
 ```sh [HTTPS]
-$ git clone https://github.com/eslint-config/airbnb-extended.git
-$ cd eslint-config-airbnb-extended
+$ git clone https://github.com/sanity-plugin/structure-tool.git
+$ cd structure-tool
 ```
 
 :::
@@ -34,8 +34,7 @@ $ pnpm install
 
 The repo is organized as a monorepo with two main packages:
 
-- `packages/eslint-config-airbnb-extended` → The ESLint configuration package
-- `packages/create-airbnb-x-config` → The CLI tool for quick setup
+- `packages/sanity-plugin-structure-tool` → The sanity structure tool package
 - `docs/` → Documentation site (built with VitePress)
 
 ### 4. Making Changes {#making-changes}
@@ -71,8 +70,8 @@ $ pnpm format:fix
 
 We follow **Conventional Commits** for a clean commit history. Examples:
 
-- `feat: add strict rules for TypeScript`
-- `fix: resolve path alias issue in eslint-import-resolver-typescript`
+- `feat: add strict config for TypeScript`
+- `fix: resolve path issues`
 - `docs: update installation steps`
 
 ### 7. Running Scripts {#running-scripts}
@@ -91,9 +90,9 @@ $ pnpm script:lint
 
 ## Code of Conduct {#code-of-conduct}
 
-This project follows a [**Code of Conduct**](https://github.com/eslint-config/airbnb-extended/blob/master/CODE_OF_CONDUCT.md). Please be respectful, collaborative, and inclusive.
+This project follows a [**Code of Conduct**](https://github.com/sanity-plugin/structure-tool/blob/master/CODE_OF_CONDUCT.md). Please be respectful, collaborative, and inclusive.
 
 ## Suggestions & Issues {#suggestions-issues}
 
-- Found a bug? → [Open an Issue](https://github.com/eslint-config/airbnb-extended/issues/new/choose)
+- Found a bug? → [Open an Issue](https://github.com/sanity-plugin/structure-tool/issues/new/choose)
 - Want a new feature or rule? → Use the same link to create an issue, or start a discussion before opening a PR.
