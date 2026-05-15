@@ -70,6 +70,7 @@ export default defineConfig({
       },
       {
         text: 'Guide',
+        collapsed: false,
         items: [
           {
             text: 'Setup',
@@ -145,7 +146,6 @@ export default defineConfig({
       },
       {
         text: 'Customization',
-        collapsed: false,
         items: [
           {
             text: 'Singleton Action',
