@@ -70,38 +70,14 @@ export default defineConfig({
       },
       {
         text: 'Guide',
-        collapsed: false,
         items: [
           {
-            text: 'Installation',
-            link: '/guide/installation',
+            text: 'Setup',
+            link: '/guide/setup',
           },
           {
-            text: 'Extended Config',
-            link: '/config/extended-config',
-            collapsed: true,
-            items: [
-              {
-                text: 'Rules',
-                link: '/config/extended-config/rules',
-              },
-              {
-                text: 'Plugins',
-                link: '/config/extended-config/plugins',
-              },
-              {
-                text: 'Extensions',
-                link: '/config/extended-config/extensions',
-              },
-              {
-                text: 'Configs',
-                link: '/config/extended-config/configs',
-              },
-              {
-                text: 'Helpers',
-                link: '/config/extended-config/helpers',
-              },
-            ],
+            text: 'List Items',
+            link: '/guide/list-items',
           },
           {
             text: 'FAQ',
@@ -110,12 +86,70 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Examples',
+        collapsed: false,
+        items: [
+          {
+            text: 'title',
+            link: '/examples/title',
+          },
+          {
+            text: 'schemaType',
+            link: '/examples/schema-type',
+          },
+          {
+            text: 'icon',
+            link: '/examples/icon',
+          },
+          {
+            text: 'singleton',
+            link: '/examples/singleton',
+          },
+          {
+            text: 'children',
+            link: '/examples/children',
+          },
+          {
+            text: 'isDivider',
+            link: '/examples/is-divider',
+          },
+          {
+            text: 'filter + filterParams',
+            link: '/examples/filter',
+          },
+          {
+            text: 'hideAddButton',
+            link: '/examples/hide-add-button',
+          },
+          {
+            text: 'isPlural',
+            link: '/examples/is-plural',
+          },
+          {
+            text: 'roles',
+            link: '/examples/roles',
+          },
+          {
+            text: 'workspaces',
+            link: '/examples/workspaces',
+          },
+          {
+            text: 'templates',
+            link: '/examples/templates',
+          },
+          {
+            text: 'raw',
+            link: '/examples/raw',
+          },
+        ],
+      },
+      {
         text: 'Customization',
         collapsed: false,
         items: [
           {
-            text: 'Strict Rules',
-            link: '/customization/strict-rules',
+            text: 'Singleton Action',
+            link: '/customization/singleton-action',
           },
         ],
       },
