@@ -3,7 +3,7 @@ import pluralize from 'pluralize-esm';
 import { constants } from '@/constants';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
-import { escapeRegex } from '@/utils';
+import { sanitizeUrl } from '@/utils';
 
 import type { CurrentUser } from 'sanity';
 import type { StructureBuilder } from 'sanity/structure';
@@ -43,7 +43,7 @@ export const getListItems = <
       const uniqueId = [id, index + 1].join(constants.URL_PATH_SEPARATOR);
       const listItemObj = {
         ...listItem,
-        id: [uniqueId, ...escapeRegex(displayTitle).toLowerCase().split(' ')].join(
+        id: [uniqueId, ...sanitizeUrl(displayTitle).toLowerCase().split(' ')].join(
           constants.URL_PATH_SEPARATOR,
         ),
         displayTitle,

@@ -31,7 +31,7 @@ export interface ListItemCore {
   icon?: IconComponent | ComponentType | ReactNode;
   raw?: ListItemRaw;
   singleton?: boolean;
-  filters?: ListItemFilters;
+  filter?: ListItemFilters;
   filterParams?: Record<string, unknown>;
   hideAddButton?: boolean;
   isDivider?: boolean;

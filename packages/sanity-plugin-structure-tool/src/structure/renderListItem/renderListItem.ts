@@ -13,7 +13,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     singleton,
     templates,
     displayTitle,
-    filters = '',
+    filter = '',
     filterParams = {},
     icon = '',
     hideAddButton = false,
@@ -22,7 +22,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
 
   if (raw) return raw(S, context);
 
-  const roleFilter = typeof filters === 'function' ? filters({ currentUser }) : filters;
+  const roleFilter = typeof filter === 'function' ? filter({ currentUser }) : filter;
 
   if (isDivider) return S.divider().title(displayTitle);
 
@@ -43,7 +43,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
       );
   }
 
-  if (!schemaType && filters.length > 0) {
+  if (!schemaType && filter) {
     return S.listItem()
       .title(displayTitle)
       .id(id)
@@ -87,7 +87,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
         const schemaBuilder = S.documentTypeList(schemaType)
           .title(displayTitle)
           .id(id)
-          .filter(['_type == $schemaType', roleFilter].join(' && '))
+          .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
           .params({
             schemaType,
             ...filterParams,
