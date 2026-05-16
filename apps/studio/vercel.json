@@ -5,5 +5,11 @@
   "devCommand": "pnpm start --port $PORT",
   "framework": "sanity",
   "installCommand": "pnpm install",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
