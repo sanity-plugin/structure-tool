@@ -7,10 +7,9 @@
 
 <p align="center">
   <a style="text-decoration:none" href="https://sanity-structure-tool.nishargshah.dev">Documentation</a> |
-  <a href="https://sanity-structure-tool.nishargshah.dev/config/installation">Config</a> |
-  <a href="https://sanity-structure-tool.nishargshah.dev/cli/guide">CLI</a> |
-  <a href="https://sanity-structure-tool.nishargshah.dev/guide/why">Why</a> |
-  <a href="https://sanity-structure-tool.nishargshah.dev/migration/upgrade-to-extended">Migration</a> |
+  <a href="https://sanity-structure-tool.nishargshah.dev/guide/setup">Setup</a> |
+  <a href="https://sanity-structure-tool.nishargshah.dev/examples/usage">Examples</a> |
+  <a href="https://sanity-structure-tool.nishargshah.dev/introduction/why">Why</a> |
   <a href="https://sanity-structure-tool.nishargshah.dev/contribute/guide">Contributing</a>
 </p>
 
