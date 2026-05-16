@@ -99,59 +99,68 @@ export default defineConfig({
       },
       {
         text: 'Examples',
-        collapsed: true,
         items: [
           {
-            text: 'title',
-            link: '/examples/title',
+            text: 'Guide',
+            link: '/examples/guide',
           },
           {
-            text: 'schemaType',
-            link: '/examples/schema-type',
-          },
-          {
-            text: 'icon',
-            link: '/examples/icon',
-          },
-          {
-            text: 'singleton',
-            link: '/examples/singleton',
-          },
-          {
-            text: 'children',
-            link: '/examples/children',
-          },
-          {
-            text: 'isDivider',
-            link: '/examples/is-divider',
-          },
-          {
-            text: 'filter + filterParams',
-            link: '/examples/filter',
-          },
-          {
-            text: 'hideAddButton',
-            link: '/examples/hide-add-button',
-          },
-          {
-            text: 'isPlural',
-            link: '/examples/is-plural',
-          },
-          {
-            text: 'workspaces',
-            link: '/examples/workspaces',
-          },
-          {
-            text: 'roles',
-            link: '/examples/roles',
-          },
-          {
-            text: 'templates',
-            link: '/examples/templates',
-          },
-          {
-            text: 'raw',
-            link: '/examples/raw',
+            text: 'List Items',
+            collapsed: true,
+            items: [
+              {
+                text: 'title',
+                link: '/examples/title',
+              },
+              {
+                text: 'schemaType',
+                link: '/examples/schema-type',
+              },
+              {
+                text: 'icon',
+                link: '/examples/icon',
+              },
+              {
+                text: 'singleton',
+                link: '/examples/singleton',
+              },
+              {
+                text: 'children',
+                link: '/examples/children',
+              },
+              {
+                text: 'isDivider',
+                link: '/examples/is-divider',
+              },
+              {
+                text: 'filter + filterParams',
+                link: '/examples/filter',
+              },
+              {
+                text: 'hideAddButton',
+                link: '/examples/hide-add-button',
+              },
+              {
+                text: 'isPlural',
+                link: '/examples/is-plural',
+              },
+              {
+                text: 'workspaces',
+                link: '/examples/workspaces',
+              },
+              {
+                text: 'roles',
+                link: '/examples/roles',
+              },
+              {
+                text: 'templates',
+                link: '/examples/templates',
+              },
+              {
+                text: 'raw',
+                link: '/examples/raw',
+              },
+            ],
           },
         ],
       },
@@ -208,12 +217,34 @@ export default defineConfig({
     },
   },
   head: [
-    ['link', { rel: 'icon', href: '/logo.png', type: 'image/png' }],
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
-    ['meta', { name: 'author', content: `${title} Team` }],
+    [
+      'link',
+      {
+        rel: 'icon',
+        href: '/logo.png',
+        type: 'image/png',
+      },
+    ],
     [
       'meta',
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' },
+      {
+        name: 'theme-color',
+        content: '#ffffff',
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'author',
+        content: `${title} Team`,
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1.0, viewport-fit=cover',
+      },
     ],
     [
       'meta',
@@ -231,7 +262,13 @@ export default defineConfig({
       },
     ],
     // OG
-    ['meta', { property: 'og:title', content: title }],
+    [
+      'meta',
+      {
+        property: 'og:title',
+        content: title,
+      },
+    ],
     [
       'meta',
       {
@@ -246,11 +283,35 @@ export default defineConfig({
         content: `${siteUrl}/og-logo.png`,
       },
     ],
-    ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:url', content: siteUrl }],
-    ['meta', { property: 'og:site_name', content: title }],
+    [
+      'meta',
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+    ],
+    [
+      'meta',
+      {
+        property: 'og:url',
+        content: siteUrl,
+      },
+    ],
+    [
+      'meta',
+      {
+        property: 'og:site_name',
+        content: title,
+      },
+    ],
     // TWITTER
-    ['meta', { name: 'twitter:title', content: title }],
+    [
+      'meta',
+      {
+        name: 'twitter:title',
+        content: title,
+      },
+    ],
     [
       'meta',
       {
@@ -265,7 +326,19 @@ export default defineConfig({
         content: `${siteUrl}/og-logo.png`,
       },
     ],
-    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:creator', content: '@iamnisharg' }],
+    [
+      'meta',
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'twitter:creator',
+        content: '@iamnisharg',
+      },
+    ],
   ],
 });

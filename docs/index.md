@@ -15,7 +15,7 @@ hero:
       link: /introduction/getting-started
     - theme: alt
       text: Examples
-      link: /examples/title
+      link: /examples/guide
 
 features:
   - icon: 🧩
