@@ -92,6 +92,10 @@ export default defineConfig({
             link: '/guide/list-items',
           },
           {
+            text: 'Comparison',
+            link: '/guide/comparison',
+          },
+          {
             text: 'FAQ',
             link: '/guide/faq',
           },

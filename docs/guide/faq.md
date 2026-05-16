@@ -32,3 +32,5 @@ Yes, it is built with TypeScript and provides full type safety and autocompletio
 ## 6. Why should I use this instead of the native API? {#why-should-i-use-this-instead-of-native-api}
 
 While the native API is powerful, it can become very verbose and hard to maintain as your studio grows. This tool provides a cleaner, more readable hierarchy that is easier to refactor and manage, especially for common patterns like singletons and nested lists.
+
+For a detailed side-by-side example, check out our **[Comparison Guide](./comparison)**.
