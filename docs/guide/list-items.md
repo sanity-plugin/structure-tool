@@ -6,6 +6,7 @@ The core of **Sanity Structure Tool** is the `ListItem` configuration. This guid
 
 - **Type**: `string`
 - **Optional**: Yes (Required if `children` is present)
+- **Examples**: [See Examples](../examples/title)
 
 The display name for the list item. While optional for standard items (where it can be inferred from `schemaType`), it is **mandatory** for items that act as folders (containing `children`).
 
@@ -19,6 +20,7 @@ The display name for the list item. While optional for standard items (where it 
 
 - **Type**: `string`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/schema-type)
 
 The name of the document type defined in your Sanity schema. Providing this will automatically link the list item to that document type.
 
@@ -32,6 +34,7 @@ The name of the document type defined in your Sanity schema. Providing this will
 
 - **Type**: `IconComponent | ComponentType | ReactNode`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/icon)
 
 The icon to display to the left of the title. You can use standard Sanity icons or custom React components.
 
@@ -48,6 +51,7 @@ import { UserIcon } from '@sanity/icons';
 
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/singleton)
 
 When set to `true`, this item is treated as a single document rather than a list. The plugin will automatically handle the document ID and editor view.
 
@@ -63,6 +67,7 @@ When set to `true`, this item is treated as a single document rather than a list
 
 - **Type**: `ListItem[]`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/children)
 
 An array of `ListItem` objects to create a nested list. This is the primary way to build hierarchical structures.
 
@@ -88,6 +93,7 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/is-divider)
 
 When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
 
@@ -102,6 +108,7 @@ When set to `true`, this item renders as a visual separator in the desk list. Ot
 
 - **Type**: `string | ((params: { currentUser: CurrentUser }) => string)`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/filter)
 
 A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
 
@@ -116,6 +123,7 @@ A GROQ filter string to limit which documents are shown in the list. You can als
 
 - **Type**: `Record<string, unknown> | ((params: { currentUser: CurrentUser }) => Record<string, unknown>)`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/filter)
 
 Parameters to be used within the `filter` GROQ string.
 
@@ -133,6 +141,7 @@ Parameters to be used within the `filter` GROQ string.
 
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/hide-add-button)
 
 When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
 
@@ -147,11 +156,13 @@ When set to `true`, the "Add" button (plus icon) will be hidden for this documen
 
 - **Type**: `boolean`
 - **Optional**: Yes (Default: `true`)
+- **Examples**: [See Examples](../examples/is-plural)
 
 Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
 
 ::: details Note
 For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
+
 ::: details Recommendation
 We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
 :::
@@ -169,6 +180,7 @@ When `isPlural` is set to `false`, the plugin will showcase the exact same name 
 
 - **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/workspaces)
 
 Restricts the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin configuration.
 
@@ -187,6 +199,7 @@ When using a **static array**, the provided values are **concatenated** with the
 
 - **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/roles)
 
 Restricts the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the `defaultRoles`.
 
@@ -205,6 +218,7 @@ When using a **static array**, the provided values are **concatenated** with the
 
 - **Type**: `Record<string, unknown>`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/templates)
 
 Used to pass initial value templates for new documents created from this list item.
 
@@ -219,13 +233,18 @@ Used to pass initial value templates for new documents created from this list it
 
 ## `raw` {#raw}
 
-- **Type**: `(S: StructureBuilder, context: Context) => ListItem`
+- **Type**: `(S: StructureBuilder, context: StructureResolverContext) => ListItem`
 - **Optional**: Yes
+- **Examples**: [See Examples](../examples/raw)
 
-The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API directly for this specific item.
+The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API directly for this specific item. You also have access to the `context` (containing `currentUser`, `projectId`, etc.).
 
 ```ts
 {
   raw: (S) => S.listItem().title('Advanced Item').child(...),
 }
 ```
+
+::: warning Use Sparingly
+When using `raw`, you are responsible for handling your own visibility logic (workspaces/roles) for any nested children.
+:::
