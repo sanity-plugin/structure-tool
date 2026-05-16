@@ -31,7 +31,7 @@
     "lint": "pnpm root:lint && pnpm -r lint",
     "lint:fix": "pnpm root:lint:fix && pnpm -r lint:fix",
     "pkg:prepare": "pnpm changeset && pnpm changeset version",
-    "pkg:publish": "pnpm -r build && pnpm changeset publish",
+    "pkg:publish": "pnpm bootstrap && pnpm changeset publish",
     "prepare": "husky || true",
     "root:format": "prettier . --check --log-level silent",
     "root:format:fix": "prettier . --write --log-level silent",

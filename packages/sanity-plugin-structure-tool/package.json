@@ -40,7 +40,6 @@
     "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepublishOnly": "pnpm build",
     "script:lint": "bash -e ../../scripts/lint.sh --filter=sanity-plugin-structure-tool",
     "typecheck": "tsc --noEmit"
   },
