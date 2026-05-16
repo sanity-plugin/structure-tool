@@ -9,10 +9,7 @@ First, create a file to configure the plugin. This generates the typed helpers y
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { 
-  structure, 
-  defineListItems, 
-} = structureToolPlugin({
+export const { structure, defineListItems } = structureToolPlugin({
   title: 'My Project',
 });
 ```
@@ -81,6 +78,7 @@ To confirm everything is working as expected:
 1. Start your studio:
 
 ::: code-group
+
 ```sh [npm]
 npm run dev
 ```
@@ -96,6 +94,7 @@ pnpm dev
 ```sh [bun]
 bun dev
 ```
+
 :::
 
 2. Navigate to the **Structure** tab in your browser.

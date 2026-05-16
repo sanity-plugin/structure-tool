@@ -9,12 +9,7 @@ A minimal setup with just a static title.
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { 
-  structure, 
-  defineListItems, 
-  defineListItem, 
-  templates,
-} = structureToolPlugin({
+export const { structure, defineListItems, defineListItem, templates } = structureToolPlugin({
   title: 'Project Name',
 });
 ```
@@ -26,15 +21,10 @@ A complete setup utilizing dynamic titles, custom roles, and workspaces for enha
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { 
-  structure, 
-  defineListItems, 
-  defineListItem, 
-  templates,
-} = structureToolPlugin({
+export const { structure, defineListItems, defineListItem, templates } = structureToolPlugin({
   // Dynamic title based on active workspace
   title: ({ workspace }) => `${workspace} Workspace`,
-  
+
   // Custom title for empty lists
   emptyListTitle: 'No items configured',
 
@@ -53,6 +43,7 @@ export const {
 The `structureToolPlugin` function accepts a configuration object with the following properties:
 
 ### `title` {#title}
+
 - **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
 - **Required**: Yes
 
@@ -63,6 +54,7 @@ title: 'Project Name',
 ```
 
 ### `emptyListTitle` {#empty-list-title}
+
 - **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
 - **Optional**: Yes
 
@@ -73,6 +65,7 @@ emptyListTitle: 'Nothing to see here',
 ```
 
 ### `workspaces` {#workspaces}
+
 - **Type**: `readonly string[]`
 - **Optional**: Yes
 
@@ -83,6 +76,7 @@ workspaces: ['workspace-1', 'workspace-2'],
 ```
 
 ### `defaultWorkspaces` {#default-workspaces}
+
 - **Type**: `readonly string[]`
 - **Optional**: Yes (Required if `workspaces` is provided)
 
@@ -93,6 +87,7 @@ defaultWorkspaces: ['workspace-1'],
 ```
 
 ### `roles` {#roles}
+
 - **Type**: `readonly string[]`
 - **Optional**: Yes
 
@@ -103,6 +98,7 @@ roles: ['administrator', 'editor', 'viewer'],
 ```
 
 ### `defaultRoles` {#default-roles}
+
 - **Type**: `readonly string[]`
 - **Optional**: Yes (Required if `roles` is provided)
 
@@ -185,7 +181,7 @@ export default defineConfig({
     templates: (prev) => {
       // 1. Get templates from this plugin
       const pluginTemplates = templates({ listItems })(prev);
-      
+
       // 2. Add your own custom templates
       return [
         ...pluginTemplates,

@@ -5,6 +5,7 @@ The `raw` property serves as the "Escape Hatch". It allows you to bypass the dec
 ## When to use `raw`? {#when-to-use-raw}
 
 You should only use `raw` when you need functionality that isn't currently supported by the plugin's declarative schema, such as:
+
 - Customizing the document list sorting or grouping.
 - Using complex `child` resolvers.
 - Creating completely custom views or components in the desk.
@@ -22,7 +23,7 @@ In this example, we use the native `S.listItem()` to create a highly customized 
 
 ```ts
 {
-  raw: (S) => 
+  raw: (S) =>
     S.listItem()
       .title('Custom Sorted Posts')
       .child(
@@ -42,7 +43,7 @@ The `raw` callback also provides access to the Sanity `context`, which includes 
 {
   raw: (S, context) => {
     const { currentUser } = context;
-    
+
     return S.listItem()
       .title(`My Assigned Tasks (${currentUser?.name})`)
       .child(

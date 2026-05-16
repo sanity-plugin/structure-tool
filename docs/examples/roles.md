@@ -68,4 +68,3 @@ You can combine `roles` with the `workspaces` property to create multi-layered a
 ```
 
 For more details on workspace-based restrictions, see the **[workspaces](./workspaces)**.
-
