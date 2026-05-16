@@ -17,7 +17,7 @@ The fastest way to understand a specific property is to browse the individual ex
 
 If you want to see the **Sanity Structure Tool** in action without setting anything up, visit our live demo studio:
 
-👉 **[Live Demo Studio](https://sanity-structure-tool-examples.nishargshah.dev/)**
+👉 **[Live Demo Studio](https://sanity-structure-tool-studio.nishargshah.dev/)**
 
 ::: info Note
 You will need to log in with your own Sanity account and **send an access request** to the owner. Please note that it can take up to **24 hours** to resolve the request. Since the basic Sanity plan has a limit of 20 users, access is managed manually to ensure everyone has a chance to explore the demo.
