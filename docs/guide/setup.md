@@ -6,6 +6,8 @@ After [installing](/introduction/getting-started#installation) the package, foll
 
 First, create a file to configure the plugin. This generates the typed helpers you'll use throughout your project.
 
+::: code-group
+
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
@@ -14,6 +16,8 @@ export const { structure, defineListItems } = structureToolPlugin({
 });
 ```
 
+:::
+
 ::: info Advanced Configuration
 For dynamic titles, custom roles, or workspace support, see the full **[Configuration Guide](./setup/configuration)**.
 :::
@@ -21,6 +25,8 @@ For dynamic titles, custom roles, or workspace support, see the full **[Configur
 ## 2. Define List Items {#define-list-items}
 
 Next, use the generated `defineListItems` helper to define your studio's desk hierarchy in a separate file.
+
+::: code-group
 
 ```ts [src/structure/listItems.ts]
 import { defineListItems } from './index';
@@ -39,6 +45,8 @@ const listItems = defineListItems([
 export default listItems;
 ```
 
+:::
+
 ::: tip Advanced Usage
 Learn more about type safety and modular items in the **[Define List Items Guide](./setup/define-list-items)**.
 :::
@@ -46,6 +54,8 @@ Learn more about type safety and modular items in the **[Define List Items Guide
 ## 3. Register the Plugin {#step-3-register-plugin}
 
 Finally, add the `structure` plugin and the `SingletonAction` to your `sanity.config.ts`.
+
+::: code-group
 
 ```ts [sanity.config.ts]
 import { defineConfig } from 'sanity';
@@ -66,6 +76,8 @@ export default defineConfig({
   },
 });
 ```
+
+:::
 
 ::: info What is SingletonAction?
 The `SingletonAction` is essential for singletons to work correctly. It ensures that document actions like "Delete" or "Duplicate" are hidden for singletons, while preserving them for regular documents. Learn more in the **[Singleton Action Guide](../customization/singleton-action)**.

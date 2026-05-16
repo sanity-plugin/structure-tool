@@ -6,6 +6,8 @@ The first step in using **Sanity Structure Tool** is configuring the plugin. Ins
 
 A minimal setup with just a static title.
 
+::: code-group
+
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
@@ -14,9 +16,13 @@ export const { structure, defineListItems, defineListItem, templates } = structu
 });
 ```
 
+:::
+
 ## Advanced Example {#advanced-example}
 
 A complete setup utilizing dynamic titles, custom roles, and workspaces for enhanced type safety and access control.
+
+::: code-group
 
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
@@ -37,6 +43,8 @@ export const { structure, defineListItems, defineListItem, templates } = structu
   defaultRoles: ['administrator'],
 });
 ```
+
+:::
 
 ## Parameters {#parameters}
 
@@ -116,6 +124,8 @@ The `structureToolPlugin` function returns a set of utilities that are internall
 
 The core plugin utility. This is what you import and use within the `plugins` array of your `sanity.config.ts`.
 
+::: code-group
+
 ```ts [sanity.config.ts]
 import { structure } from './src/structure';
 
@@ -127,6 +137,8 @@ export default defineConfig({
   ],
 });
 ```
+
+:::
 
 ### `defineListItems` {#return-define-list-items}
 
@@ -171,6 +183,8 @@ The `structure` utility handles template registration automatically for you. In 
 
 You only need this utility if you want to manually merge the plugin-generated templates with your own custom templates or templates from other plugins in your `sanity.config.ts`:
 
+::: code-group
+
 ```ts [sanity.config.ts]
 import { templates } from './src/structure';
 import listItems from './src/structure/listItems';
@@ -196,3 +210,5 @@ export default defineConfig({
   },
 });
 ```
+
+:::

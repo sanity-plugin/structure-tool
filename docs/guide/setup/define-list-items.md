@@ -4,6 +4,8 @@ Once you have [configured the structure](./configuration), you can use the gener
 
 We recommend keeping your list items in a separate file (e.g., `src/structure/listItems.ts`).
 
+::: code-group
+
 ```ts [src/structure/listItems.ts]
 import { defineListItems } from './index';
 
@@ -24,6 +26,8 @@ const listItems = defineListItems([
 
 export default listItems;
 ```
+
+:::
 
 ## Why use `defineListItems`? {#why-use-define-list-items}
 

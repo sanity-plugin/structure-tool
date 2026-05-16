@@ -18,6 +18,8 @@ This ensures that once a singleton document is created, it remains as a single, 
 
 To use it, import `SingletonAction` and add it to the `document.actions` property in your `sanity.config.ts`.
 
+::: code-group
+
 ```ts [sanity.config.ts]
 import { defineConfig } from 'sanity';
 import { SingletonAction } from 'sanity-plugin-structure-tool';
@@ -38,9 +40,13 @@ export default defineConfig({
 });
 ```
 
+:::
+
 ## Customizing Actions {#customizing-actions}
 
 If you have other custom document actions, you can still use `SingletonAction`. Since it's a standard resolver, you can compose it with your own logic:
+
+::: code-group
 
 ```ts [sanity.config.ts]
 import { SingletonAction } from 'sanity-plugin-structure-tool';
@@ -58,6 +64,8 @@ export default defineConfig({
   },
 });
 ```
+
+:::
 
 ::: info Note
 The `SingletonAction` only affects documents whose IDs end with `-singleton`. It will not interfere with the standard actions of your other document types.
