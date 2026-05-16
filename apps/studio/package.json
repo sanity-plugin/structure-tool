@@ -13,7 +13,8 @@
     "lint:fix": "eslint . --fix",
     "script:lint": "bash -e ../../scripts/lint.sh --filter=@structure-tool/studio",
     "start": "sanity start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "vercel:build": "pnpm --filter @structure-tool/project bootstrap && pnpm build"
   },
   "dependencies": {
     "@sanity/assist": "^6.0.5",
