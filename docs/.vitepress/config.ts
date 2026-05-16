@@ -105,8 +105,8 @@ export default defineConfig({
         text: 'Examples',
         items: [
           {
-            text: 'Guide',
-            link: '/examples/guide',
+            text: 'Usage',
+            link: '/examples/usage',
           },
           {
             text: 'List Items',
