@@ -170,7 +170,7 @@ When `isPlural` is set to `false`, the plugin will showcase the exact same name 
 - **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
 - **Optional**: Yes
 
-Restricts the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin initialization.
+Restricts the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin configuration.
 
 ::: info Note
 When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.

@@ -75,6 +75,17 @@ export default defineConfig({
           {
             text: 'Setup',
             link: '/guide/setup',
+            collapsed: true,
+            items: [
+              {
+                text: 'Configuration',
+                link: '/guide/setup/configuration',
+              },
+              {
+                text: 'Define List Items',
+                link: '/guide/setup/define-list-items',
+              },
+            ],
           },
           {
             text: 'List Items',
@@ -88,7 +99,7 @@ export default defineConfig({
       },
       {
         text: 'Examples',
-        collapsed: false,
+        collapsed: true,
         items: [
           {
             text: 'title',

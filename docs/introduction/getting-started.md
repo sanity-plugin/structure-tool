@@ -30,7 +30,7 @@ bun add sanity-plugin-structure-tool
 
 Once installed, follow these steps to get your studio up and running with a declarative structure:
 
-1.  **[Follow the Setup Guide](/guide/setup)**: Learn how to initialize utilities and register the plugin.
+1.  **[Follow the Setup Guide](/guide/setup)**: Learn how to configure the plugin and register it.
 2.  **[Define Your Items](/guide/list-items)**: Explore the `ListItem` configuration to build your hierarchy.
 3.  **[Browse Examples](/examples/title)**: See specific examples for properties like `singleton`, `filter`, and `children`.
 

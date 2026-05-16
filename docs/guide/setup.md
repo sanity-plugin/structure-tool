@@ -1,47 +1,39 @@
 # Setup {#setup}
 
-After [installing](/introduction/getting-started#installation) the package, follow this guide to integrate **Sanity Structure Tool** into your studio. The integration process is straightforward and consists of three main steps:
+After [installing](/introduction/getting-started#installation) the package, follow these three simple steps to integrate **Sanity Structure Tool** into your studio.
 
-- Initialize Utilities
-- Define Structure
-- Register Plugin
+## 1. Configuration {#configuration}
 
-## 1. Initialize Plugin Utilities {#initialize-plugin-utilities}
-
-Instead of importing directly from the package, we recommend creating a dedicated file (e.g., `src/structure/index.ts`) to initialize the plugin. This approach allows the tool to generate **typed utilities** (like `defineListItems` and `structure`) that are specific to your project's roles and workspaces.
+First, create a file to configure the plugin. This generates the typed helpers you'll use throughout your project.
 
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-// Initialize the plugin and export its core utilities
-export const { structure, defineListItems, defineListItem } = structureToolPlugin({
-  title: 'Main Structure',
-  // You can optionally pass roles or workspaces here for enhanced type safety
-  // roles: ['administrator', 'editor', 'viewer'] as const,
+export const { 
+  structure, 
+  defineListItems, 
+} = structureToolPlugin({
+  title: 'My Project',
 });
 ```
 
-### Why initialize utilities? {#why-initialize-utilities}
+::: info Advanced Configuration
+For dynamic titles, custom roles, or workspace support, see the full **[Configuration Guide](./setup/configuration)**.
+:::
 
-By initializing the plugin this way, `TypeScript` will know exactly which roles and workspaces are available throughout your structure definition, providing you with powerful `autocompletion` and preventing configuration `errors`.
+## 2. Define List Items {#define-list-items}
 
-## 2. Define Your Structure {#define-your-structure}
-
-Now, use the `defineListItems` utility to create your studio's desk hierarchy. We suggest keeping this in a separate file like `src/structure/listItems.ts` to keep your configuration clean and modular.
+Next, use the generated `defineListItems` helper to define your studio's desk hierarchy in a separate file.
 
 ```ts [src/structure/listItems.ts]
 import { defineListItems } from './index';
 
 const listItems = defineListItems([
   {
-    title: 'General',
-    isDivider: true,
+    schemaType: 'author',
   },
   {
-    schemaType: 'post',
-  },
-  {
-    // A singleton document example (e.g., global settings)
+    title: 'Settings',
     schemaType: 'settings',
     singleton: true,
   },
@@ -50,15 +42,13 @@ const listItems = defineListItems([
 export default listItems;
 ```
 
-### Key Item Properties {#key-item-properties}
+::: tip Advanced Usage
+Learn more about type safety and modular items in the **[Define List Items Guide](./setup/define-list-items)**.
+:::
 
-- `isDivider`: Use this to visually separate sections in your studio.
-- `schemaType`: The `name` of the document, defined in your schema.
-- `singleton`: Set to `true` to treat this item as a single document rather than a list.
+## 3. Register the Plugin {#step-3-register-plugin}
 
-## 3. Register the Plugin {#register-the-plugin}
-
-The final step is to add the `structure` plugin to your `sanity.config.ts` file. This is where you pass the `listItems` you just defined.
+Finally, add the `structure` plugin and the `SingletonAction` to your `sanity.config.ts`.
 
 ```ts [sanity.config.ts]
 import { defineConfig } from 'sanity';
@@ -74,28 +64,47 @@ export default defineConfig({
     }),
   ],
   document: {
-    // Add SingletonAction to handle document actions for singletons
+    // Required to handle document actions for singletons
     actions: SingletonAction,
   },
 });
 ```
 
-### What is SingletonAction? {#what-is-singleton-action}
-
-See the [Singleton Action](/customization/singleton-action) guide for more details and customization options.
+::: info What is SingletonAction?
+The `SingletonAction` is essential for singletons to work correctly. It ensures that document actions like "Delete" or "Duplicate" are hidden for singletons, while preserving them for regular documents. Learn more in the **[Singleton Action Guide](../customization/singleton-action)**.
+:::
 
 ## Verification {#verification}
 
 To confirm everything is working as expected:
 
-1. Start your studio using your preferred command.
-2. Navigate to the **Structure** tab.
-3. You should see your list items, dividers, and singletons rendered according to your JSON configuration.
+1. Start your studio:
+
+::: code-group
+```sh [npm]
+npm run dev
+```
+
+```sh [yarn]
+yarn dev
+```
+
+```sh [pnpm]
+pnpm dev
+```
+
+```sh [bun]
+bun dev
+```
+:::
+
+2. Navigate to the **Structure** tab in your browser.
+3. You should see your list items (e.g., "Authors" and "Settings") rendered correctly.
 
 ## Next Steps {#next-steps}
 
 Now that your base setup is complete, explore more:
 
-- **[List Items](/guide/list-items)**: Learn how to add icons, filters, and custom parameters.
-- **[Examples](/examples/title)**: See specific examples for each field.
-- **[FAQ](/guide/faq)**: Find answers to common questions.
+- **[List Items](./list-items)**: Learn how to add icons, filters, and custom parameters.
+- **[Examples](../examples/title)**: See specific examples for each field.
+- **[FAQ](./faq)**: Find answers to common questions.
