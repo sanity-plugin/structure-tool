@@ -1,4 +1,4 @@
-# `templates` Example {#templates-example}
+# `templates` Examples {#templates-examples}
 
 The `templates` property allows you to define default values for new documents created from a specific list item. These are automatically mapped to [Sanity Initial Value Templates](https://www.sanity.io/docs/studio/initial-value-templates).
 

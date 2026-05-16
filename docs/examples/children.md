@@ -1,4 +1,4 @@
-# `children` Example {#children-example}
+# `children` Examples {#children-examples}
 
 The `children` property allows you to create nested list structures. You can nest children multiple levels deep to create complex hierarchies.
 

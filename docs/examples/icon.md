@@ -1,4 +1,4 @@
-# `icon` Example {#icon-example}
+# `icon` Examples {#icon-examples}
 
 The `icon` property allows you to add a visual indicator to the left of the title.
 

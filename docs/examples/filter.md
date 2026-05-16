@@ -1,4 +1,4 @@
-# `filter` + `filterParams` Example {#filter-filter-params-example}
+# `filter` + `filterParams` Examples {#filter-filter-params-examples}
 
 The `filter` property allows you to limit which documents are shown in a list using a GROQ filter string or a function.
 

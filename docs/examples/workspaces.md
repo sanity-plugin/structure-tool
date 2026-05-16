@@ -1,4 +1,4 @@
-# `workspaces` Example {#workspaces-example}
+# `workspaces` Examples {#workspaces-examples}
 
 The `workspaces` property allows you to restrict the visibility of a list item to specific Sanity workspaces. This is ideal for multi-tenant setups where certain document types should only appear in specific environments.
 

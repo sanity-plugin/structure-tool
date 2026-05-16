@@ -1,4 +1,4 @@
-# `roles` Example {#roles-example}
+# `roles` Examples {#roles-examples}
 
 The `roles` property allows you to restrict the visibility of a list item to specific user roles. This ensures that sensitive documents or administrative tools are only accessible to authorized team members.
 

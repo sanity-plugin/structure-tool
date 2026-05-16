@@ -1,4 +1,4 @@
-# `isPlural` Example {#is-plural}
+# `isPlural` Examples {#is-plural-examples}
 
 The `isPlural` property controls automatic pluralization of the schema title.
 

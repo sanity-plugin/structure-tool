@@ -1,4 +1,4 @@
-# `isDivider` Example {#is-divider-example}
+# `isDivider` Examples {#is-divider-examples}
 
 The `isDivider` property renders a visual separator in the desk list.
 
