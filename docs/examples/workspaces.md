@@ -14,7 +14,7 @@ When you provide a static array, the workspaces you list are **concatenated** wi
 {
   title: 'Admin Only Settings',
   schemaType: 'settings',
-  // This item will appear in 'admin-workspace' AND all default workspaces
+  // This item will appear in 'admin-workspace' and all default workspaces
   workspaces: ['admin-workspace'],
 }
 ```
@@ -52,22 +52,20 @@ You can dynamically filter the `defaultWorkspaces` based on naming conventions o
 }
 ```
 
-### 3. Combining with Roles {#combining-with-roles}
+### 3. Using with Roles {#using-with-roles}
 
-You can implement complex logic by combining workspace checks with roles. For more details on user-based restrictions, see the **[roles guide](./roles)**.
+You can combine `workspaces` with the `roles` property to create multi-layered access control. This ensures an item is only visible in specific workspaces **and** only to users with certain roles.
 
 ```ts
 {
-  title: 'Sensitive Financial Data',
+  title: 'Financial Reports',
   schemaType: 'revenue',
-  // Only show in the 'finance' workspace, and only for 'administrator' roles
-  workspaces: ({ currentUser }) => {
-    const isAdmin = currentUser.roles.some(r => r.name === 'administrator');
-    return isAdmin ? ['finance-workspace'] : [];
-  },
+  // Visible only in 'finance-workspace'
+  workspaces: () => ['finance-workspace'],
+  // Only for users with the 'administrator' role
+  roles: ['administrator'],
 }
 ```
 
-::: info Note
-You can also achieve similar results by using the dedicated [`roles`](./roles) property instead.
-:::
+For more details on role-based restrictions, see the **[roles](./roles)**.
+
