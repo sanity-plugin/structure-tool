@@ -1,6 +1,6 @@
 {
   "name": "@structure-tool/studio",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Structure Builder Examples",
   "type": "module",
