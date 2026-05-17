@@ -125,10 +125,6 @@ export default defineConfig({
                 link: '/examples/schema-type',
               },
               {
-                text: 'apiVersion',
-                link: '/examples/api-version',
-              },
-              {
                 text: 'icon',
                 link: '/examples/icon',
               },
@@ -141,20 +137,12 @@ export default defineConfig({
                 link: '/examples/children',
               },
               {
-                text: 'isDivider',
-                link: '/examples/is-divider',
+                text: 'apiVersion',
+                link: '/examples/api-version',
               },
               {
                 text: 'filter + filterParams',
                 link: '/examples/filter',
-              },
-              {
-                text: 'hideAddButton',
-                link: '/examples/hide-add-button',
-              },
-              {
-                text: 'isPlural',
-                link: '/examples/is-plural',
               },
               {
                 text: 'workspaces',
@@ -165,12 +153,24 @@ export default defineConfig({
                 link: '/examples/roles',
               },
               {
+                text: 'hideAddButton',
+                link: '/examples/hide-add-button',
+              },
+              {
                 text: 'templates',
                 link: '/examples/templates',
               },
               {
                 text: 'raw',
                 link: '/examples/raw',
+              },
+              {
+                text: 'isDivider',
+                link: '/examples/is-divider',
+              },
+              {
+                text: 'isPlural',
+                link: '/examples/is-plural',
               },
             ],
           },

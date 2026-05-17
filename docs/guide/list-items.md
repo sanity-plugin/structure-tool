@@ -89,18 +89,18 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 }
 ```
 
-## `isDivider` {#is-divider}
+## `apiVersion` {#api-versioning}
 
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/is-divider)
+- **Type**: `string`
+- **Optional**: Yes
+- **Examples**: [See Examples](../examples/api-version)
 
-When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
+Specifies the Sanity API version to use for this specific list item.
 
 ```ts
 {
-  title: 'Content Section',
-  isDivider: true,
+  schemaType: 'author',
+  apiVersion: '2025-02-19',
 }
 ```
 
@@ -134,45 +134,6 @@ Parameters to be used within the `filter` GROQ string.
   filterParams: {
     type: 'news'
   },
-}
-```
-
-## `hideAddButton` {#hide-add-button}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/hide-add-button)
-
-When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
-
-```ts
-{
-  schemaType: 'author',
-  hideAddButton: true,
-}
-```
-
-## `isPlural` {#is-plural}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `true`)
-- **Examples**: [See Examples](../examples/is-plural)
-
-Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
-
-::: details Note
-For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
-
-::: details Recommendation
-We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
-:::
-
-When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
-
-```ts
-{
-  schemaType: 'author',
-  isPlural: false,
 }
 ```
 
@@ -214,18 +175,18 @@ When using a **static array**, the provided values are **concatenated** with the
 }
 ```
 
-## `apiVersion` {#api-versioning}
+## `hideAddButton` {#hide-add-button}
 
-- **Type**: `string`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/api-version)
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/hide-add-button)
 
-Specifies the Sanity API version to use for this specific list item.
+When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
 
 ```ts
 {
   schemaType: 'author',
-  apiVersion: '2025-02-19',
+  hideAddButton: true,
 }
 ```
 
@@ -263,3 +224,42 @@ The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API 
 ::: warning Use Sparingly
 When using `raw`, you are responsible for handling your own visibility logic (workspaces/roles) for any nested children.
 :::
+
+## `isDivider` {#is-divider}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/is-divider)
+
+When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
+
+```ts
+{
+  title: 'Content Section',
+  isDivider: true,
+}
+```
+
+## `isPlural` {#is-plural}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `true`)
+- **Examples**: [See Examples](../examples/is-plural)
+
+Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
+
+::: details Note
+For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
+
+::: details Recommendation
+We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
+:::
+
+When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
+
+```ts
+{
+  schemaType: 'author',
+  isPlural: false,
+}
+```

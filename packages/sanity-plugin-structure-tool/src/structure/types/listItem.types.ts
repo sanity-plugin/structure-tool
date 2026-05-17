@@ -30,15 +30,15 @@ export type ListItemWithoutGenerics = RequireOneOrNone<
     title?: string;
     schemaType?: string;
     icon?: IconComponent | ComponentType | ReactNode;
-    raw?: ListItemRaw;
     singleton?: boolean;
+    apiVersion?: string;
     filter?: ListItemFilter;
     filterParams?: ListItemFilterParams;
     hideAddButton?: boolean;
+    templates?: Record<string, unknown>;
+    raw?: ListItemRaw;
     isDivider?: boolean;
     isPlural?: boolean;
-    templates?: Record<string, unknown>;
-    apiVersion?: string;
   },
   'hideAddButton' | 'templates'
 >;
