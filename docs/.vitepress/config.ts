@@ -125,6 +125,10 @@ export default defineConfig({
                 link: '/examples/schema-type',
               },
               {
+                text: 'apiVersion',
+                link: '/examples/api-version',
+              },
+              {
                 text: 'icon',
                 link: '/examples/icon',
               },

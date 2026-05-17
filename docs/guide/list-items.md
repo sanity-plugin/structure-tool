@@ -214,6 +214,21 @@ When using a **static array**, the provided values are **concatenated** with the
 }
 ```
 
+## `apiVersion` {#api-versioning}
+
+- **Type**: `string`
+- **Optional**: Yes
+- **Examples**: [See Examples](../examples/api-version)
+
+Specifies the Sanity API version to use for this specific list item.
+
+```ts
+{
+  schemaType: 'author',
+  apiVersion: '2025-02-19',
+}
+```
+
 ## `templates` {#templates}
 
 - **Type**: `Record<string, unknown>`

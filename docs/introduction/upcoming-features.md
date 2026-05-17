@@ -30,18 +30,7 @@ More granular control over how documents are ordered within lists.
 }
 ```
 
-### 3. API Versioning (`apiVersion`) {#api-versioning}
-
-The ability to specify the Sanity API version at the item level.
-
-```ts
-{
-  schemaType: 'author',
-  apiVersion: '2025-02-19',
-}
-```
-
-### 4. Layout Options (`defaultLayout`) {#layout-options}
+### 3. Layout Options (`defaultLayout`) {#layout-options}
 
 Presets and configuration options to switch between different list layouts.
 
@@ -52,7 +41,7 @@ Presets and configuration options to switch between different list layouts.
 }
 ```
 
-### 5. Menu Items (`menuItems`) {#menu-items}
+### 4. Menu Items (`menuItems`) {#menu-items}
 
 Support for defining custom menu actions and icons at the top of document lists.
 
@@ -71,7 +60,7 @@ import { DownloadIcon } from '@sanity/icons';
 }
 ```
 
-### 6. View Customization (`views`) {#view-customization}
+### 5. View Customization (`views`) {#view-customization}
 
 Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
 
@@ -93,7 +82,7 @@ Support for defining multiple document views (e.g., Editor, Preview, and custom 
 }
 ```
 
-### 7. TypeScript & Validation {#typescript-validation}
+### 6. TypeScript & Validation {#typescript-validation}
 
 We are working on providing a robust, type-safe experience and built-in validation for your JSON structures.
 
