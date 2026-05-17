@@ -97,7 +97,7 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 
 - **Type**: `string`
 - **Optional**: Yes
-- **Examples**: [See Examples](../api-version)
+- **Examples**: [See Examples](../examples/api-version)
 
 Specifies the Sanity API version to use for this specific list item.
 
