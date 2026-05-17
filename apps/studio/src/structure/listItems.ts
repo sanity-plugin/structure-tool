@@ -399,7 +399,7 @@ const listItems = defineListItems([
             .title('Contributors')
             .icon(AddUserIcon)
             .schemaType(schemaNames.AUTHOR)
-            .child(S.documentTypeList(schemaNames.AUTHOR).title('Author 2')),
+            .child(S.documentTypeList(schemaNames.AUTHOR).title('Contributors')),
       },
       {
         raw: (S) => S.divider().title('Drawer'),
