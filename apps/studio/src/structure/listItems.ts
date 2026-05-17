@@ -1,6 +1,7 @@
 import { AddUserIcon, ComponentIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
+import { CodeComponent } from '@/components/CodeComponent';
 import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
@@ -441,6 +442,15 @@ const listItems = defineListItems([
             ),
       },
     ],
+  },
+  {
+    title: 'Code',
+    isDivider: true,
+  },
+  {
+    title: 'Code',
+    schemaType: schemaNames.CODE,
+    singleton: true,
   },
 ]);
 

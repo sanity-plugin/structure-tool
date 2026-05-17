@@ -1,4 +1,5 @@
 export const schemaNames = {
   AUTHOR: 'author',
-  SETTING: 'SETTING',
+  SETTING: 'setting',
+  CODE: 'code',
 };
