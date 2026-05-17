@@ -65,46 +65,41 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     .id(id)
     .icon(icon)
     .schemaType(schemaType)
-    .child(
-      (() => {
-        if (singleton) {
-          const schemaBuilder = S.editor()
-            .id([schemaType, constants.SINGLETON_KEY].join('-'))
-            .schemaType(schemaType);
-
-          if (templates) {
-            return schemaBuilder.initialValueTemplate(
-              [schemaType, ...Object.keys(templates)].join('-'),
-              templates,
-            );
-          }
-
-          return schemaBuilder;
-        }
-
-        const schemaBuilder = S.documentTypeList(schemaType)
-          .title(displayTitle)
-          .id(id)
-          .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
-          .params({
-            schemaType,
-            ...roleFilterParams,
-          });
-
-        if (hideAddButton) {
-          return schemaBuilder.menuItems([]).initialValueTemplates([]);
-        }
+    .child(() => {
+      if (singleton) {
+        const schemaBuilder = S.editor()
+          .id([schemaType, constants.SINGLETON_KEY].join('-'))
+          .schemaType(schemaType);
 
         if (templates) {
-          return schemaBuilder.initialValueTemplates([
-            S.initialValueTemplateItem(
-              [schemaType, ...Object.keys(templates)].join('-'),
-              templates,
-            ),
-          ]);
+          return schemaBuilder.initialValueTemplate(
+            [schemaType, ...Object.keys(templates)].join('-'),
+            templates,
+          );
         }
 
         return schemaBuilder;
-      })(),
-    );
+      }
+
+      const schemaBuilder = S.documentTypeList(schemaType)
+        .title(displayTitle)
+        .id(id)
+        .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
+        .params({
+          schemaType,
+          ...roleFilterParams,
+        });
+
+      if (hideAddButton) {
+        return schemaBuilder.menuItems([]).initialValueTemplates([]);
+      }
+
+      if (templates) {
+        return schemaBuilder.initialValueTemplates([
+          S.initialValueTemplateItem([schemaType, ...Object.keys(templates)].join('-'), templates),
+        ]);
+      }
+
+      return schemaBuilder;
+    });
 };

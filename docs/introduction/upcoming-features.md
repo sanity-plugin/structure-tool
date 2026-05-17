@@ -24,13 +24,9 @@ More granular control over how documents are ordered within lists.
 ```ts
 {
   schemaType: 'post',
-  ordering: [
-    {
-      title: 'Last Edited',
-      name: 'lastEdited',
-      by: [{ field: '_updatedAt', direction: 'desc' }],
-    }
-  ]
+  defaultOrdering: {
+    _createdAt: 'desc',
+  },
 }
 ```
 
@@ -41,18 +37,18 @@ The ability to specify the Sanity API version at the item level.
 ```ts
 {
   schemaType: 'author',
-  apiVersion: '2024-05-17',
+  apiVersion: '2025-02-19',
 }
 ```
 
-### 4. Layout Options (`layout`) {#layout-options}
+### 4. Layout Options (`defaultLayout`) {#layout-options}
 
 Presets and configuration options to switch between different list layouts.
 
 ```ts
 {
   schemaType: 'gallery',
-  layout: 'card', // Upcoming: 'default' | 'card' | 'detail'
+  defaultLayout: 'media', // Upcoming: 'default' | 'card' | 'media' | 'detail' | 'block'
 }
 ```
 
