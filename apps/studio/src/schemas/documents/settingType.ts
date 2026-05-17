@@ -11,9 +11,8 @@ export const settingType = defineType({
   icon: CogIcon,
   preview: {
     select: {
-      title: 'name',
-      subtitle: 'slug.current',
-      media: 'avatar.image',
+      title: 'companyName',
+      media: 'companyLogo.image',
     },
   },
   fields: [

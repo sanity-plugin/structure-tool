@@ -6,25 +6,26 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
   const { currentUser } = context;
 
   const {
-    id,
     schemaType,
-    children,
-    raw,
+    icon,
     singleton,
+    apiVersion,
+    filter,
+    filterParams,
+    hideAddButton,
     templates,
+    raw,
+    isDivider,
+    id,
     displayTitle,
-    filter = '',
-    filterParams = {},
-    icon = '',
-    hideAddButton = false,
-    isDivider = false,
+    children,
   } = listItem;
 
   if (raw) return raw(S, context);
 
-  const roleFilter = typeof filter === 'function' ? filter({ currentUser }) : filter;
+  const roleFilter = typeof filter === 'function' ? filter({ currentUser }) : (filter ?? '');
   const roleFilterParams =
-    typeof filterParams === 'function' ? filterParams({ currentUser }) : filterParams;
+    typeof filterParams === 'function' ? filterParams({ currentUser }) : (filterParams ?? {});
 
   if (isDivider) return S.divider().title(displayTitle);
 
@@ -46,15 +47,29 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
   }
 
   if (!schemaType && filter) {
-    return S.listItem().title(displayTitle).id(id).icon(icon).child(
-      S.documentList()
-        .title(displayTitle)
-        // eslint-disable-next-line unicorn/no-array-callback-reference
-        .filter(roleFilter)
-        .params(roleFilterParams)
-        .menuItems([])
-        .initialValueTemplates([]),
-    );
+    return S.listItem()
+      .title(displayTitle)
+      .id(id)
+      .icon(icon)
+      .child(() => {
+        let schemaBuilder = S.documentList()
+          .title(displayTitle)
+          .menuItems([])
+          .initialValueTemplates([]);
+
+        if (roleFilter || roleFilterParams) {
+          schemaBuilder = schemaBuilder
+            // eslint-disable-next-line unicorn/no-array-callback-reference
+            .filter(roleFilter)
+            .params(roleFilterParams);
+        }
+
+        if (apiVersion) {
+          schemaBuilder = schemaBuilder.apiVersion(apiVersion);
+        }
+
+        return schemaBuilder;
+      });
   }
 
   if (!schemaType) return null;
@@ -65,46 +80,45 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     .id(id)
     .icon(icon)
     .schemaType(schemaType)
-    .child(
-      (() => {
-        if (singleton) {
-          const schemaBuilder = S.editor()
-            .id([schemaType, constants.SINGLETON_KEY].join('-'))
-            .schemaType(schemaType);
-
-          if (templates) {
-            return schemaBuilder.initialValueTemplate(
-              [schemaType, ...Object.keys(templates)].join('-'),
-              templates,
-            );
-          }
-
-          return schemaBuilder;
-        }
-
-        const schemaBuilder = S.documentTypeList(schemaType)
-          .title(displayTitle)
-          .id(id)
-          .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
-          .params({
-            schemaType,
-            ...roleFilterParams,
-          });
-
-        if (hideAddButton) {
-          return schemaBuilder.menuItems([]).initialValueTemplates([]);
-        }
+    .child(() => {
+      if (singleton) {
+        let schemaBuilder = S.editor()
+          .id([schemaType, constants.SINGLETON_KEY].join('-'))
+          .schemaType(schemaType);
 
         if (templates) {
-          return schemaBuilder.initialValueTemplates([
-            S.initialValueTemplateItem(
-              [schemaType, ...Object.keys(templates)].join('-'),
-              templates,
-            ),
-          ]);
+          schemaBuilder = schemaBuilder.initialValueTemplate(
+            [schemaType, ...Object.keys(templates)].join('-'),
+            templates,
+          );
         }
 
         return schemaBuilder;
-      })(),
-    );
+      }
+
+      let schemaBuilder = S.documentTypeList(schemaType)
+        .title(displayTitle)
+        .id(id)
+        .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
+        .params({
+          schemaType,
+          ...roleFilterParams,
+        });
+
+      if (apiVersion) {
+        schemaBuilder = schemaBuilder.apiVersion(apiVersion);
+      }
+
+      if (hideAddButton) {
+        return schemaBuilder.menuItems([]).initialValueTemplates([]);
+      }
+
+      if (templates) {
+        return schemaBuilder.initialValueTemplates([
+          S.initialValueTemplateItem([schemaType, ...Object.keys(templates)].join('-'), templates),
+        ]);
+      }
+
+      return schemaBuilder;
+    });
 };

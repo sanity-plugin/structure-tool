@@ -55,6 +55,10 @@ import { UserIcon } from '@sanity/icons';
 
 When set to `true`, this item is treated as a single document rather than a list. The plugin will automatically handle the document ID and editor view.
 
+::: warning Note
+When `singleton: true` is enabled, the `apiVersion` and `templates` properties are **not supported** and should not be used.
+:::
+
 ```ts
 {
   title: 'Global Settings',
@@ -89,18 +93,22 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 }
 ```
 
-## `isDivider` {#is-divider}
+## `apiVersion` {#api-versioning}
 
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/is-divider)
+- **Type**: `string`
+- **Optional**: Yes
+- **Examples**: [See Examples](../examples/api-version)
 
-When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
+Specifies the Sanity API version to use for this specific list item.
+
+::: warning Note
+This property is **not compatible** with items marked as `singleton: true`.
+:::
 
 ```ts
 {
-  title: 'Content Section',
-  isDivider: true,
+  schemaType: 'author',
+  apiVersion: '2025-02-19',
 }
 ```
 
@@ -111,6 +119,10 @@ When set to `true`, this item renders as a visual separator in the desk list. Ot
 - **Examples**: [See Examples](../examples/filter)
 
 A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
+
+::: warning Note
+If you provide a `filter` without a `schemaType`, you cannot use `hideAddButton` or `templates` for that item.
+:::
 
 ```ts
 {
@@ -134,45 +146,6 @@ Parameters to be used within the `filter` GROQ string.
   filterParams: {
     type: 'news'
   },
-}
-```
-
-## `hideAddButton` {#hide-add-button}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/hide-add-button)
-
-When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
-
-```ts
-{
-  schemaType: 'author',
-  hideAddButton: true,
-}
-```
-
-## `isPlural` {#is-plural}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `true`)
-- **Examples**: [See Examples](../examples/is-plural)
-
-Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
-
-::: details Note
-For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
-
-::: details Recommendation
-We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
-:::
-
-When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
-
-```ts
-{
-  schemaType: 'author',
-  isPlural: false,
 }
 ```
 
@@ -214,6 +187,25 @@ When using a **static array**, the provided values are **concatenated** with the
 }
 ```
 
+## `hideAddButton` {#hide-add-button}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/hide-add-button)
+
+When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
+
+::: warning Note
+This property cannot be used in combination with `templates`. Additionally, it is not supported when a `filter` is used without a `schemaType`.
+:::
+
+```ts
+{
+  schemaType: 'author',
+  hideAddButton: true,
+}
+```
+
 ## `templates` {#templates}
 
 - **Type**: `Record<string, unknown>`
@@ -221,6 +213,10 @@ When using a **static array**, the provided values are **concatenated** with the
 - **Examples**: [See Examples](../examples/templates)
 
 Used to pass initial value templates for new documents created from this list item.
+
+::: warning Note
+This property cannot be used if `hideAddButton` is present. It is also **not supported** for `singleton` items or when a `filter` is used without a `schemaType`.
+:::
 
 ```ts
 {
@@ -248,3 +244,42 @@ The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API 
 ::: warning Use Sparingly
 When using `raw`, you are responsible for handling your own visibility logic (workspaces/roles) for any nested children.
 :::
+
+## `isDivider` {#is-divider}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `false`)
+- **Examples**: [See Examples](../examples/is-divider)
+
+When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
+
+```ts
+{
+  title: 'Content Section',
+  isDivider: true,
+}
+```
+
+## `isPlural` {#is-plural}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `true`)
+- **Examples**: [See Examples](../examples/is-plural)
+
+Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
+
+::: details Note
+For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
+
+::: details Recommendation
+We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
+:::
+
+When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
+
+```ts
+{
+  schemaType: 'author',
+  isPlural: false,
+}
+```

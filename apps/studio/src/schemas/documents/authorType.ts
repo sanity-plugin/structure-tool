@@ -13,6 +13,7 @@ export const authorType = defineType({
     select: {
       title: 'name',
       subtitle: 'slug.current',
+      description: 'description',
       media: 'avatar.image',
     },
   },

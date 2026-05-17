@@ -1,4 +1,5 @@
 import { AddUserIcon, ComponentIcon } from '@sanity/icons';
+import { constants } from 'sanity-plugin-structure-tool';
 
 import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
@@ -13,22 +14,34 @@ const listItems = defineListItems([
     title: 'General',
     children: [
       {
-        title: 'Default Listing',
+        title: 'Standard Listing',
         isDivider: true,
       },
       {
         schemaType: schemaNames.AUTHOR,
       },
       {
+        title: 'Standard Listing + isPlural: false',
+        isDivider: true,
+      },
+      {
         schemaType: schemaNames.AUTHOR,
         isPlural: false,
+      },
+      {
+        title: 'Singleton View',
+        isDivider: true,
       },
       {
         schemaType: schemaNames.SETTING,
         singleton: true,
       },
       {
-        title: 'Custom Author Title + Icon',
+        title: 'Custom Title + Icon',
+        isDivider: true,
+      },
+      {
+        title: 'Contributors',
         icon: AddUserIcon,
         schemaType: schemaNames.AUTHOR,
       },
@@ -39,33 +52,88 @@ const listItems = defineListItems([
     icon: ComponentIcon,
     children: [
       {
-        schemaType: schemaNames.SETTING,
-        singleton: true,
+        title: 'Level 1 Depth',
+        isDivider: true,
       },
       {
         schemaType: schemaNames.AUTHOR,
       },
       {
-        title: 'Author 2',
-        icon: AddUserIcon,
-        schemaType: schemaNames.AUTHOR,
+        title: 'Next Level',
+        isDivider: true,
+      },
+      {
+        title: 'Nested Drawer',
+        children: [
+          {
+            title: 'Level 2 Depth',
+            isDivider: true,
+          },
+          {
+            schemaType: schemaNames.AUTHOR,
+          },
+          {
+            title: 'Next Level',
+            isDivider: true,
+          },
+          {
+            title: 'Nested Drawer',
+            children: [
+              {
+                title: 'Level 3 Depth',
+                isDivider: true,
+              },
+              {
+                schemaType: schemaNames.AUTHOR,
+              },
+              {
+                title: 'Next Level',
+                isDivider: true,
+              },
+              {
+                title: 'Nested Drawer',
+                children: [
+                  {
+                    title: 'Deeply Nested Navigation',
+                    isDivider: true,
+                  },
+                  {
+                    schemaType: schemaNames.AUTHOR,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ],
   },
   {
-    title: 'Feature Examples',
+    title: 'Feature Demonstrations',
     isDivider: true,
   },
   {
     title: 'Filters',
     children: [
       {
+        title: 'Filtering by Active Status',
+        isDivider: true,
+      },
+      {
         title: 'Authors',
         children: [
+          {
+            title: 'Filtered: Active Only',
+            isDivider: true,
+          },
           {
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive == true',
+          },
+          {
+            title: 'Filtered: Inactive (Add Disabled)',
+            isDivider: true,
           },
           {
             title: 'Inactive',
@@ -76,6 +144,10 @@ const listItems = defineListItems([
         ],
       },
       {
+        title: 'Dynamic GROQ Queries',
+        isDivider: true,
+      },
+      {
         title: 'Authors from GROQ',
         icon: AddUserIcon,
         filter: '_type == $author',
@@ -84,12 +156,12 @@ const listItems = defineListItems([
         },
       },
       {
-        title: 'Authors + Homepage from GROQ',
+        title: 'Authors + Setting from GROQ',
         icon: AddUserIcon,
-        filter: '_type ==  $author || _type == $homepage',
+        filter: '_type ==  $author || _type == $setting',
         filterParams: {
           author: schemaNames.AUTHOR,
-          homepage: schemaNames.SETTING,
+          setting: schemaNames.SETTING,
         },
       },
     ],
@@ -114,7 +186,6 @@ const listItems = defineListItems([
       {
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
-        singleton: true,
       },
       {
         title: 'Sanity Structure Tool + Testing Workspace',
@@ -265,12 +336,20 @@ const listItems = defineListItems([
         title: 'Authors',
         children: [
           {
+            title: 'Restricted To: Active State',
+            isDivider: true,
+          },
+          {
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive == true',
             templates: {
               isActive: true,
             },
+          },
+          {
+            title: 'Restricted To: Inactive State',
+            isDivider: true,
           },
           {
             title: 'Inactive',
@@ -288,21 +367,7 @@ const listItems = defineListItems([
     title: 'Raw',
     children: [
       {
-        raw: (S) => S.divider().title('General'),
-      },
-      {
-        raw: (S) =>
-          S.listItem()
-            .title('Homepage')
-            .schemaType(schemaNames.SETTING)
-            .child(
-              S.editor().schemaType(schemaNames.SETTING).documentId(
-                [
-                  schemaNames.SETTING,
-                  // constants.SINGLETON_KEY
-                ].join('-'),
-              ),
-            ),
+        raw: (S) => S.divider().title('Standard Listing'),
       },
       {
         raw: (S) =>
@@ -312,15 +377,32 @@ const listItems = defineListItems([
             .child(S.documentTypeList(schemaNames.AUTHOR).title('Authors')),
       },
       {
-        raw: (S) =>
-          S.listItem()
-            .title('Author 2')
-            .icon(AddUserIcon)
-            .schemaType(schemaNames.AUTHOR)
-            .child(S.documentTypeList(schemaNames.AUTHOR).title('Author 2')),
+        raw: (S) => S.divider().title('Singleton View'),
       },
       {
-        raw: (S) => S.divider().title('Drawer Example'),
+        raw: (S) =>
+          S.listItem()
+            .title('Setting')
+            .schemaType(schemaNames.SETTING)
+            .child(
+              S.editor()
+                .schemaType(schemaNames.SETTING)
+                .documentId([schemaNames.SETTING, constants.SINGLETON_KEY].join('-')),
+            ),
+      },
+      {
+        raw: (S) => S.divider().title('Custom Title + Icon'),
+      },
+      {
+        raw: (S) =>
+          S.listItem()
+            .title('Contributors')
+            .icon(AddUserIcon)
+            .schemaType(schemaNames.AUTHOR)
+            .child(S.documentTypeList(schemaNames.AUTHOR).title('Contributors')),
+      },
+      {
+        raw: (S) => S.divider().title('Drawer'),
       },
       {
         raw: (S) =>
@@ -331,20 +413,42 @@ const listItems = defineListItems([
               S.list()
                 .title('Drawer')
                 .items([
-                  // Author
+                  S.divider().title('Level 1 Depth'),
                   S.listItem()
                     .title('Authors')
                     .schemaType(schemaNames.AUTHOR)
-                    .child(S.documentTypeList(schemaNames.AUTHOR).title('Authors')), // Author 2
+                    .child(S.documentTypeList(schemaNames.AUTHOR).title('Authors')),
+                  S.divider().title('Next Level'),
                   S.listItem()
-                    .title('Author 2')
-                    .icon(AddUserIcon)
-                    .schemaType(schemaNames.AUTHOR)
-                    .child(S.documentTypeList(schemaNames.AUTHOR).title('Author 2')),
+                    .title('Nested Drawer')
+                    .icon(ComponentIcon)
+                    .child(
+                      S.list()
+                        .title('Drawer')
+                        .items([
+                          S.divider().title('Level 2 Depth'),
+                          S.listItem()
+                            .title('Authors')
+                            .schemaType(schemaNames.AUTHOR)
+                            .child(S.documentTypeList(schemaNames.AUTHOR).title('Authors')),
+                          S.divider().title(
+                            'Drawer code reached a point where even the compiler said “bro enough”',
+                          ),
+                        ]),
+                    ),
                 ]),
             ),
       },
     ],
+  },
+  {
+    title: 'Code',
+    isDivider: true,
+  },
+  {
+    title: 'Code',
+    schemaType: schemaNames.CODE,
+    singleton: true,
   },
 ]);
 

@@ -66,6 +66,10 @@ export default defineConfig({
             text: 'Why',
             link: '/introduction/why',
           },
+          {
+            text: 'Upcoming Features',
+            link: '/introduction/upcoming-features',
+          },
         ],
       },
       {
@@ -133,20 +137,12 @@ export default defineConfig({
                 link: '/examples/children',
               },
               {
-                text: 'isDivider',
-                link: '/examples/is-divider',
+                text: 'apiVersion',
+                link: '/examples/api-version',
               },
               {
                 text: 'filter + filterParams',
                 link: '/examples/filter',
-              },
-              {
-                text: 'hideAddButton',
-                link: '/examples/hide-add-button',
-              },
-              {
-                text: 'isPlural',
-                link: '/examples/is-plural',
               },
               {
                 text: 'workspaces',
@@ -157,12 +153,24 @@ export default defineConfig({
                 link: '/examples/roles',
               },
               {
+                text: 'hideAddButton',
+                link: '/examples/hide-add-button',
+              },
+              {
                 text: 'templates',
                 link: '/examples/templates',
               },
               {
                 text: 'raw',
                 link: '/examples/raw',
+              },
+              {
+                text: 'isDivider',
+                link: '/examples/is-divider',
+              },
+              {
+                text: 'isPlural',
+                link: '/examples/is-plural',
               },
             ],
           },
@@ -171,6 +179,10 @@ export default defineConfig({
       {
         text: 'Customization',
         items: [
+          {
+            text: 'Constants',
+            link: '/customization/constants',
+          },
           {
             text: 'Singleton Action',
             link: '/customization/singleton-action',
