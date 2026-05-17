@@ -55,6 +55,10 @@ import { UserIcon } from '@sanity/icons';
 
 When set to `true`, this item is treated as a single document rather than a list. The plugin will automatically handle the document ID and editor view.
 
+::: warning Note
+When `singleton: true` is enabled, the `apiVersion` and `templates` properties are **not supported** and should not be used.
+:::
+
 ```ts
 {
   title: 'Global Settings',
@@ -93,9 +97,13 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 
 - **Type**: `string`
 - **Optional**: Yes
-- **Examples**: [See Examples](../examples/api-version)
+- **Examples**: [See Examples](../api-version)
 
 Specifies the Sanity API version to use for this specific list item.
+
+::: warning Note
+This property is **not compatible** with items marked as `singleton: true`.
+:::
 
 ```ts
 {
@@ -111,6 +119,10 @@ Specifies the Sanity API version to use for this specific list item.
 - **Examples**: [See Examples](../examples/filter)
 
 A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
+
+::: warning Note
+If you provide a `filter` without a `schemaType`, you cannot use `hideAddButton` or `templates` for that item.
+:::
 
 ```ts
 {
@@ -184,7 +196,7 @@ When using a **static array**, the provided values are **concatenated** with the
 When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
 
 ::: warning Note
-You can only use either `hideAddButton` or `templates`, but not both together in the same list item.
+This property cannot be used in combination with `templates`. Additionally, it is not supported when a `filter` is used without a `schemaType`.
 :::
 
 ```ts
@@ -203,7 +215,7 @@ You can only use either `hideAddButton` or `templates`, but not both together in
 Used to pass initial value templates for new documents created from this list item.
 
 ::: warning Note
-You can only use either `hideAddButton` or `templates`, but not both together in the same list item.
+This property cannot be used if `hideAddButton` is present. It is also **not supported** for `singleton` items or when a `filter` is used without a `schemaType`.
 :::
 
 ```ts
