@@ -66,6 +66,10 @@ export default defineConfig({
             text: 'Why',
             link: '/introduction/why',
           },
+          {
+            text: 'Upcoming Features',
+            link: '/introduction/upcoming-features',
+          },
         ],
       },
       {
@@ -172,12 +176,12 @@ export default defineConfig({
         text: 'Customization',
         items: [
           {
-            text: 'Singleton Action',
-            link: '/customization/singleton-action',
-          },
-          {
             text: 'Constants',
             link: '/customization/constants',
+          },
+          {
+            text: 'Singleton Action',
+            link: '/customization/singleton-action',
           },
         ],
       },

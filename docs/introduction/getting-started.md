@@ -34,6 +34,12 @@ Once installed, follow these steps to get your studio up and running with a decl
 2.  **[Define Your Items](/guide/list-items)**: Explore the `ListItem` configuration to build your hierarchy.
 3.  **[Browse Examples](/examples/title)**: See specific examples for properties like `singleton`, `filter`, and `children`.
 
+## Roadmap to v1.0.0 {#roadmap-to-v-1-0-0}
+
+We are actively working towards our stable **v1.0.0** release. This milestone will include key features like custom components, enhanced ordering, view customization, and robust TypeScript validation.
+
+Check out the full **[Upcoming Features & Roadmap](/introduction/upcoming-features)** to see what's planned.
+
 ## Learn More {#learn-more}
 
 - **[Why this tool?](/introduction/why)**: Understand the core philosophy and the problems it solves.
