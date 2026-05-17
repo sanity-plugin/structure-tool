@@ -1,6 +1,6 @@
 # Constants {#constants}
 
-The **Sanity Structure Tool** exports several constants that you can use in your configuration or custom document actions.
+The **Sanity Structure Tool** exports the following constants that you can use in your configuration or custom document actions.
 
 ---
 
