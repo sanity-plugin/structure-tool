@@ -17,7 +17,7 @@ Support for passing custom React components to render entire list items or views
 }
 ```
 
-### 2. Enhanced Ordering (`ordering`) {#enhanced-ordering}
+### 2. Enhanced Ordering (`defaultOrdering`) {#enhanced-ordering}
 
 More granular control over how documents are ordered within lists.
 
