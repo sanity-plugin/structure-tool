@@ -186,7 +186,6 @@ const listItems = defineListItems([
       {
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
-        singleton: true,
       },
       {
         title: 'Sanity Structure Tool + Testing Workspace',
