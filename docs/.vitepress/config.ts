@@ -175,6 +175,10 @@ export default defineConfig({
             text: 'Singleton Action',
             link: '/customization/singleton-action',
           },
+          {
+            text: 'Constants',
+            link: '/customization/constants',
+          },
         ],
       },
       {

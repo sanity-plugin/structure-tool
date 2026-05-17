@@ -6,7 +6,7 @@ The **Sanity Structure Tool** provides a built-in `SingletonAction` helper to ha
 
 ## How it Works {#how-it-works}
 
-The `SingletonAction` is a Sanity `DocumentActionsResolver`. It checks the ID of the document being edited, if the ID ends with `-singleton` (which is how the plugin generates IDs for items marked as `singleton: true`), it filters out the following actions:
+The `SingletonAction` is a Sanity `DocumentActionsResolver`. It checks the ID of the document being edited. If the ID ends with `constants.SINGLETON_KEY` (which is how the plugin generates IDs for items marked as `singleton: true`), it filters out the following actions:
 
 - **Delete**
 - **Duplicate**
@@ -44,12 +44,12 @@ export default defineConfig({
 
 ## Customizing Actions {#customizing-actions}
 
-If you have other custom document actions, you can still use `SingletonAction`. Since it's a standard resolver, you can compose it with your own logic:
+If you have other custom document actions, you can still use `SingletonAction`. Since it's a standard resolver, you can compose it with your own logic. You can also use the exported `constants` for your own checks:
 
 ::: code-group
 
 ```ts [sanity.config.ts]
-import { SingletonAction } from 'sanity-plugin-structure-tool';
+import { constants, SingletonAction } from 'sanity-plugin-structure-tool';
 
 export default defineConfig({
   // ...
@@ -57,6 +57,11 @@ export default defineConfig({
     actions: (prev, context) => {
       // First, let SingletonAction handle the filtering for singletons
       const actions = SingletonAction(prev, context);
+
+      // Example of using constants manually
+      if (context.documentId?.endsWith(constants.SINGLETON_KEY)) {
+        // do something specific for singletons
+      }
 
       // Then, add your custom logic if needed
       return actions;
@@ -68,5 +73,5 @@ export default defineConfig({
 :::
 
 ::: info Note
-The `SingletonAction` only affects documents whose IDs end with `-singleton`. It will not interfere with the standard actions of your other document types.
+The `SingletonAction` only affects documents whose IDs end with `constants.SINGLETON_KEY`. It will not interfere with the standard actions of your other document types.
 :::
