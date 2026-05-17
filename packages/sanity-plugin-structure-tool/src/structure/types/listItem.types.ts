@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { CurrentUser } from 'sanity';
 import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import type { SetNonNullable } from 'type-fest';
+import type { RequireOneOrNone, SetNonNullable } from 'type-fest';
 
 import type { ListItemCore } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
@@ -25,19 +25,23 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ListItemWithoutGenerics {
-  title?: string;
-  schemaType?: string;
-  icon?: IconComponent | ComponentType | ReactNode;
-  raw?: ListItemRaw;
-  singleton?: boolean;
-  filter?: ListItemFilter;
-  filterParams?: ListItemFilterParams;
-  hideAddButton?: boolean;
-  isDivider?: boolean;
-  isPlural?: boolean;
-  templates?: Record<string, unknown>;
-}
+export type ListItemWithoutGenerics = RequireOneOrNone<
+  {
+    title?: string;
+    schemaType?: string;
+    icon?: IconComponent | ComponentType | ReactNode;
+    raw?: ListItemRaw;
+    singleton?: boolean;
+    filter?: ListItemFilter;
+    filterParams?: ListItemFilterParams;
+    hideAddButton?: boolean;
+    isDivider?: boolean;
+    isPlural?: boolean;
+    templates?: Record<string, unknown>;
+    apiVersion?: string;
+  },
+  'hideAddButton' | 'templates'
+>;
 
 export type ListItem<
   Workspaces extends readonly string[] | undefined,
@@ -63,8 +67,8 @@ export type ListItemExtended<
     ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
     {
       id: string;
-      children: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
       displayTitle: string;
+      children: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
     },
   ]
 >;
