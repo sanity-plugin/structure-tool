@@ -183,6 +183,10 @@ When using a **static array**, the provided values are **concatenated** with the
 
 When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
 
+::: warning Note
+You can only use either `hideAddButton` or `templates`, but not both together in the same list item.
+:::
+
 ```ts
 {
   schemaType: 'author',
@@ -197,6 +201,10 @@ When set to `true`, the "Add" button (plus icon) will be hidden for this documen
 - **Examples**: [See Examples](../examples/templates)
 
 Used to pass initial value templates for new documents created from this list item.
+
+::: warning Note
+You can only use either `hideAddButton` or `templates`, but not both together in the same list item.
+:::
 
 ```ts
 {
