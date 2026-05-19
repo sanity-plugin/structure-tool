@@ -1,6 +1,11 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { CurrentUser } from 'sanity';
-import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
+import type {
+  ListBuilder,
+  StructureBuilder,
+  StructureResolverContext,
+  UserComponent,
+} from 'sanity/structure';
 import type { RequireOneOrNone, SetNonNullable } from 'type-fest';
 
 import type { ListItemCore } from '@/structure/types/listItemCore.types';
@@ -31,6 +36,7 @@ export type ListItemWithoutGenerics = RequireOneOrNone<
     schemaType?: string;
     icon?: IconComponent | ComponentType | ReactNode;
     singleton?: boolean;
+    component?: UserComponent;
     apiVersion?: string;
     filter?: ListItemFilter;
     filterParams?: ListItemFilterParams;

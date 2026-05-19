@@ -9,6 +9,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     schemaType,
     icon,
     singleton,
+    component,
     apiVersion,
     filter,
     filterParams,
@@ -44,6 +45,10 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
               .filter((child) => child !== null),
           ),
       );
+  }
+
+  if (component) {
+    return S.listItem().title(displayTitle).id(id).icon(icon).child(S.component(component).id(id));
   }
 
   if (!schemaType && filter) {
