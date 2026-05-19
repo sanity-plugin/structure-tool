@@ -1,6 +1,7 @@
-import { AddUserIcon, ComponentIcon } from '@sanity/icons';
+import { AddUserIcon, BookIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
+import { Documentation, TypeScriptDocumentation } from '@/components/Components';
 import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
@@ -111,6 +112,29 @@ const listItems = defineListItems([
   {
     title: 'Feature Demonstrations',
     isDivider: true,
+  },
+  {
+    title: 'Components',
+    children: [
+      {
+        title: 'Documentation ( iframe )',
+        isDivider: true,
+      },
+      {
+        title: 'Documentation',
+        icon: BookIcon,
+        component: Documentation,
+      },
+      {
+        title: 'TypeScript Documentation ( iframe )',
+        isDivider: true,
+      },
+      {
+        title: 'TypeScript Documentation',
+        icon: LogoTsIcon,
+        component: TypeScriptDocumentation,
+      },
+    ],
   },
   {
     title: 'Filters',
