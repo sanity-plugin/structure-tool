@@ -1,8 +1,13 @@
+import type { SetNonNullable } from 'type-fest';
+
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemRoles } from '@/structure/types/listItemCore.types';
 
 type GetRolesWithDefaults = (
-  defaultRoles: readonly string[],
-  roles: ListItemRoles<readonly string[], readonly string[]> | undefined,
+  defaultRoles: NonNullable<StructureToolParams['DefaultRoles']>,
+  roles:
+    | ListItemRoles<Pick<SetNonNullable<StructureToolParams>, 'Roles' | 'DefaultRoles'>>
+    | undefined,
 ) => string[];
 
 export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {

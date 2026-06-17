@@ -5,12 +5,12 @@ import type { RequireAllOrNone } from 'type-fest';
 import type { DefineListItemType } from '@/factories/defineListItem';
 import type { DefineListItemsType } from '@/factories/defineListItems';
 import type { Helpers } from '@/factories/helpers';
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 interface StructureToolCoreFieldParams<T extends Pick<StructureToolParams, 'Workspaces'>> {
-  workspace: T['Workspaces'] extends readonly string[] ? T['Workspaces'][number] : string;
+  workspace: Workspace<T>;
   context: StructureResolverContext;
 }
 

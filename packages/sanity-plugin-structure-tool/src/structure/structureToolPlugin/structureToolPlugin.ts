@@ -14,71 +14,31 @@ import type {
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
-export const structureToolPlugin = <
-  const Workspaces extends StructureToolParams['Workspaces'] = undefined,
-  const DefaultWorkspaces extends StructureToolParams['DefaultWorkspaces'] = undefined,
-  const Roles extends StructureToolParams['Roles'] = undefined,
-  const DefaultRoles extends StructureToolParams['DefaultRoles'] = undefined,
->(
-  params: StructureToolPluginParams<{
-    Workspaces: Workspaces;
-    DefaultWorkspaces: DefaultWorkspaces;
-    Roles: Roles;
-    DefaultRoles: DefaultRoles;
-  }>,
-): StructureToolPluginOutput<{
-  Workspaces: Workspaces;
-  DefaultWorkspaces: DefaultWorkspaces;
-  Roles: Roles;
-  DefaultRoles: DefaultRoles;
-}> => ({
+export const structureToolPlugin = <const T extends StructureToolParams = StructureToolParams>(
+  params: StructureToolPluginParams<T>,
+): StructureToolPluginOutput<T> => ({
   structure: definePlugin(({ listItems }) => {
-    const flatListItems = getAllListItems<{
-      Workspaces: Workspaces;
-      DefaultWorkspaces: DefaultWorkspaces;
-      Roles: Roles;
-      DefaultRoles: DefaultRoles;
-    }>(listItems);
+    const flatListItems = getAllListItems<T>(listItems);
 
     return {
       name: 'sanity-plugin-structure-tool',
       plugins: [
         structureTool({
-          structure: structure<{
-            Workspaces: Workspaces;
-            DefaultWorkspaces: DefaultWorkspaces;
-            Roles: Roles;
-            DefaultRoles: DefaultRoles;
-          }>({
+          structure: structure<T>({
             ...params,
             listItems,
           }),
         }),
       ],
       schema: {
-        templates: templates<{
-          Workspaces: Workspaces;
-          DefaultWorkspaces: DefaultWorkspaces;
-          Roles: Roles;
-          DefaultRoles: DefaultRoles;
-        }>(flatListItems),
+        templates: templates<T>(flatListItems),
       },
     };
   }),
   templates: ({ listItems }) => {
-    const flatListItems = getAllListItems<{
-      Workspaces: Workspaces;
-      DefaultWorkspaces: DefaultWorkspaces;
-      Roles: Roles;
-      DefaultRoles: DefaultRoles;
-    }>(listItems);
+    const flatListItems = getAllListItems<T>(listItems);
 
-    return templates<{
-      Workspaces: Workspaces;
-      DefaultWorkspaces: DefaultWorkspaces;
-      Roles: Roles;
-      DefaultRoles: DefaultRoles;
-    }>(flatListItems);
+    return templates<T>(flatListItems);
   },
   defineListItems,
   defineListItem,

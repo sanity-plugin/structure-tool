@@ -4,3 +4,6 @@ export interface StructureToolParams {
   Roles: readonly string[] | undefined;
   DefaultRoles: readonly string[] | undefined;
 }
+
+export type Workspace<T extends Pick<StructureToolParams, 'Workspaces'>> =
+  T['Workspaces'] extends readonly string[] ? T['Workspaces'][number] : string;

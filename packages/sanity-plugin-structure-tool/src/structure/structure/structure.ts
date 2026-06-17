@@ -4,7 +4,7 @@ import { renderListItem } from '@/structure/renderListItem/renderListItem';
 import type { StructureResolver } from 'sanity/structure';
 
 import type { StructureParams } from '@/structure/structure/structure.types';
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
 
 export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
@@ -13,9 +13,7 @@ export const structure =
     const { currentUser, schema } = context;
     const { _original: original } = schema;
 
-    const workspace = original?.name as T['Workspaces'] extends readonly string[]
-      ? T['Workspaces'][number]
-      : string;
+    const workspace = original?.name as Workspace<T>;
 
     const displayTitle = typeof title === 'function' ? title({ workspace, context }) : title;
     const displayEmptyListTitle =

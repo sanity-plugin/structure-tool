@@ -10,12 +10,12 @@ import type { CurrentUser } from 'sanity';
 import type { StructureBuilder } from 'sanity/structure';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 
 export const getListItems = <T extends StructureToolParams>(
   S: StructureBuilder,
-  workspace: T['Workspaces'] extends readonly string[] ? T['Workspaces'][number] : string,
+  workspace: Workspace<T>,
   currentUser: CurrentUser,
   id: string,
   params: StructureListItemsParams<T>,
