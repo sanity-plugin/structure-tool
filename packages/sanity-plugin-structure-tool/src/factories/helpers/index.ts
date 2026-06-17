@@ -1,3 +1,4 @@
+import { childrenHelper } from '@/factories/helpers/childrenHelper';
 import { componentHelper } from '@/factories/helpers/componentHelper';
 import { dividerHelper } from '@/factories/helpers/dividerHelper';
 import { filtersHelper } from '@/factories/helpers/filtersHelper';
@@ -5,6 +6,7 @@ import { listingHelper } from '@/factories/helpers/listingHelper';
 import { rawHelper } from '@/factories/helpers/rawHelper';
 import { singletonHelper } from '@/factories/helpers/singletonHelper';
 
+import type { ChildrenHelper } from '@/factories/helpers/childrenHelper';
 import type { ComponentHelper } from '@/factories/helpers/componentHelper';
 import type { DividerHelper } from '@/factories/helpers/dividerHelper';
 import type { FiltersHelper } from '@/factories/helpers/filtersHelper';
@@ -20,6 +22,7 @@ export interface Helpers<T extends StructureToolParams> {
   divider: DividerHelper<T>;
   raw: RawHelper<T>;
   component: ComponentHelper<T>;
+  children: ChildrenHelper<T>;
 }
 
 export const helpers = {
@@ -29,4 +32,5 @@ export const helpers = {
   divider: dividerHelper,
   raw: rawHelper,
   component: componentHelper,
+  children: childrenHelper,
 } satisfies Helpers<StructureToolParams>;
