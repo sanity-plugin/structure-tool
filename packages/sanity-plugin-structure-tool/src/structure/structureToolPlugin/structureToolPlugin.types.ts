@@ -2,8 +2,8 @@ import type { Plugin, TemplateResolver } from 'sanity';
 import type { StructureResolverContext } from 'sanity/structure';
 import type { RequireAllOrNone } from 'type-fest';
 
-import type { DefineListItemType } from '@/factories/defineListItem';
-import type { DefineListItemsType } from '@/factories/defineListItems';
+import type { DefineListItem } from '@/factories/defineListItem';
+import type { DefineListItems } from '@/factories/defineListItems';
 import type { Helpers } from '@/factories/helpers';
 import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
@@ -48,7 +48,7 @@ interface StructureToolPluginOutputParams<T extends StructureToolParams> {
 export interface StructureToolPluginOutput<T extends StructureToolParams> {
   structure: Plugin<StructureToolPluginOutputParams<T>>;
   templates: (params: StructureToolPluginOutputParams<T>) => TemplateResolver;
-  defineListItems: DefineListItemsType<T>;
-  defineListItem: DefineListItemType<T>;
+  defineListItems: DefineListItems<T>;
+  defineListItem: DefineListItem<T>;
   helpers: Helpers<T>;
 }
