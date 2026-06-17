@@ -70,8 +70,8 @@ export const getListItems = <T extends StructureToolParams>(
     const { hasRoleEnabled, hasRoleAccess } = (() => {
       if (!defaultRoles || !globalRoles) return { hasRoleEnabled: false, hasRoleAccess: true };
 
-      const hasAccess = getCurrentUserRoles<T['Roles']>({ currentUser, roles: globalRoles }).some(
-        (role) => getRolesWithDefaults(defaultRoles, roles).includes(role),
+      const hasAccess = getCurrentUserRoles<T>({ currentUser, roles: globalRoles }).some((role) =>
+        getRolesWithDefaults(defaultRoles, roles).includes(role),
       );
 
       return { hasRoleEnabled: true, hasRoleAccess: hasAccess };
