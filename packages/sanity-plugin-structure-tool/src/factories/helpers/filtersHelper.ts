@@ -1,45 +1,41 @@
 import { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import { ListItemWithoutGenerics } from '@/types';
-import { SetRequired } from 'type-fest';
+import { RequireAtLeastOne, RequireExactlyOne, RequireOneOrNone, SetRequired } from 'type-fest';
 
-type SingletonHelperParams<
+type FiltersHelperParams<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
-  SetRequired<Pick<ListItemWithoutGenerics, 'title' | 'schemaType' | 'icon'>, 'schemaType'>;
+  SetRequired<
+    Pick<ListItemWithoutGenerics, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams'>,
+    'title' | 'filter'
+  >;
 
-type SingletonHelperOutput<
+type FiltersHelperOutput<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
-> = SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> & {
-  singleton: true;
-};
+> = FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export type SingletonHelperType<
+export type FiltersHelperType<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = (
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+  params: FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+) => FiltersHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export type SingletonHelper = <
+export type FiltersHelper = <
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+  params: FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+) => FiltersHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export const singletonHelper: SingletonHelper = (params) => {
-  return {
-    ...params,
-    singleton: true,
-  };
-};
+export const filtersHelper: FiltersHelper = (params) => params;

@@ -151,7 +151,7 @@ const listItems = defineListItems([
       helpers.divider({
         title: 'Dynamic GROQ Queries',
       }),
-      helpers.listing({
+      helpers.filters({
         title: 'Authors from GROQ',
         icon: AddUserIcon,
         filter: '_type == $author',
@@ -159,7 +159,7 @@ const listItems = defineListItems([
           author: schemaNames.AUTHOR,
         },
       }),
-      helpers.listing({
+      helpers.filters({
         title: 'Authors + Setting from GROQ',
         icon: AddUserIcon,
         filter: '_type ==  $author || _type == $setting',
