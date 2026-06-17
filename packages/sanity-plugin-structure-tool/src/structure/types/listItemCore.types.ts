@@ -1,3 +1,4 @@
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithoutGenerics } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
@@ -25,26 +26,21 @@ export type ListItemRoles<
   DefaultRoles extends readonly string[],
 > = Roles[number][] | ((params: ListItemRolesParams<DefaultRoles>) => Roles[number][]);
 
-export type ListItemWithWorkspacesAndRoles<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = SimpleMerge<
   [
-    Workspaces extends readonly string[]
-      ? DefaultWorkspaces extends readonly string[]
+    T['Workspaces'] extends readonly string[]
+      ? T['DefaultWorkspaces'] extends readonly string[]
         ? {
-            workspaces?: ListItemWorkspaces<Workspaces, DefaultWorkspaces>;
+            workspaces?: ListItemWorkspaces<T['Workspaces'], T['Workspaces']>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
           {}
       : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         {},
-    Roles extends readonly string[]
-      ? DefaultRoles extends readonly string[]
+    T['Roles'] extends readonly string[]
+      ? T['DefaultRoles'] extends readonly string[]
         ? {
-            roles?: ListItemRoles<Roles, DefaultRoles>;
+            roles?: ListItemRoles<T['Roles'], T['DefaultRoles']>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
           {}
@@ -53,14 +49,6 @@ export type ListItemWithWorkspacesAndRoles<
   ]
 >;
 
-export type ListItemCore<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
-  [
-    ListItemWithoutGenerics,
-    ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-  ]
+export type ListItemCore<T extends StructureToolParams> = SimpleMerge<
+  [ListItemWithoutGenerics, ListItemWithWorkspacesAndRoles<T>]
 >;

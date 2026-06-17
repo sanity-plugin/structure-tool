@@ -1,18 +1,12 @@
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export const getAllListItems = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-): ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] => {
-  const schemaTypes = [] as ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+export const getAllListItems = <T extends StructureToolParams>(
+  listItems: ListItem<T>[],
+): ListItem<T>[] => {
+  const schemaTypes = [] as ListItem<T>[];
 
-  const getListItems = (
-    items: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-  ): void => {
+  const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
       if (item?.schemaType) {
         schemaTypes.push(item);

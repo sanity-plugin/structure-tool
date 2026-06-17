@@ -1,14 +1,10 @@
 import type { RequireOneOrNone, SetRequired } from 'type-fest';
 
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { ListItemWithoutGenerics } from '@/types';
 
-type ListingHelperParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
+type ListingHelperParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T> &
   SetRequired<
     Pick<
       ListItemWithoutGenerics,
@@ -18,29 +14,14 @@ type ListingHelperParams<
   > &
   RequireOneOrNone<Pick<ListItemWithoutGenerics, 'hideAddButton' | 'templates'>>;
 
-type ListingHelperOutput<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = ListingHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+type ListingHelperOutput<T extends StructureToolParams> = ListingHelperParams<T>;
 
-export type ListingHelperType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  params: ListingHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => ListingHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type ListingHelperType<T extends StructureToolParams> = (
+  params: ListingHelperParams<T>,
+) => ListingHelperOutput<T>;
 
-export type ListingHelper = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  params: ListingHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => ListingHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type ListingHelper = <T extends StructureToolParams>(
+  params: ListingHelperParams<T>,
+) => ListingHelperOutput<T>;
 
 export const listingHelper: ListingHelper = (params) => params;

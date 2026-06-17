@@ -1,21 +1,12 @@
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export type DefineListItemsType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-) => ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+export type DefineListItemsType<T extends StructureToolParams> = (
+  listItems: ListItem<T>[],
+) => ListItem<T>[];
 
-export type DefineListItems = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-) => ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+export type DefineListItems = <T extends StructureToolParams>(
+  listItems: ListItem<T>[],
+) => ListItem<T>[];
 
 export const defineListItems: DefineListItems = (listItems) => listItems;

@@ -8,6 +8,7 @@ import type {
 } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemCore } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
@@ -46,32 +47,22 @@ export interface ListItemWithoutGenerics {
   isPlural?: boolean;
 }
 
-export type ListItem<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export type ListItem<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+    ListItemCore<T>,
     {
-      children?: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+      children?: ListItem<T>[];
     },
   ]
 >;
 
-export type ListItemExtended<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+    ListItemCore<T>,
     {
       id: string;
       displayTitle: string;
-      children: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+      children: ListItemExtended<T>[];
     },
   ]
 >;

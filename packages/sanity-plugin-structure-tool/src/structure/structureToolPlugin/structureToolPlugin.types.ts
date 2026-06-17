@@ -5,70 +5,50 @@ import type { RequireAllOrNone } from 'type-fest';
 import type { DefineListItemType } from '@/factories/defineListItem';
 import type { DefineListItemsType } from '@/factories/defineListItems';
 import type { Helpers } from '@/factories/helpers';
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-interface StructureToolCoreFieldParams<Workspaces extends readonly string[] | undefined> {
-  workspace: Workspaces extends readonly string[] ? Workspaces[number] : string;
+interface StructureToolCoreFieldParams<T extends Pick<StructureToolParams, 'Workspaces'>> {
+  workspace: T['Workspaces'] extends readonly string[] ? T['Workspaces'][number] : string;
   context: StructureResolverContext;
 }
 
-export interface StructureToolCoreParams<Workspaces extends readonly string[] | undefined> {
-  title: string | ((params: StructureToolCoreFieldParams<Workspaces>) => string);
-  emptyListTitle?: string | ((params: StructureToolCoreFieldParams<Workspaces>) => string);
+export interface StructureToolCoreParams<T extends Pick<StructureToolParams, 'Workspaces'>> {
+  title: string | ((params: StructureToolCoreFieldParams<T>) => string);
+  emptyListTitle?: string | ((params: StructureToolCoreFieldParams<T>) => string);
 }
 
 export interface StructureToolWorkspaceParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
+  T extends Pick<StructureToolParams, 'Workspaces' | 'DefaultWorkspaces'>,
 > {
-  workspaces?: Workspaces;
-  defaultWorkspaces?: DefaultWorkspaces;
+  workspaces?: T['Workspaces'];
+  defaultWorkspaces?: T['DefaultWorkspaces'];
 }
 
 export interface StructureToolRoleParams<
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
+  T extends Pick<StructureToolParams, 'Roles' | 'DefaultRoles'>,
 > {
-  roles?: Roles;
-  defaultRoles?: DefaultRoles;
+  roles?: T['Roles'];
+  defaultRoles?: T['DefaultRoles'];
 }
 
-export type StructureToolPluginParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export type StructureToolPluginParams<T extends StructureToolParams> = SimpleMerge<
   [
-    RequireAllOrNone<StructureToolWorkspaceParams<Workspaces, DefaultWorkspaces>>,
-    RequireAllOrNone<StructureToolRoleParams<Roles, DefaultRoles>>,
-    StructureToolCoreParams<Workspaces>,
+    RequireAllOrNone<StructureToolWorkspaceParams<T>>,
+    RequireAllOrNone<StructureToolRoleParams<T>>,
+    StructureToolCoreParams<T>,
   ]
 >;
 
-interface StructureToolPluginOutputParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> {
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+interface StructureToolPluginOutputParams<T extends StructureToolParams> {
+  listItems: ListItem<T>[];
 }
 
-export interface StructureToolPluginOutput<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> {
-  structure: Plugin<
-    StructureToolPluginOutputParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>
-  >;
-  templates: (
-    params: StructureToolPluginOutputParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-  ) => TemplateResolver;
-  defineListItems: DefineListItemsType<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
-  defineListItem: DefineListItemType<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
-  helpers: Helpers<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export interface StructureToolPluginOutput<T extends StructureToolParams> {
+  structure: Plugin<StructureToolPluginOutputParams<T>>;
+  templates: (params: StructureToolPluginOutputParams<T>) => TemplateResolver;
+  defineListItems: DefineListItemsType<T>;
+  defineListItem: DefineListItemType<T>;
+  helpers: Helpers<T>;
 }

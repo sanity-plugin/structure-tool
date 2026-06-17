@@ -3,38 +3,24 @@ import type {
   StructureToolRoleParams,
   StructureToolWorkspaceParams,
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-interface StructureListItems<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> {
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+interface StructureListItems<T extends StructureToolParams> {
+  listItems: ListItem<T>[];
 }
 
-export type StructureParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export type StructureParams<T extends StructureToolParams> = SimpleMerge<
   [
-    StructureToolCoreParams<Workspaces>,
-    StructureToolWorkspaceParams<Workspaces, DefaultWorkspaces>,
-    StructureToolRoleParams<Roles, DefaultRoles>,
-    StructureListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+    StructureToolCoreParams<T>,
+    StructureToolWorkspaceParams<T>,
+    StructureToolRoleParams<T>,
+    StructureListItems<T>,
   ]
 >;
 
-export type StructureListItemsParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = Omit<
-  StructureParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-  keyof StructureToolCoreParams<Workspaces>
+export type StructureListItemsParams<T extends StructureToolParams> = Omit<
+  StructureParams<T>,
+  keyof StructureToolCoreParams<T>
 >;

@@ -1,42 +1,23 @@
 import type { SetRequired } from 'type-fest';
 
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { ListItemWithoutGenerics } from '@/types';
 
-type FiltersHelperParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
+type FiltersHelperParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T> &
   SetRequired<
     Pick<ListItemWithoutGenerics, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams'>,
     'title' | 'filter'
   >;
 
-type FiltersHelperOutput<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+type FiltersHelperOutput<T extends StructureToolParams> = FiltersHelperParams<T>;
 
-export type FiltersHelperType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  params: FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => FiltersHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type FiltersHelperType<T extends StructureToolParams> = (
+  params: FiltersHelperParams<T>,
+) => FiltersHelperOutput<T>;
 
-export type FiltersHelper = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  params: FiltersHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => FiltersHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type FiltersHelper = <T extends StructureToolParams>(
+  params: FiltersHelperParams<T>,
+) => FiltersHelperOutput<T>;
 
 export const filtersHelper: FiltersHelper = (params) => params;

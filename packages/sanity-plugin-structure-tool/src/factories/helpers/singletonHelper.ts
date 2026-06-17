@@ -1,42 +1,23 @@
 import type { SetRequired } from 'type-fest';
 
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { ListItemWithoutGenerics } from '@/types';
 
-type SingletonHelperParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
+type SingletonHelperParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T> &
   SetRequired<Pick<ListItemWithoutGenerics, 'title' | 'schemaType' | 'icon'>, 'schemaType'>;
 
-type SingletonHelperOutput<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> & {
+type SingletonHelperOutput<T extends StructureToolParams> = SingletonHelperParams<T> & {
   singleton: true;
 };
 
-export type SingletonHelperType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type SingletonHelperType<T extends StructureToolParams> = (
+  params: SingletonHelperParams<T>,
+) => SingletonHelperOutput<T>;
 
-export type SingletonHelper = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type SingletonHelper = <T extends StructureToolParams>(
+  params: SingletonHelperParams<T>,
+) => SingletonHelperOutput<T>;
 
 export const singletonHelper: SingletonHelper = (params) => ({
   ...params,

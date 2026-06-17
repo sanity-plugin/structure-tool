@@ -1,40 +1,21 @@
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { ListItemWithoutGenerics } from '@/types';
 
-type DividerHelperParams<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
+type DividerHelperParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T> &
   Pick<ListItemWithoutGenerics, 'title'>;
 
-type DividerHelperOutput<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> & {
+type DividerHelperOutput<T extends StructureToolParams> = DividerHelperParams<T> & {
   isDivider: true;
 };
 
-export type DividerHelperType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  params: DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => DividerHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type DividerHelperType<T extends StructureToolParams> = (
+  params: DividerHelperParams<T>,
+) => DividerHelperOutput<T>;
 
-export type DividerHelper = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  params: DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => DividerHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type DividerHelper = <T extends StructureToolParams>(
+  params: DividerHelperParams<T>,
+) => DividerHelperOutput<T>;
 
 export const dividerHelper: DividerHelper = (params) => ({
   ...params,
