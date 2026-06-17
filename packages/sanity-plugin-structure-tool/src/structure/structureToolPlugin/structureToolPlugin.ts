@@ -14,33 +14,57 @@ import type {
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
-export const structureToolPlugin = <const T extends StructureToolParams = StructureToolParams>(
-  params: StructureToolPluginParams<T>,
-): StructureToolPluginOutput<T> => ({
-  structure: definePlugin(({ listItems }) => {
-    const flatListItems = getAllListItems<T>(listItems);
+export const structureToolPlugin = <
+  const Workspaces extends StructureToolParams['Workspaces'] = undefined,
+  const DefaultWorkspaces extends StructureToolParams['DefaultWorkspaces'] = undefined,
+  const Roles extends StructureToolParams['Roles'] = undefined,
+  const DefaultRoles extends StructureToolParams['DefaultRoles'] = undefined,
+>(
+  params: StructureToolPluginParams<{
+    Workspaces: Workspaces;
+    DefaultWorkspaces: DefaultWorkspaces;
+    Roles: Roles;
+    DefaultRoles: DefaultRoles;
+  }>,
+): StructureToolPluginOutput<{
+  Workspaces: Workspaces;
+  DefaultWorkspaces: DefaultWorkspaces;
+  Roles: Roles;
+  DefaultRoles: DefaultRoles;
+}> => {
+  interface DefaultsStructureToolParams {
+    Workspaces: Workspaces;
+    DefaultWorkspaces: DefaultWorkspaces;
+    Roles: Roles;
+    DefaultRoles: DefaultRoles;
+  }
 
-    return {
-      name: 'sanity-plugin-structure-tool',
-      plugins: [
-        structureTool({
-          structure: structure<T>({
-            ...params,
-            listItems,
+  return {
+    structure: definePlugin(({ listItems }) => {
+      const flatListItems = getAllListItems<DefaultsStructureToolParams>(listItems);
+
+      return {
+        name: 'sanity-plugin-structure-tool',
+        plugins: [
+          structureTool({
+            structure: structure<DefaultsStructureToolParams>({
+              ...params,
+              listItems,
+            }),
           }),
-        }),
-      ],
-      schema: {
-        templates: templates<T>(flatListItems),
-      },
-    };
-  }),
-  templates: ({ listItems }) => {
-    const flatListItems = getAllListItems<T>(listItems);
+        ],
+        schema: {
+          templates: templates<DefaultsStructureToolParams>(flatListItems),
+        },
+      };
+    }),
+    templates: ({ listItems }) => {
+      const flatListItems = getAllListItems<DefaultsStructureToolParams>(listItems);
 
-    return templates<T>(flatListItems);
-  },
-  defineListItems,
-  defineListItem,
-  helpers,
-});
+      return templates<DefaultsStructureToolParams>(flatListItems);
+    },
+    defineListItems,
+    defineListItem,
+    helpers,
+  };
+};
