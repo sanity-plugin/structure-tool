@@ -3,6 +3,7 @@ import { structureTool } from 'sanity/structure';
 
 import { defineListItem } from '@/factories/defineListItem';
 import { defineListItems } from '@/factories/defineListItems';
+import { helpers } from '@/factories/helpers';
 import { getAllListItems } from '@/helpers/getAllListItems';
 import { structure } from '@/structure/structure/structure';
 import { templates } from '@/structure/templates/templates';
@@ -11,7 +12,6 @@ import type {
   StructureToolPluginOutput,
   StructureToolPluginParams,
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
-import { helpers } from '@/factories/helpers';
 
 export const structureToolPlugin = <
   const Workspaces extends readonly string[] | undefined = undefined,

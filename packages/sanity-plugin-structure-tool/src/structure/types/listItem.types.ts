@@ -30,7 +30,7 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export type ListItemWithoutGenerics = {
+export interface ListItemWithoutGenerics {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
@@ -44,7 +44,7 @@ export type ListItemWithoutGenerics = {
   raw?: ListItemRaw;
   isDivider?: boolean;
   isPlural?: boolean;
-};
+}
 
 export type ListItem<
   Workspaces extends readonly string[] | undefined,

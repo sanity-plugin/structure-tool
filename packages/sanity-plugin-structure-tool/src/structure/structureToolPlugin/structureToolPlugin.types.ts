@@ -4,9 +4,9 @@ import type { RequireAllOrNone } from 'type-fest';
 
 import type { DefineListItemType } from '@/factories/defineListItem';
 import type { DefineListItemsType } from '@/factories/defineListItems';
+import type { Helpers } from '@/factories/helpers';
 import type { ListItem } from '@/structure/types/listItem.types';
 import type { SimpleMerge } from '@/types/lib.types';
-import type { Helpers } from '@/factories/helpers';
 
 interface StructureToolCoreFieldParams<Workspaces extends readonly string[] | undefined> {
   workspace: Workspaces extends readonly string[] ? Workspaces[number] : string;

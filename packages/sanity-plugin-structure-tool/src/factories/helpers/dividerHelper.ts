@@ -1,5 +1,5 @@
-import { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import { ListItemWithoutGenerics } from '@/types';
+import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
+import type { ListItemWithoutGenerics } from '@/types';
 
 type DividerHelperParams<
   Workspaces extends readonly string[] | undefined,
@@ -36,9 +36,7 @@ export type DividerHelper = <
   params: DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
 ) => DividerHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export const dividerHelper: DividerHelper = (params) => {
-  return {
-    ...params,
-    isDivider: true,
-  };
-};
+export const dividerHelper: DividerHelper = (params) => ({
+  ...params,
+  isDivider: true,
+});

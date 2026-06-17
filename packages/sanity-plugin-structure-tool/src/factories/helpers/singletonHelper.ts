@@ -1,6 +1,7 @@
-import { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import { ListItemWithoutGenerics } from '@/types';
-import { SetRequired } from 'type-fest';
+import type { SetRequired } from 'type-fest';
+
+import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
+import type { ListItemWithoutGenerics } from '@/types';
 
 type SingletonHelperParams<
   Workspaces extends readonly string[] | undefined,
@@ -37,9 +38,7 @@ export type SingletonHelper = <
   params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
 ) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export const singletonHelper: SingletonHelper = (params) => {
-  return {
-    ...params,
-    singleton: true,
-  };
-};
+export const singletonHelper: SingletonHelper = (params) => ({
+  ...params,
+  singleton: true,
+});
