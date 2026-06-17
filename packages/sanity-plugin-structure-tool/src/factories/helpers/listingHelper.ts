@@ -20,7 +20,7 @@ type ListingHelperParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListingHelperCoreParams<T>,
     {
-      schemaType: ListItemWithoutGenerics['schemaType'];
+      schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>;
     },
   ]
 >;
