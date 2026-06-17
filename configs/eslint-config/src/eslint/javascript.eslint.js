@@ -35,7 +35,7 @@ const unicornConfig = defineConfig([
       'unicorn/prefer-export-from': [
         'error',
         {
-          ignoreUsedVariables: true,
+          checkUsedVariables: false,
         },
       ],
       'unicorn/no-process-exit': 'off',
