@@ -25,14 +25,13 @@ export type ListItemRoles<
   DefaultRoles extends readonly string[],
 > = Roles[number][] | ((params: ListItemRolesParams<DefaultRoles>) => Roles[number][]);
 
-export type ListItemCore<
+export type ListItemWithWorkspacesAndRoles<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = SimpleMerge<
   [
-    ListItemWithoutGenerics,
     Workspaces extends readonly string[]
       ? DefaultWorkspaces extends readonly string[]
         ? {
@@ -51,5 +50,17 @@ export type ListItemCore<
           {}
       : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         {},
+  ]
+>;
+
+export type ListItemCore<
+  Workspaces extends readonly string[] | undefined,
+  DefaultWorkspaces extends readonly string[] | undefined,
+  Roles extends readonly string[] | undefined,
+  DefaultRoles extends readonly string[] | undefined,
+> = SimpleMerge<
+  [
+    ListItemWithoutGenerics,
+    ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
   ]
 >;

@@ -3,7 +3,7 @@ import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 import { userRoles, workspaceTypes } from '@/constants/common';
 import workspaces from '@/workspace/workspaces';
 
-export const { structure, templates, defineListItems } = structureToolPlugin({
+export const { structure, templates, defineListItems, helpers } = structureToolPlugin({
   title: ({ workspace }) => workspaces.find((item) => item.name === workspace)?.title ?? '',
   roles: Object.values(userRoles),
   defaultRoles: [userRoles.ADMINISTRATOR],

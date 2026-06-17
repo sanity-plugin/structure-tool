@@ -11,6 +11,7 @@ import type {
   StructureToolPluginOutput,
   StructureToolPluginParams,
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
+import { helpers } from '@/factories/helpers';
 
 export const structureToolPlugin = <
   const Workspaces extends readonly string[] | undefined = undefined,
@@ -47,8 +48,7 @@ export const structureToolPlugin = <
 
     return templates<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(flatListItems);
   },
-  defineListItems: (listItems) =>
-    defineListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(listItems),
-  defineListItem: (listItem) =>
-    defineListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(listItem),
+  defineListItems,
+  defineListItem,
+  helpers,
 });
