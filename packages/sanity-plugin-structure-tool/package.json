@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "build:dev": "tsdown --watch",
+    "build:watch": "tsdown --watch",
     "format": "prettier . --check --log-level silent --ignore-path ../../.gitignore",
     "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
     "lint": "eslint .",
@@ -73,6 +73,6 @@
     "node": ">=18"
   },
   "inlinedDependencies": {
-    "type-fest": "5.6.0"
+    "type-fest": "5.7.0"
   }
 }
