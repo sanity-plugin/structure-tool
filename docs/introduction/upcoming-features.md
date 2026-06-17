@@ -6,18 +6,7 @@ Here is a glimpse of what's coming in future releases:
 
 ## Planned Features {#planned-features}
 
-### 1. Custom Components (`component`) {#custom-components}
-
-Support for passing custom React components to render entire list items or views.
-
-```ts
-{
-  title: 'Analytics Dashboard',
-  component: MyDashboardComponent,
-}
-```
-
-### 2. Enhanced Ordering (`defaultOrdering`) {#enhanced-ordering}
+### 1. Enhanced Ordering (`defaultOrdering`) {#enhanced-ordering}
 
 More granular control over how documents are ordered within lists.
 
@@ -30,7 +19,7 @@ More granular control over how documents are ordered within lists.
 }
 ```
 
-### 3. Layout Options (`defaultLayout`) {#layout-options}
+### 2. Layout Options (`defaultLayout`) {#layout-options}
 
 Presets and configuration options to switch between different list layouts.
 
@@ -41,7 +30,7 @@ Presets and configuration options to switch between different list layouts.
 }
 ```
 
-### 4. Menu Items (`menuItems`) {#menu-items}
+### 3. Menu Items (`menuItems`) {#menu-items}
 
 Support for defining custom menu actions and icons at the top of document lists.
 
@@ -60,7 +49,7 @@ import { DownloadIcon } from '@sanity/icons';
 }
 ```
 
-### 5. View Customization (`views`) {#view-customization}
+### 4. View Customization (`views`) {#view-customization}
 
 Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
 
@@ -82,7 +71,7 @@ Support for defining multiple document views (e.g., Editor, Preview, and custom 
 }
 ```
 
-### 6. TypeScript & Validation {#typescript-validation}
+### 5. TypeScript & Validation {#typescript-validation}
 
 We are working on providing a robust, type-safe experience and built-in validation for your JSON structures.
 

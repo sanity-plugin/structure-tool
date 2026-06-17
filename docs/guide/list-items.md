@@ -67,6 +67,23 @@ When `singleton: true` is enabled, the `apiVersion` and `templates` properties a
 }
 ```
 
+## `component` {#component}
+
+- **Type**: `UserComponent`
+- **Optional**: Yes
+- **Examples**: [See Examples](../examples/component)
+
+Allows you to render a custom React component as the child (view) of the list item. This is useful for creating custom dashboards, analytics views, or any other non-document based content.
+
+```ts
+import { MyDashboard } from './components/MyDashboard';
+
+{
+  title: 'Analytics',
+  component: MyDashboard,
+}
+```
+
 ## `children` {#children}
 
 - **Type**: `ListItem[]`
