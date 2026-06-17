@@ -16,16 +16,16 @@ const listItems = defineListItems([
       helpers.divider({
         title: 'Standard Listing',
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
-      },
+      }),
       helpers.divider({
         title: 'Standard Listing + isPlural: false',
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
         isPlural: false,
-      },
+      }),
       helpers.divider({
         title: 'Singleton View',
       }),
@@ -35,11 +35,11 @@ const listItems = defineListItems([
       helpers.divider({
         title: 'Custom Title + Icon',
       }),
-      {
+      helpers.listing({
         title: 'Contributors',
         icon: AddUserIcon,
         schemaType: schemaNames.AUTHOR,
-      },
+      }),
     ],
   },
   {
@@ -49,9 +49,9 @@ const listItems = defineListItems([
       helpers.divider({
         title: 'Level 1 Depth',
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
-      },
+      }),
       helpers.divider({
         title: 'Next Level',
       }),
@@ -61,9 +61,9 @@ const listItems = defineListItems([
           helpers.divider({
             title: 'Level 2 Depth',
           }),
-          {
+          helpers.listing({
             schemaType: schemaNames.AUTHOR,
-          },
+          }),
           helpers.divider({
             title: 'Next Level',
           }),
@@ -73,9 +73,9 @@ const listItems = defineListItems([
               helpers.divider({
                 title: 'Level 3 Depth',
               }),
-              {
+              helpers.listing({
                 schemaType: schemaNames.AUTHOR,
-              },
+              }),
               helpers.divider({
                 title: 'Next Level',
               }),
@@ -85,9 +85,9 @@ const listItems = defineListItems([
                   helpers.divider({
                     title: 'Deeply Nested Navigation',
                   }),
-                  {
+                  helpers.listing({
                     schemaType: schemaNames.AUTHOR,
-                  },
+                  }),
                 ],
               },
             ],
@@ -132,34 +132,34 @@ const listItems = defineListItems([
           helpers.divider({
             title: 'Filtered: Active Only',
           }),
-          {
+          helpers.listing({
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive == true',
-          },
+          }),
           helpers.divider({
             title: 'Filtered: Inactive (Add Disabled)',
           }),
-          {
+          helpers.listing({
             title: 'Inactive',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive != true',
             hideAddButton: true,
-          },
+          }),
         ],
       },
       helpers.divider({
         title: 'Dynamic GROQ Queries',
       }),
-      {
+      helpers.listing({
         title: 'Authors from GROQ',
         icon: AddUserIcon,
         filter: '_type == $author',
         filterParams: {
           author: schemaNames.AUTHOR,
         },
-      },
-      {
+      }),
+      helpers.listing({
         title: 'Authors + Setting from GROQ',
         icon: AddUserIcon,
         filter: '_type ==  $author || _type == $setting',
@@ -167,7 +167,7 @@ const listItems = defineListItems([
           author: schemaNames.AUTHOR,
           setting: schemaNames.SETTING,
         },
-      },
+      }),
     ],
   },
   {
@@ -184,10 +184,10 @@ const listItems = defineListItems([
         title: 'Sanity Structure Tool Only',
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
-      },
+      }),
       helpers.divider({
         title: 'Sanity Structure Tool + Testing Workspace',
         workspaces: [workspaceTypes.TESTING],
@@ -200,10 +200,10 @@ const listItems = defineListItems([
         title: 'Testing Workspace Only',
         workspaces: () => [workspaceTypes.TESTING],
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.TESTING],
-      },
+      }),
     ],
   },
   {
@@ -220,15 +220,14 @@ const listItems = defineListItems([
         title: 'Admin Only',
         roles: () => [userRoles.ADMINISTRATOR],
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
         roles: () => [userRoles.ADMINISTRATOR],
-      },
+      }),
       helpers.divider({
         title: 'Admin + Viewer',
         roles: [userRoles.VIEWER],
       }),
-
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         roles: [userRoles.VIEWER],
@@ -237,10 +236,10 @@ const listItems = defineListItems([
         title: 'Viewer Only',
         roles: () => [userRoles.VIEWER],
       }),
-      {
+      helpers.listing({
         schemaType: schemaNames.AUTHOR,
         roles: () => [userRoles.VIEWER],
-      },
+      }),
     ],
   },
   {
@@ -317,25 +316,25 @@ const listItems = defineListItems([
           helpers.divider({
             title: 'Restricted To: Active State',
           }),
-          {
+          helpers.listing({
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive == true',
             templates: {
               isActive: true,
             },
-          },
+          }),
           helpers.divider({
             title: 'Restricted To: Inactive State',
           }),
-          {
+          helpers.listing({
             title: 'Inactive',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive != true',
             templates: {
               isActive: false,
             },
-          },
+          }),
         ],
       },
     ],
