@@ -11,15 +11,29 @@ type SingletonHelperOutput<T extends StructureToolParams> = SingletonHelperParam
   singleton: true;
 };
 
-export type SingletonHelperType<T extends StructureToolParams> = (
-  params: SingletonHelperParams<T>,
-) => SingletonHelperOutput<T>;
+export interface SingletonHelperType<T extends StructureToolParams> {
+  (params: SingletonHelperParams<T>): SingletonHelperOutput<T>;
 
-export type SingletonHelper = <T extends StructureToolParams>(
-  params: SingletonHelperParams<T>,
-) => SingletonHelperOutput<T>;
+  (
+    schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>,
+    params?: Omit<SingletonHelperParams<T>, 'schemaType'>,
+  ): SingletonHelperOutput<T>;
+}
 
-export const singletonHelper: SingletonHelper = (params) => ({
-  ...params,
-  singleton: true,
-});
+export const singletonHelper = <T extends StructureToolParams>(
+  schemaTypeOrParams: SingletonHelperParams<T> | NonNullable<ListItemWithoutGenerics['schemaType']>,
+  params?: Omit<SingletonHelperParams<T>, 'schemaType'>,
+): SingletonHelperOutput<T> => {
+  if (typeof schemaTypeOrParams === 'string') {
+    return {
+      ...params,
+      schemaType: schemaTypeOrParams,
+      singleton: true,
+    };
+  }
+
+  return {
+    ...schemaTypeOrParams,
+    singleton: true,
+  } as unknown as SingletonHelperOutput<T>;
+};

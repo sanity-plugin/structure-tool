@@ -21,9 +21,7 @@ const listItems = defineListItems([
         isPlural: false,
       }),
       helpers.divider('Singleton View'),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
-      }),
+      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Custom Title + Icon'),
       helpers.listing({
         title: 'Contributors',
@@ -137,9 +135,7 @@ const listItems = defineListItems([
     workspaces: [workspaceTypes.TESTING],
     children: [
       helpers.divider('Default'),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
-      }),
+      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Sanity Structure Tool Only', {
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       }),
@@ -150,8 +146,7 @@ const listItems = defineListItems([
       helpers.divider('Sanity Structure Tool + Testing Workspace', {
         workspaces: [workspaceTypes.TESTING],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         workspaces: [workspaceTypes.TESTING],
       }),
       helpers.divider('Testing Workspace Only', {
@@ -168,9 +163,7 @@ const listItems = defineListItems([
     roles: [userRoles.VIEWER],
     children: [
       helpers.divider('Default'),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
-      }),
+      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Admin Only', {
         roles: () => [userRoles.ADMINISTRATOR],
       }),
@@ -181,8 +174,7 @@ const listItems = defineListItems([
       helpers.divider('Admin + Viewer', {
         roles: [userRoles.VIEWER],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         roles: [userRoles.VIEWER],
       }),
       helpers.divider('Viewer Only', {
@@ -200,52 +192,44 @@ const listItems = defineListItems([
     workspaces: [workspaceTypes.TESTING],
     children: [
       helpers.divider('Default'),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
-      }),
+      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Admin Only + Default Workspace', {
         roles: () => [userRoles.ADMINISTRATOR],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         roles: () => [userRoles.ADMINISTRATOR],
       }),
       helpers.divider('Default Role + Sanity Structure Tool Only', {
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       }),
       helpers.divider('Admin Role Only + Sanity Structure Tool Only', {
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
         roles: () => [userRoles.ADMINISTRATOR],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
         roles: () => [userRoles.ADMINISTRATOR],
       }),
       helpers.divider('Viewer Only + Default Workspace', {
         roles: () => [userRoles.VIEWER],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         roles: () => [userRoles.VIEWER],
       }),
       helpers.divider('Default Role + Testing Workspace Only', {
         workspaces: () => [workspaceTypes.TESTING],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         workspaces: () => [workspaceTypes.TESTING],
       }),
       helpers.divider('Viewer Role Only + Testing Workspace Only', {
         workspaces: () => [workspaceTypes.TESTING],
         roles: () => [userRoles.VIEWER],
       }),
-      helpers.singleton({
-        schemaType: schemaNames.SETTING,
+      helpers.singleton(schemaNames.SETTING, {
         workspaces: () => [workspaceTypes.TESTING],
         roles: () => [userRoles.VIEWER],
       }),
@@ -358,10 +342,7 @@ const listItems = defineListItems([
     ],
   },
   helpers.divider('Code'),
-  helpers.singleton({
-    title: 'Code',
-    schemaType: schemaNames.CODE,
-  }),
+  helpers.singleton(schemaNames.CODE),
 ]);
 
 export default listItems;
