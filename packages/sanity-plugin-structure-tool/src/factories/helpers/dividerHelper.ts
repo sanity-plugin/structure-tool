@@ -1,46 +1,44 @@
 import { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import { ListItemWithoutGenerics } from '@/types';
 
-type SingletonHelperParams<
+type DividerHelperParams<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = ListItemWithWorkspacesAndRoles<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> &
-  Pick<ListItemWithoutGenerics, 'title' | 'icon'> & {
-    schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>;
-  };
+  Pick<ListItemWithoutGenerics, 'title'>;
 
-type SingletonHelperOutput<
+type DividerHelperOutput<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
-> = SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> & {
-  singleton: true;
+> = DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> & {
+  isDivider: true;
 };
 
-export type SingletonHelperType<
+export type DividerHelperType<
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 > = (
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+  params: DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+) => DividerHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export type SingletonHelper = <
+export type DividerHelper = <
   Workspaces extends readonly string[] | undefined,
   DefaultWorkspaces extends readonly string[] | undefined,
   Roles extends readonly string[] | undefined,
   DefaultRoles extends readonly string[] | undefined,
 >(
-  params: SingletonHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => SingletonHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+  params: DividerHelperParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+) => DividerHelperOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 
-export const singletonHelper: SingletonHelper = (params) => {
+export const dividerHelper: DividerHelper = (params) => {
   return {
     ...params,
-    singleton: true,
+    isDivider: true,
   };
 };

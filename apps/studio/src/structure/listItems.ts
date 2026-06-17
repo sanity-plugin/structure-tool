@@ -7,39 +7,34 @@ import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems, helpers } from '@/structure';
 
 const listItems = defineListItems([
-  {
+  helpers.divider({
     title: 'Examples',
-    isDivider: true,
-  },
+  }),
   {
     title: 'General',
     children: [
-      {
+      helpers.divider({
         title: 'Standard Listing',
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
       },
-      {
+      helpers.divider({
         title: 'Standard Listing + isPlural: false',
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
         isPlural: false,
       },
-      {
+      helpers.divider({
         title: 'Singleton View',
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
       }),
-      {
+      helpers.divider({
         title: 'Custom Title + Icon',
-        isDivider: true,
-      },
+      }),
       {
         title: 'Contributors',
         icon: AddUserIcon,
@@ -51,52 +46,45 @@ const listItems = defineListItems([
     title: 'Drawer',
     icon: ComponentIcon,
     children: [
-      {
+      helpers.divider({
         title: 'Level 1 Depth',
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
       },
-      {
+      helpers.divider({
         title: 'Next Level',
-        isDivider: true,
-      },
+      }),
       {
         title: 'Nested Drawer',
         children: [
-          {
+          helpers.divider({
             title: 'Level 2 Depth',
-            isDivider: true,
-          },
+          }),
           {
             schemaType: schemaNames.AUTHOR,
           },
-          {
+          helpers.divider({
             title: 'Next Level',
-            isDivider: true,
-          },
+          }),
           {
             title: 'Nested Drawer',
             children: [
-              {
+              helpers.divider({
                 title: 'Level 3 Depth',
-                isDivider: true,
-              },
+              }),
               {
                 schemaType: schemaNames.AUTHOR,
               },
-              {
+              helpers.divider({
                 title: 'Next Level',
-                isDivider: true,
-              },
+              }),
               {
                 title: 'Nested Drawer',
                 children: [
-                  {
+                  helpers.divider({
                     title: 'Deeply Nested Navigation',
-                    isDivider: true,
-                  },
+                  }),
                   {
                     schemaType: schemaNames.AUTHOR,
                   },
@@ -108,26 +96,23 @@ const listItems = defineListItems([
       },
     ],
   },
-  {
+  helpers.divider({
     title: 'Feature Demonstrations',
-    isDivider: true,
-  },
+  }),
   {
     title: 'Components',
     children: [
-      {
+      helpers.divider({
         title: 'Documentation ( iframe )',
-        isDivider: true,
-      },
+      }),
       {
         title: 'Documentation',
         icon: BookIcon,
         component: Documentation,
       },
-      {
+      helpers.divider({
         title: 'TypeScript Documentation ( iframe )',
-        isDivider: true,
-      },
+      }),
       {
         title: 'TypeScript Documentation',
         icon: LogoTsIcon,
@@ -138,26 +123,23 @@ const listItems = defineListItems([
   {
     title: 'Filters',
     children: [
-      {
+      helpers.divider({
         title: 'Filtering by Active Status',
-        isDivider: true,
-      },
+      }),
       {
         title: 'Authors',
         children: [
-          {
+          helpers.divider({
             title: 'Filtered: Active Only',
-            isDivider: true,
-          },
+          }),
           {
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
             filter: 'isActive == true',
           },
-          {
+          helpers.divider({
             title: 'Filtered: Inactive (Add Disabled)',
-            isDivider: true,
-          },
+          }),
           {
             title: 'Inactive',
             schemaType: schemaNames.AUTHOR,
@@ -166,10 +148,9 @@ const listItems = defineListItems([
           },
         ],
       },
-      {
+      helpers.divider({
         title: 'Dynamic GROQ Queries',
-        isDivider: true,
-      },
+      }),
       {
         title: 'Authors from GROQ',
         icon: AddUserIcon,
@@ -193,36 +174,32 @@ const listItems = defineListItems([
     title: 'Workspaces',
     workspaces: [workspaceTypes.TESTING],
     children: [
-      {
+      helpers.divider({
         title: 'Default',
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
       }),
-      {
+      helpers.divider({
         title: 'Sanity Structure Tool Only',
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       },
-      {
+      helpers.divider({
         title: 'Sanity Structure Tool + Testing Workspace',
         workspaces: [workspaceTypes.TESTING],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         workspaces: [workspaceTypes.TESTING],
       }),
-      {
+      helpers.divider({
         title: 'Testing Workspace Only',
         workspaces: () => [workspaceTypes.TESTING],
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
         workspaces: () => [workspaceTypes.TESTING],
@@ -233,36 +210,33 @@ const listItems = defineListItems([
     title: 'Roles',
     roles: [userRoles.VIEWER],
     children: [
-      {
+      helpers.divider({
         title: 'Default',
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
       }),
-      {
+      helpers.divider({
         title: 'Admin Only',
         roles: () => [userRoles.ADMINISTRATOR],
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
         roles: () => [userRoles.ADMINISTRATOR],
       },
-      {
+      helpers.divider({
         title: 'Admin + Viewer',
         roles: [userRoles.VIEWER],
-        isDivider: true,
-      },
+      }),
+
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         roles: [userRoles.VIEWER],
       }),
-      {
+      helpers.divider({
         title: 'Viewer Only',
         roles: () => [userRoles.VIEWER],
-        isDivider: true,
-      },
+      }),
       {
         schemaType: schemaNames.AUTHOR,
         roles: () => [userRoles.VIEWER],
@@ -274,66 +248,59 @@ const listItems = defineListItems([
     roles: [userRoles.VIEWER],
     workspaces: [workspaceTypes.TESTING],
     children: [
-      {
+      helpers.divider({
         title: 'Default',
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
       }),
-      {
+      helpers.divider({
         title: 'Admin Only + Default Workspace',
         roles: () => [userRoles.ADMINISTRATOR],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         roles: () => [userRoles.ADMINISTRATOR],
       }),
-      {
+      helpers.divider({
         title: 'Default Role + Sanity Structure Tool Only',
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
       }),
-      {
+      helpers.divider({
         title: 'Admin Role Only + Sanity Structure Tool Only',
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
         roles: () => [userRoles.ADMINISTRATOR],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         workspaces: () => [workspaceTypes.SANITY_STRUCTURE_TOOL],
         roles: () => [userRoles.ADMINISTRATOR],
       }),
-      {
+      helpers.divider({
         title: 'Viewer Only + Default Workspace',
         roles: () => [userRoles.VIEWER],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         roles: () => [userRoles.VIEWER],
       }),
-      {
+      helpers.divider({
         title: 'Default Role + Testing Workspace Only',
         workspaces: () => [workspaceTypes.TESTING],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         workspaces: () => [workspaceTypes.TESTING],
       }),
-      {
+      helpers.divider({
         title: 'Viewer Role Only + Testing Workspace Only',
         workspaces: () => [workspaceTypes.TESTING],
         roles: () => [userRoles.VIEWER],
-        isDivider: true,
-      },
+      }),
       helpers.singleton({
         schemaType: schemaNames.SETTING,
         workspaces: () => [workspaceTypes.TESTING],
@@ -347,10 +314,9 @@ const listItems = defineListItems([
       {
         title: 'Authors',
         children: [
-          {
+          helpers.divider({
             title: 'Restricted To: Active State',
-            isDivider: true,
-          },
+          }),
           {
             title: 'Active',
             schemaType: schemaNames.AUTHOR,
@@ -359,10 +325,9 @@ const listItems = defineListItems([
               isActive: true,
             },
           },
-          {
+          helpers.divider({
             title: 'Restricted To: Inactive State',
-            isDivider: true,
-          },
+          }),
           {
             title: 'Inactive',
             schemaType: schemaNames.AUTHOR,
@@ -453,10 +418,9 @@ const listItems = defineListItems([
       },
     ],
   },
-  {
+  helpers.divider({
     title: 'Code',
-    isDivider: true,
-  },
+  }),
   helpers.singleton({
     title: 'Code',
     schemaType: schemaNames.CODE,

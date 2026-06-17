@@ -1,3 +1,4 @@
+import { dividerHelper, DividerHelperType } from '@/factories/helpers/dividerHelper';
 import { singletonHelper, SingletonHelperType } from '@/factories/helpers/singletonHelper';
 
 export interface Helpers<
@@ -7,8 +8,10 @@ export interface Helpers<
   DefaultRoles extends readonly string[] | undefined,
 > {
   singleton: SingletonHelperType<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+  divider: DividerHelperType<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
 }
 
 export const helpers = {
   singleton: singletonHelper,
+  divider: dividerHelper,
 } as const;
