@@ -11,6 +11,7 @@ It is a declarative, JSON-based wrapper around Sanity's `structureTool`. It allo
 Yes! If you have a highly complex requirement that the JSON API doesn't support yet, you can use the `raw` property or `helpers.raw` to drop back into the native `Structure Builder` (S).
 
 ::: code-group
+
 ```ts [JSON]
 {
   raw: (S) => S.listItem().title('Custom').child(...)
@@ -20,6 +21,7 @@ Yes! If you have a highly complex requirement that the JSON API doesn't support 
 ```ts [Helpers]
 helpers.raw((S) => S.listItem().title('Custom').child(...))
 ```
+
 :::
 
 ## 3. Does it support Singletons? {#does-it-support-singletons}
@@ -42,6 +44,6 @@ For a detailed side-by-side example, check out our **[Comparison Guide](./compar
 
 ## 7. Why do JSON configurations and Helpers (Object) properties match? {#why-do-json-and-helpers-match}
 
-You will notice that the properties in a plain JSON configuration and a `Helpers (Object)` call match exactly. 
+You will notice that the properties in a plain JSON configuration and a `Helpers (Object)` call match exactly.
 
 The helper function wrapper is provided so that the TypeScript compiler can actively identify and validate the precise parameters you can use (e.g., checking if roles/workspaces are enabled in your setup configuration), offering inline IntelliSense and error checking while keeping the object structure you are familiar with.

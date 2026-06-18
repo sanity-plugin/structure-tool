@@ -27,6 +27,7 @@ Refer to the files above for specific implementation details and coding standard
 ### Helper Callback Pattern
 
 When working with list item definitions or documenting them:
+
 - Remember that `defineListItems` and `defineListItem` support a callback parameter `({ helpers }) => ...`.
 - This callback avoids the need to import `helpers` globally or contextually in every single file.
 - When writing documentation (such as `.md` files in `docs/`), always present both the plain JSON-like object format and the helper-based format (using both the direct import and callback signatures) to ensure completeness.
