@@ -4,7 +4,7 @@ import type { ListItemWithoutGenerics } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type SingletonHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItemWithoutGenerics, 'title' | 'icon'>]
+  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItemWithoutGenerics, 'title' | 'icon' | 'isPlural'>]
 >;
 
 type SingletonHelperParams<T extends StructureToolParams> = SimpleMerge<
