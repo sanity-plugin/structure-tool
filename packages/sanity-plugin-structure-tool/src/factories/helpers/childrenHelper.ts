@@ -34,13 +34,13 @@ export const childrenHelper = <T extends StructureToolParams>(
   children?: ListItem<T>[],
   params?: ChildrenHelperCoreParams<T>,
 ): ChildrenHelperOutput<T> => {
-  if (typeof titleOrParams === 'string' && children) {
-    return {
-      ...params,
-      title: titleOrParams,
-      children,
-    };
+  if (typeof titleOrParams === 'object') {
+    return titleOrParams;
   }
 
-  return titleOrParams as unknown as ChildrenHelperOutput<T>;
+  return {
+    ...params,
+    title: titleOrParams,
+    children,
+  } as unknown as ChildrenHelperOutput<T>;
 };

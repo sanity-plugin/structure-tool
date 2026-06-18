@@ -38,16 +38,16 @@ export const singletonHelper = <T extends StructureToolParams>(
   schemaTypeOrParams: SingletonHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
   params?: SingletonHelperCoreParams<T>,
 ): SingletonHelperOutput<T> => {
-  if (typeof schemaTypeOrParams === 'string') {
+  if (typeof schemaTypeOrParams === 'object') {
     return {
-      ...params,
-      schemaType: schemaTypeOrParams,
+      ...schemaTypeOrParams,
       singleton: true,
-    };
+    } as unknown as SingletonHelperOutput<T>;
   }
 
   return {
-    ...schemaTypeOrParams,
+    ...params,
+    schemaType: schemaTypeOrParams,
     singleton: true,
-  } as unknown as SingletonHelperOutput<T>;
+  };
 };

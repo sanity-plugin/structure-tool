@@ -34,13 +34,13 @@ export const componentHelper = <T extends StructureToolParams>(
   component?: NonNullable<ListItem<T>['component']>,
   params?: ComponentHelperCoreParams<T>,
 ): ComponentHelperOutput<T> => {
-  if (typeof titleOrParams === 'string' && component) {
-    return {
-      ...params,
-      title: titleOrParams,
-      component,
-    };
+  if (typeof titleOrParams === 'object') {
+    return titleOrParams;
   }
 
-  return titleOrParams as unknown as ComponentHelperOutput<T>;
+  return {
+    ...params,
+    title: titleOrParams,
+    component,
+  } as unknown as ComponentHelperOutput<T>;
 };

@@ -26,12 +26,12 @@ export const rawHelper = <T extends StructureToolParams>(
   rawOrParams: RawHelperParams<T> | NonNullable<ListItem<T>['raw']>,
   params?: RawHelperCoreParams<T>,
 ): RawHelperOutput<T> => {
-  if (typeof rawOrParams === 'function') {
-    return {
-      ...params,
-      raw: rawOrParams,
-    };
+  if (typeof rawOrParams === 'object') {
+    return rawOrParams;
   }
 
-  return rawOrParams;
+  return {
+    ...params,
+    raw: rawOrParams,
+  };
 };

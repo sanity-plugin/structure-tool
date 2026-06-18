@@ -3,8 +3,10 @@ import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemC
 import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
+type DividerHelperCoreParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T>;
+
 type DividerHelperParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'title'>]
+  [DividerHelperCoreParams<T>, Pick<ListItem<T>, 'title'>]
 >;
 
 type DividerHelperOutput<T extends StructureToolParams> = DividerHelperParams<T> & {
@@ -14,26 +16,23 @@ type DividerHelperOutput<T extends StructureToolParams> = DividerHelperParams<T>
 export interface DividerHelper<T extends StructureToolParams> {
   (params?: DividerHelperParams<T>): DividerHelperOutput<T>;
 
-  (
-    title?: ListItem<T>['title'],
-    params?: Omit<DividerHelperParams<T>, 'title'>,
-  ): DividerHelperOutput<T>;
+  (title?: ListItem<T>['title'], params?: DividerHelperCoreParams<T>): DividerHelperOutput<T>;
 }
 
 export const dividerHelper = <T extends StructureToolParams>(
   titleOrParams?: DividerHelperParams<T> | ListItem<T>['title'],
-  params?: Omit<DividerHelperParams<T>, 'title'>,
+  params?: DividerHelperCoreParams<T>,
 ): DividerHelperOutput<T> => {
-  if (typeof titleOrParams === 'string') {
+  if (typeof titleOrParams === 'object') {
     return {
-      ...params,
-      title: titleOrParams,
+      ...titleOrParams,
       isDivider: true,
-    };
+    } as unknown as DividerHelperOutput<T>;
   }
 
   return {
-    ...titleOrParams,
+    ...params,
+    title: titleOrParams,
     isDivider: true,
   };
 };

@@ -37,12 +37,12 @@ export const listingHelper = <T extends StructureToolParams>(
   schemaTypeOrParams: ListingHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
   params?: ListingHelperCoreParams<T>,
 ): ListingHelperOutput<T> => {
-  if (typeof schemaTypeOrParams === 'string') {
-    return {
-      ...params,
-      schemaType: schemaTypeOrParams,
-    };
+  if (typeof schemaTypeOrParams === 'object') {
+    return schemaTypeOrParams;
   }
 
-  return schemaTypeOrParams;
+  return {
+    ...params,
+    schemaType: schemaTypeOrParams,
+  };
 };
