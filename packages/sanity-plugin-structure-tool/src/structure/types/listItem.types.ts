@@ -43,10 +43,15 @@ type DynamicListItemProps<T extends StructureToolParams> = {
   >;
 };
 
-export interface ListItem<T extends StructureToolParams>
-  extends Pick<ListItemCore, DefaultListItem>, DynamicListItemProps<T> {
-  children?: ListItem<T>[];
-}
+export type ListItem<T extends StructureToolParams> = SimpleMerge<
+  [
+    Pick<ListItemCore, DefaultListItem>,
+    DynamicListItemProps<T>,
+    {
+      children?: ListItem<T>[];
+    },
+  ]
+>;
 
 export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
   [

@@ -3,20 +3,24 @@ import pluralize from 'pluralize-esm';
 import { constants } from '@/constants';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
+import { getValidListItem } from '@/helpers/getValidListItem';
 import { getWorkspacesWithDefaults } from '@/helpers/getWorkspacesWithDefaults';
 import { sanitizeUrl } from '@/utils';
 
-import type { StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import type { SetNonNullable } from 'type-fest';
+import type { StructureBuilder } from 'sanity/structure';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
-import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
+import type {
+  StructureToolParams,
+  ValidSanityContext,
+  Workspace,
+} from '@/structure/types/common.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 
 export const getListItems = <T extends StructureToolParams>(
   S: StructureBuilder,
   workspace: Workspace<T>,
-  context: SetNonNullable<StructureResolverContext, 'currentUser'>,
+  context: ValidSanityContext,
   id: string,
   params: StructureListItemsParams<T>,
 ): ListItemExtended<T>[] => {
@@ -31,14 +35,41 @@ export const getListItems = <T extends StructureToolParams>(
   } = params;
 
   return listItems.reduce<ListItemExtended<T>[]>((acc, listItem, index) => {
-    const { children, schemaType, singleton, isPlural, title = '' } = listItem;
+    const {
+      title: titleFn,
+      schemaType: schemaTypeFn,
+      singleton: singletonFn,
+      children,
+      apiVersion: apiVersionFn,
+      filter: filterFn,
+      filterParams: filterParamsFn,
+      hideAddButton: hideAddButtonFn,
+      templates: templatesFn,
+      isDivider: isDividerFn,
+      isPlural: isPluralFn,
+      ...restListItem
+    } = listItem;
 
     const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
     const roles = 'roles' in listItem ? listItem.roles : undefined;
 
+    const listItemParams = { workspace, currentUser, context };
+
+    const schemaType = getValidListItem(schemaTypeFn, listItemParams);
+    const singleton = getValidListItem(singletonFn, listItemParams);
+    const title = getValidListItem(titleFn, listItemParams);
+    const apiVersion = getValidListItem(apiVersionFn, listItemParams);
+    const filter = getValidListItem(filterFn, listItemParams);
+    const filterParams = getValidListItem(filterParamsFn, listItemParams);
+    const hideAddButton = getValidListItem(hideAddButtonFn, listItemParams);
+    const templates = getValidListItem(templatesFn, listItemParams);
+    const isDivider = getValidListItem(isDividerFn, listItemParams);
+    const isPlural = getValidListItem(isPluralFn, listItemParams);
+
     const displayTitle = (() => {
       const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
       const isItPlural = title ? false : (isPlural ?? !singleton);
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
       const mainTitle = title || (schemaTitle ?? '');
 
       const finalTitle = isItPlural ? pluralize(mainTitle) : mainTitle;
@@ -47,11 +78,21 @@ export const getListItems = <T extends StructureToolParams>(
 
     const uniqueId = [id, index + 1].join(constants.URL_PATH_SEPARATOR);
     const listItemObj = {
-      ...listItem,
+      ...restListItem,
       id: [uniqueId, ...sanitizeUrl(displayTitle).toLowerCase().split(' ')].join(
         constants.URL_PATH_SEPARATOR,
       ),
       displayTitle,
+      children,
+      schemaType,
+      singleton,
+      apiVersion,
+      filter,
+      filterParams,
+      hideAddButton,
+      templates,
+      isDivider,
+      isPlural,
     };
 
     const { hasWorkspaceEnabled, hasWorkspaceAccess } = (() => {
