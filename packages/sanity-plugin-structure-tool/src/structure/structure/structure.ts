@@ -1,4 +1,4 @@
-import { getContextValues } from '@/factories/helpers/getContextValues';
+import { getContextValues } from '@/helpers/getContextValues';
 import { getWorkspaceListItems } from '@/helpers/getWorkspaceListItems';
 import { renderListItem } from '@/structure/renderListItem/renderListItem';
 

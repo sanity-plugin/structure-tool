@@ -1,4 +1,4 @@
-import { getContextValues } from '@/factories/helpers/getContextValues';
+import { getContextValues } from '@/helpers/getContextValues';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { Templates } from '@/structure/templates/templates.types';
