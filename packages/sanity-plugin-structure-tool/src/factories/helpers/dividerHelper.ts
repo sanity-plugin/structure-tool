@@ -1,10 +1,10 @@
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItemWithoutGenerics } from '@/types';
+import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type DividerHelperParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItemWithoutGenerics, 'title'>]
+  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'title'>]
 >;
 
 type DividerHelperOutput<T extends StructureToolParams> = DividerHelperParams<T> & {
@@ -15,13 +15,13 @@ export interface DividerHelper<T extends StructureToolParams> {
   (params?: DividerHelperParams<T>): DividerHelperOutput<T>;
 
   (
-    title?: ListItemWithoutGenerics['title'],
+    title?: ListItem<T>['title'],
     params?: Omit<DividerHelperParams<T>, 'title'>,
   ): DividerHelperOutput<T>;
 }
 
 export const dividerHelper = <T extends StructureToolParams>(
-  titleOrParams?: DividerHelperParams<T> | ListItemWithoutGenerics['title'],
+  titleOrParams?: DividerHelperParams<T> | ListItem<T>['title'],
   params?: Omit<DividerHelperParams<T>, 'title'>,
 ): DividerHelperOutput<T> => {
   if (typeof titleOrParams === 'string') {

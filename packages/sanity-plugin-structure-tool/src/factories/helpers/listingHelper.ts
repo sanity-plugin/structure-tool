@@ -2,17 +2,14 @@ import type { RequireOneOrNone } from 'type-fest';
 
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItemWithoutGenerics } from '@/types';
+import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListItemWithWorkspacesAndRoles<T>,
-    RequireOneOrNone<Pick<ListItemWithoutGenerics, 'hideAddButton' | 'templates'>>,
-    Pick<
-      ListItemWithoutGenerics,
-      'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams' | 'isPlural'
-    >,
+    RequireOneOrNone<Pick<ListItem<T>, 'hideAddButton' | 'templates'>>,
+    Pick<ListItem<T>, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams' | 'isPlural'>,
   ]
 >;
 
@@ -20,7 +17,7 @@ type ListingHelperParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListingHelperCoreParams<T>,
     {
-      schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>;
+      schemaType: NonNullable<ListItem<T>['schemaType']>;
     },
   ]
 >;
@@ -31,13 +28,13 @@ export interface ListingHelper<T extends StructureToolParams> {
   (params: ListingHelperParams<T>): ListingHelperOutput<T>;
 
   (
-    schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>,
+    schemaType: NonNullable<ListItem<T>['schemaType']>,
     params?: ListingHelperCoreParams<T>,
   ): ListingHelperOutput<T>;
 }
 
 export const listingHelper = <T extends StructureToolParams>(
-  schemaTypeOrParams: ListingHelperParams<T> | NonNullable<ListItemWithoutGenerics['schemaType']>,
+  schemaTypeOrParams: ListingHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
   params?: ListingHelperCoreParams<T>,
 ): ListingHelperOutput<T> => {
   if (typeof schemaTypeOrParams === 'string') {

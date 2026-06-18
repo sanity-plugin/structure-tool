@@ -2,14 +2,14 @@ import type { SetRequired } from 'type-fest';
 
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItemWithoutGenerics } from '@/types';
+import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListItemWithWorkspacesAndRoles<T>,
     SetRequired<
-      Pick<ListItemWithoutGenerics, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams'>,
+      Pick<ListItem<T>, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams'>,
       'title' | 'filter'
     >,
   ]

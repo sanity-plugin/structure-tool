@@ -14,15 +14,9 @@ import type { IconComponent, SimpleMerge } from '@/types/lib.types';
 
 // Filter & Filter Params
 
-interface ListItemFilterCallbackParams {
+export interface ListItemFilterCallbackParams {
   currentUser: CurrentUser;
 }
-
-export type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
-
-export type ListItemFilterParams =
-  | Record<string, unknown>
-  | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
 
 // Raw
 
@@ -31,30 +25,24 @@ export type ListItemRaw = (
   context: SetNonNullable<StructureResolverContext, 'currentUser'>,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ListItemWithoutGenerics {
+export interface ListItem<T extends StructureToolParams> {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
   singleton?: boolean;
   component?: UserComponent;
+  children?: ListItem<T>[];
   apiVersion?: string;
-  filter?: ListItemFilter;
-  filterParams?: ListItemFilterParams;
+  filter?: string | ((params: ListItemFilterCallbackParams) => string);
+  filterParams?:
+    | Record<string, unknown>
+    | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
   hideAddButton?: boolean;
   templates?: Record<string, unknown>;
   raw?: ListItemRaw;
   isDivider?: boolean;
   isPlural?: boolean;
 }
-
-export type ListItem<T extends StructureToolParams> = SimpleMerge<
-  [
-    ListItemCore<T>,
-    {
-      children?: ListItem<T>[];
-    },
-  ]
->;
 
 export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
   [

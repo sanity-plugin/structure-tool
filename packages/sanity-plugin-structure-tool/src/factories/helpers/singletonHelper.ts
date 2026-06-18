@@ -1,17 +1,17 @@
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItemWithoutGenerics } from '@/types';
+import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type SingletonHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItemWithoutGenerics, 'title' | 'icon' | 'isPlural'>]
+  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'title' | 'icon' | 'isPlural'>]
 >;
 
 type SingletonHelperParams<T extends StructureToolParams> = SimpleMerge<
   [
     SingletonHelperCoreParams<T>,
     {
-      schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>;
+      schemaType: NonNullable<ListItem<T>['schemaType']>;
     },
   ]
 >;
@@ -29,13 +29,13 @@ export interface SingletonHelper<T extends StructureToolParams> {
   (params: SingletonHelperParams<T>): SingletonHelperOutput<T>;
 
   (
-    schemaType: NonNullable<ListItemWithoutGenerics['schemaType']>,
+    schemaType: NonNullable<ListItem<T>['schemaType']>,
     params?: SingletonHelperCoreParams<T>,
   ): SingletonHelperOutput<T>;
 }
 
 export const singletonHelper = <T extends StructureToolParams>(
-  schemaTypeOrParams: SingletonHelperParams<T> | NonNullable<ListItemWithoutGenerics['schemaType']>,
+  schemaTypeOrParams: SingletonHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
   params?: SingletonHelperCoreParams<T>,
 ): SingletonHelperOutput<T> => {
   if (typeof schemaTypeOrParams === 'string') {

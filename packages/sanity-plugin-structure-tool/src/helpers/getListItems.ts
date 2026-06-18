@@ -6,8 +6,8 @@ import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
 import { getWorkspacesWithDefaults } from '@/helpers/getWorkspacesWithDefaults';
 import { sanitizeUrl } from '@/utils';
 
-import type { CurrentUser } from 'sanity';
-import type { StructureBuilder } from 'sanity/structure';
+import type { StructureBuilder, StructureResolverContext } from 'sanity/structure';
+import type { SetNonNullable } from 'type-fest';
 
 import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
@@ -16,10 +16,12 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 export const getListItems = <T extends StructureToolParams>(
   S: StructureBuilder,
   workspace: Workspace<T>,
-  currentUser: CurrentUser,
+  context: SetNonNullable<StructureResolverContext, 'currentUser'>,
   id: string,
   params: StructureListItemsParams<T>,
 ): ListItemExtended<T>[] => {
+  const { currentUser } = context;
+
   const {
     workspaces: globalWorkspaces,
     defaultWorkspaces,
@@ -82,7 +84,7 @@ export const getListItems = <T extends StructureToolParams>(
     if (children && children.length > 0) {
       acc.push({
         ...listItemObj,
-        children: getListItems(S, workspace, currentUser, uniqueId, {
+        children: getListItems(S, workspace, context, uniqueId, {
           ...params,
           listItems: children,
         }),

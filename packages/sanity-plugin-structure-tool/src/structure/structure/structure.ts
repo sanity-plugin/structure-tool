@@ -15,15 +15,23 @@ export const structure =
 
     const workspace = original?.name as Workspace<T>;
 
-    const displayTitle = typeof title === 'function' ? title({ workspace, context }) : title;
+    if (!currentUser) return S.list().title('CurrentUser not found').items([]);
+
+    const validContext = { ...context, currentUser };
+
+    const displayTitle =
+      typeof title === 'function'
+        ? title({ workspace, currentUser, context: validContext })
+        : title;
+
     const displayEmptyListTitle =
       typeof emptyListTitle === 'function'
-        ? emptyListTitle({ workspace, context })
+        ? emptyListTitle({ workspace, currentUser, context: validContext })
         : emptyListTitle;
 
-    if (!workspace || !currentUser) return S.list().title(displayTitle).items([]);
+    if (!workspace) return S.list().title(displayTitle).items([]);
 
-    const workspaceListItems = getWorkspaceListItems<T>(S, workspace, currentUser, restParams);
+    const workspaceListItems = getWorkspaceListItems<T>(S, workspace, validContext, restParams);
 
     if (!workspaceListItems || workspaceListItems.length === 0) {
       return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
@@ -33,7 +41,7 @@ export const structure =
       .title(displayTitle)
       .items(
         workspaceListItems
-          .map((listItem) => renderListItem<T>(S, { ...context, currentUser }, listItem))
+          .map((listItem) => renderListItem<T>(S, validContext, listItem))
           .filter((item) => item !== null),
       );
   };
