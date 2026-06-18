@@ -39,3 +39,9 @@ Yes, it is built with TypeScript and provides full type safety and autocompletio
 While the native API is powerful, it can become very verbose and hard to maintain as your studio grows. This tool provides a cleaner, more readable hierarchy that is easier to refactor and manage, especially for common patterns like singletons and nested lists.
 
 For a detailed side-by-side example, check out our **[Comparison Guide](./comparison)**.
+
+## 7. Why do JSON configurations and Helpers (Object) properties match? {#why-do-json-and-helpers-match}
+
+You will notice that the properties in a plain JSON configuration and a `Helpers (Object)` call match exactly. 
+
+The helper function wrapper is provided so that the TypeScript compiler can actively identify and validate the precise parameters you can use (e.g., checking if roles/workspaces are enabled in your setup configuration), offering inline IntelliSense and error checking while keeping the object structure you are familiar with.
