@@ -4,14 +4,14 @@ After [installing](/introduction/getting-started#installation) the package, foll
 
 ## 1. Configuration {#configuration}
 
-First, create a file to configure the plugin. This generates the typed helpers you'll use throughout your project.
+First, create a file to configure the plugin. This generates the typed utilities and helpers you'll use throughout your project.
 
 ::: code-group
 
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { structure, defineListItems } = structureToolPlugin({
+export const { structure, defineListItems, helpers } = structureToolPlugin({
   title: 'My Project',
 });
 ```
@@ -24,11 +24,12 @@ For dynamic titles, custom roles, or workspace support, see the full **[Configur
 
 ## 2. Define List Items {#define-list-items}
 
-Next, use the generated `defineListItems` helper to define your studio's desk hierarchy in a separate file.
+Next, define your studio's desk hierarchy in a separate file. You can use either the `helpers` or raw objects with `defineListItems`.
 
 ::: code-group
 
-```ts [src/structure/listItems.ts]
+```ts [JSON]
+// src/structure/listItems.ts
 import { defineListItems } from './index';
 
 const listItems = defineListItems([
@@ -41,6 +42,20 @@ const listItems = defineListItems([
     singleton: true,
   },
 ]);
+
+export default listItems;
+```
+
+```ts [Helpers]
+// src/structure/listItems.ts
+import { defineListItems } from './index';
+
+const listItems = defineListItems([
+  helpers.listing('author'),
+  helpers.singleton('settings', {
+    title: 'Settings',
+  }),
+];
 
 export default listItems;
 ```
@@ -117,5 +132,6 @@ bun dev
 Now that your base setup is complete, explore more:
 
 - **[List Items](./list-items)**: Learn how to add icons, filters, and custom parameters.
+- **[Helpers](./helpers)**: Learn about the built-in functions to define your structure.
 - **[Examples](../examples/title)**: See specific examples for each field.
 - **[FAQ](./faq)**: Find answers to common questions.

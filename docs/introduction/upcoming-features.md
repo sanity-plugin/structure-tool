@@ -10,7 +10,9 @@ Here is a glimpse of what's coming in future releases:
 
 More granular control over how documents are ordered within lists.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'post',
   defaultOrdering: {
@@ -19,22 +21,44 @@ More granular control over how documents are ordered within lists.
 }
 ```
 
+```ts [Helpers]
+helpers.listing('post', {
+  defaultOrdering: {
+    _createdAt: 'desc',
+  },
+});
+```
+
+:::
+
 ### 2. Layout Options (`defaultLayout`) {#layout-options}
 
 Presets and configuration options to switch between different list layouts.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'gallery',
   defaultLayout: 'media', // Upcoming: 'default' | 'card' | 'media' | 'detail' | 'block'
 }
 ```
 
+```ts [Helpers]
+helpers.listing('gallery', {
+  defaultLayout: 'media', // Upcoming: 'default' | 'card' | 'media' | 'detail' | 'block'
+});
+```
+
+:::
+
 ### 3. Menu Items (`menuItems`) {#menu-items}
 
 Support for defining custom menu actions and icons at the top of document lists.
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { DownloadIcon } from '@sanity/icons';
 
 {
@@ -44,16 +68,34 @@ import { DownloadIcon } from '@sanity/icons';
       title: 'Export to CSV',
       icon: DownloadIcon,
       action: 'export-csv',
-    }
-  ]
+    },
+  ],
 }
 ```
+
+```ts [Helpers]
+import { DownloadIcon } from '@sanity/icons';
+
+helpers.listing('product', {
+  menuItems: [
+    {
+      title: 'Export to CSV',
+      icon: DownloadIcon,
+      action: 'export-csv',
+    },
+  ],
+});
+```
+
+:::
 
 ### 4. View Customization (`views`) {#view-customization}
 
 Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'post',
   singleton: true,
@@ -66,10 +108,28 @@ Support for defining multiple document views (e.g., Editor, Preview, and custom 
       title: 'Preview',
       type: 'component',
       component: MyPreviewComponent,
-    }
-  ]
+    },
+  ],
 }
 ```
+
+```ts [Helpers]
+helpers.singleton('post', {
+  views: [
+    {
+      title: 'Editor',
+      type: 'form',
+    },
+    {
+      title: 'Preview',
+      type: 'component',
+      component: MyPreviewComponent,
+    },
+  ],
+});
+```
+
+:::
 
 ### 5. TypeScript & Validation {#typescript-validation}
 

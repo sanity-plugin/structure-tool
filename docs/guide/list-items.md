@@ -2,6 +2,10 @@
 
 The core of **Sanity Structure Tool** is the `ListItem` configuration. This guide explains every property you can use to define your desk structure.
 
+::: info Using Helpers
+You can define list items using either raw objects or the built-in [Helpers](./helpers). Helpers provide enhanced type intelligence and a more expressive syntax.
+:::
+
 ## `title` {#title}
 
 - **Type**: `string`
@@ -10,11 +14,22 @@ The core of **Sanity Structure Tool** is the `ListItem` configuration. This guid
 
 The display name for the list item. While optional for standard items (where it can be inferred from `schemaType`), it is **mandatory** for items that act as folders (containing `children`).
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'My Custom Title',
+  schemaType: 'author',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  title: 'My Custom Title',
+});
+```
+
+:::
 
 ## `schemaType` {#schema-type}
 
@@ -24,11 +39,19 @@ The display name for the list item. While optional for standard items (where it 
 
 The name of the document type defined in your Sanity schema. Providing this will automatically link the list item to that document type.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author');
+```
+
+:::
 
 ## `icon` {#icon}
 
@@ -38,7 +61,9 @@ The name of the document type defined in your Sanity schema. Providing this will
 
 The icon to display to the left of the title. You can use standard Sanity icons or custom React components.
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { UserIcon } from '@sanity/icons';
 
 {
@@ -46,6 +71,16 @@ import { UserIcon } from '@sanity/icons';
   icon: UserIcon,
 }
 ```
+
+```ts [Helpers]
+import { UserIcon } from '@sanity/icons';
+
+helpers.listing('author', {
+  icon: UserIcon,
+});
+```
+
+:::
 
 ## `singleton` {#singleton}
 
@@ -59,13 +94,23 @@ When set to `true`, this item is treated as a single document rather than a list
 When `singleton: true` is enabled, the `apiVersion` and `templates` properties are **not supported** and should not be used.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Global Settings',
   schemaType: 'settings',
   singleton: true,
 }
 ```
+
+```ts [Helpers]
+helpers.singleton('settings', {
+  title: 'Global Settings',
+});
+```
+
+:::
 
 ## `component` {#component}
 
@@ -75,7 +120,9 @@ When `singleton: true` is enabled, the `apiVersion` and `templates` properties a
 
 Allows you to render a custom React component as the child (view) of the list item. This is useful for creating custom dashboards, analytics views, or any other non-document based content.
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { MyDashboard } from './components/MyDashboard';
 
 {
@@ -83,6 +130,14 @@ import { MyDashboard } from './components/MyDashboard';
   component: MyDashboard,
 }
 ```
+
+```ts [Helpers]
+import { MyDashboard } from './components/MyDashboard';
+
+helpers.component('Analytics', MyDashboard);
+```
+
+:::
 
 ## `children` {#children}
 
@@ -96,7 +151,9 @@ An array of `ListItem` objects to create a nested list. This is the primary way 
 When adding `children`, you **must** also provide a `title` so it can be labeled correctly in the desk menu.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Profile',
   children: [
@@ -110,6 +167,12 @@ When adding `children`, you **must** also provide a `title` so it can be labeled
 }
 ```
 
+```ts [Helpers]
+helpers.children('Profile', [helpers.listing('author'), helpers.listing('user')]);
+```
+
+:::
+
 ## `apiVersion` {#api-versioning}
 
 - **Type**: `string`
@@ -122,12 +185,22 @@ Specifies the Sanity API version to use for this specific list item.
 This property is **not compatible** with items marked as `singleton: true`.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   apiVersion: '2025-02-19',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  apiVersion: '2025-02-19',
+});
+```
+
+:::
 
 ## `filter` {#filter}
 
@@ -141,12 +214,22 @@ A GROQ filter string to limit which documents are shown in the list. You can als
 If you provide a `filter` without a `schemaType`, you cannot use `hideAddButton` or `templates` for that item.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   filter: 'isActive == true',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  filter: 'isActive == true',
+});
+```
+
+:::
 
 ## `filterParams` {#filter-params}
 
@@ -156,15 +239,28 @@ If you provide a `filter` without a `schemaType`, you cannot use `hideAddButton`
 
 Parameters to be used within the `filter` GROQ string.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   filter: 'type == $type',
   filterParams: {
-    type: 'news'
+    type: 'news',
   },
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  filter: 'type == $type',
+  filterParams: {
+    type: 'news',
+  },
+});
+```
+
+:::
 
 ## `workspaces` {#workspaces}
 
@@ -178,12 +274,22 @@ Restricts the visibility of the list item to specific Sanity workspaces. You can
 When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'adminSettings',
   workspaces: ['workspace1'],
 }
 ```
+
+```ts [Helpers]
+helpers.listing('adminSettings', {
+  workspaces: ['workspace1'],
+});
+```
+
+:::
 
 ## `roles` {#roles}
 
@@ -197,12 +303,22 @@ Restricts the visibility of the list item to specific user roles. Like `workspac
 When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'settings',
   roles: ['administrator', 'editor'],
 }
 ```
+
+```ts [Helpers]
+helpers.listing('settings', {
+  roles: ['administrator', 'editor'],
+});
+```
+
+:::
 
 ## `hideAddButton` {#hide-add-button}
 
@@ -216,12 +332,22 @@ When set to `true`, the "Add" button (plus icon) will be hidden for this documen
 This property cannot be used in combination with `templates`. Additionally, it is not supported when a `filter` is used without a `schemaType`.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   hideAddButton: true,
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  hideAddButton: true,
+});
+```
+
+:::
 
 ## `templates` {#templates}
 
@@ -235,7 +361,9 @@ Used to pass initial value templates for new documents created from this list it
 This property cannot be used if `hideAddButton` is present. It is also **not supported** for `singleton` items or when a `filter` is used without a `schemaType`.
 :::
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'post',
   templates: {
@@ -243,6 +371,16 @@ This property cannot be used if `hideAddButton` is present. It is also **not sup
   },
 }
 ```
+
+```ts [Helpers]
+helpers.listing('post', {
+  templates: {
+    isActive: false,
+  },
+});
+```
+
+:::
 
 ## `raw` {#raw}
 
@@ -252,11 +390,19 @@ This property cannot be used if `hideAddButton` is present. It is also **not sup
 
 The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API directly for this specific item. You also have access to the `context` (containing `currentUser`, `projectId`, etc.).
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
-  raw: (S) => S.listItem().title('Advanced Item').child(...),
+  raw: (S) => S.listItem().title('Advanced Item').child(...)
 }
 ```
+
+```ts [Helpers]
+helpers.raw((S) => S.listItem().title('Advanced Item').child(...))
+```
+
+:::
 
 ::: warning Use Sparingly
 When using `raw`, you are responsible for handling your own visibility logic (workspaces/roles) for any nested children.
@@ -270,12 +416,20 @@ When using `raw`, you are responsible for handling your own visibility logic (wo
 
 When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Content Section',
   isDivider: true,
 }
 ```
+
+```ts [Helpers]
+helpers.divider('Content Section');
+```
+
+:::
 
 ## `isPlural` {#is-plural}
 
@@ -289,14 +443,24 @@ Controls whether the auto-generated title should be pluralized when no custom `t
 For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
 
 ::: details Recommendation
-We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
+It is best to give your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
 :::
 
 When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   isPlural: false,
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  isPlural: false,
+});
+```
+
+:::

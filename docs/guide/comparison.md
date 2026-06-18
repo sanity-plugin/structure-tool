@@ -8,21 +8,33 @@ In a typical studio, you often need to handle singletons (like "Settings"), divi
 
 ::: code-group
 
-```ts [Sanity Structure Tool]
-import { defineListItems } from './index';
-
+```ts [JSON]
 const listItems = defineListItems([
   {
     title: 'Site Settings',
     schemaType: 'settings',
-    singleton: true, // Automatically handles id and editor view
+    // Automatically handles id and editor view
+    singleton: true,
   },
   {
     isDivider: true,
   },
   {
-    schemaType: 'post', // Automatically pluralizes title and adds icon
+    // Automatically pluralizes title and adds icon
+    schemaType: 'post',
   },
+]);
+```
+
+```ts [Helpers]
+const listItems = defineListItems([
+  // Automatically handles id and editor view
+  helpers.singleton('settings', {
+    title: 'Site Settings',
+  }),
+  helpers.divider(),
+  // Automatically pluralizes title and adds icon
+  helpers.listing('post'),
 ]);
 ```
 
@@ -52,7 +64,7 @@ Managing visibility based on user roles or workspaces is where the native API be
 
 ::: code-group
 
-```ts [Sanity Structure Tool]
+```ts [JSON]
 // Automatically handles logic for both roles and workspaces
 const listItems = defineListItems([
   {
@@ -60,6 +72,15 @@ const listItems = defineListItems([
     workspaces: ['staging'],
     roles: ['administrator'],
   },
+]);
+```
+
+```ts [Helpers]
+const listItems = defineListItems([
+  helpers.listing('revenue', {
+    workspaces: ['staging'],
+    roles: ['administrator'],
+  }),
 ]);
 ```
 
