@@ -1,7 +1,6 @@
 import type { SetNonNullable } from 'type-fest';
 
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 // Workspaces
@@ -57,8 +56,4 @@ export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = Simp
       : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         {},
   ]
->;
-
-export type ListItemCore<T extends StructureToolParams> = SimpleMerge<
-  [ListItem<T>, ListItemWithWorkspacesAndRoles<T>]
 >;

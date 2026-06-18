@@ -1,23 +1,17 @@
+import { getContextValues } from '@/factories/helpers/getContextValues';
 import { getWorkspaceListItems } from '@/helpers/getWorkspaceListItems';
 import { renderListItem } from '@/structure/renderListItem/renderListItem';
 
 import type { StructureResolver } from 'sanity/structure';
 
 import type { StructureParams } from '@/structure/structure/structure.types';
-import type { StructureToolParams, Workspace } from '@/structure/types/common.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 
 export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;
-    const { currentUser, schema } = context;
-    const { _original: original } = schema;
-
-    const workspace = original?.name as Workspace<T>;
-
-    if (!currentUser) return S.list().title('CurrentUser not found').items([]);
-
-    const validContext = { ...context, currentUser };
+    const { workspace, currentUser, context: validContext } = getContextValues<T>(context);
 
     const displayTitle =
       typeof title === 'function'
@@ -41,7 +35,7 @@ export const structure =
       .title(displayTitle)
       .items(
         workspaceListItems
-          .map((listItem) => renderListItem<T>(S, validContext, listItem))
+          .map((listItem) => renderListItem<T>(S, workspace, validContext, listItem))
           .filter((item) => item !== null),
       );
   };

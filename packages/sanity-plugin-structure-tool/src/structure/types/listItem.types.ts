@@ -1,42 +1,32 @@
 import type { ComponentType, ReactNode } from 'react';
-import type { CurrentUser } from 'sanity';
+import type { ListBuilder, StructureBuilder, UserComponent } from 'sanity/structure';
+
 import type {
-  ListBuilder,
-  StructureBuilder,
-  StructureResolverContext,
-  UserComponent,
-} from 'sanity/structure';
-import type { SetNonNullable } from 'type-fest';
-
-import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemCore } from '@/structure/types/listItemCore.types';
+  StructureToolGenericParam,
+  StructureToolParams,
+  ValidSanityContext,
+} from '@/structure/types/common.types';
+import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
-
-// Filter & Filter Params
-
-export interface ListItemFilterCallbackParams {
-  currentUser: CurrentUser;
-}
 
 // Raw
 
 export type ListItemRaw = (
   S: StructureBuilder,
-  context: SetNonNullable<StructureResolverContext, 'currentUser'>,
+  context: ValidSanityContext,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export interface ListItem<T extends StructureToolParams> {
+// Core
+
+export interface ListItemCore {
   title?: string;
   schemaType?: string;
   icon?: IconComponent | ComponentType | ReactNode;
   singleton?: boolean;
   component?: UserComponent;
-  children?: ListItem<T>[];
   apiVersion?: string;
-  filter?: string | ((params: ListItemFilterCallbackParams) => string);
-  filterParams?:
-    | Record<string, unknown>
-    | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
+  filter?: string;
+  filterParams?: Record<string, unknown>;
   hideAddButton?: boolean;
   templates?: Record<string, unknown>;
   raw?: ListItemRaw;
@@ -44,9 +34,24 @@ export interface ListItem<T extends StructureToolParams> {
   isPlural?: boolean;
 }
 
+type DefaultListItem = 'icon' | 'component' | 'raw';
+
+type DynamicListItemProps<T extends StructureToolParams> = {
+  [K in Exclude<keyof ListItemCore, DefaultListItem>]?: StructureToolGenericParam<
+    T,
+    ListItemCore[K]
+  >;
+};
+
+export interface ListItem<T extends StructureToolParams>
+  extends Pick<ListItemCore, DefaultListItem>, DynamicListItemProps<T> {
+  children?: ListItem<T>[];
+}
+
 export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemCore<T>,
+    ListItemCore,
+    ListItemWithWorkspacesAndRoles<T>,
     {
       id: string;
       displayTitle: string;

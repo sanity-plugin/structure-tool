@@ -1,11 +1,15 @@
-import type { StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import type { SetNonNullable } from 'type-fest';
+import type { StructureBuilder } from 'sanity/structure';
 
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type {
+  StructureToolParams,
+  ValidSanityContext,
+  Workspace,
+} from '@/structure/types/common.types';
 import type { ListItemExtended, ListItemRaw } from '@/structure/types/listItem.types';
 
 export type RenderListItem = <T extends StructureToolParams>(
   S: StructureBuilder,
-  context: SetNonNullable<StructureResolverContext, 'currentUser'>,
+  workspace: Workspace<T>,
+  context: ValidSanityContext,
   listItem: ListItemExtended<T>,
 ) => ReturnType<ListItemRaw>;

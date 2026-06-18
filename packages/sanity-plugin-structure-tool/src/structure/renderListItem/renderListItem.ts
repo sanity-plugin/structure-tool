@@ -2,14 +2,13 @@ import { constants } from '@/constants';
 
 import type { RenderListItem } from '@/structure/renderListItem/renderListItem.types';
 
-export const renderListItem: RenderListItem = (S, context, listItem) => {
-  const { currentUser } = context;
-
+export const renderListItem: RenderListItem = (S, workspace, context, listItem) => {
   const {
     schemaType,
     icon,
     singleton,
     component,
+    children,
     apiVersion,
     filter,
     filterParams,
@@ -19,14 +18,9 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
     isDivider,
     id,
     displayTitle,
-    children,
   } = listItem;
 
   if (raw) return raw(S, context);
-
-  const roleFilter = typeof filter === 'function' ? filter({ currentUser }) : (filter ?? '');
-  const roleFilterParams =
-    typeof filterParams === 'function' ? filterParams({ currentUser }) : (filterParams ?? {});
 
   if (isDivider) return S.divider().title(displayTitle);
 
@@ -41,7 +35,7 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
           .title(displayTitle)
           .items(
             children
-              .map((child) => renderListItem(S, context, child))
+              .map((child) => renderListItem(S, workspace, context, child))
               .filter((child) => child !== null),
           ),
       );
@@ -62,11 +56,11 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
           .menuItems([])
           .initialValueTemplates([]);
 
-        if (roleFilter || roleFilterParams) {
+        if (filter || filterParams) {
           schemaBuilder = schemaBuilder
             // eslint-disable-next-line unicorn/no-array-callback-reference
-            .filter(roleFilter)
-            .params(roleFilterParams);
+            .filter(filter)
+            .params({ ...filterParams });
         }
 
         if (apiVersion) {
@@ -104,10 +98,10 @@ export const renderListItem: RenderListItem = (S, context, listItem) => {
       let schemaBuilder = S.documentTypeList(schemaType)
         .title(displayTitle)
         .id(id)
-        .filter(['_type == $schemaType', ...(roleFilter ? [roleFilter] : [])].join(' && '))
+        .filter(['_type == $schemaType', ...(filter ? [filter] : [])].join(' && '))
         .params({
           schemaType,
-          ...roleFilterParams,
+          ...filterParams,
         });
 
       if (apiVersion) {

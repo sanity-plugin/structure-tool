@@ -1,9 +1,17 @@
+import { getContextValues } from '@/factories/helpers/getContextValues';
+import { getValidListItem } from '@/helpers/getValidListItem';
+
 import type { Templates } from '@/structure/templates/templates.types';
 
-export const templates: Templates = (flatListItems) => (prev) => {
+export const templates: Templates = (flatListItems) => (prev, context) => {
+  const contextValues = getContextValues(context);
+
   const templatesItems = flatListItems
     .map((item) => {
-      const { schemaType, templates: template } = item;
+      const { schemaType: schemaTypeFn, templates: templateFn } = item;
+
+      const schemaType = getValidListItem(schemaTypeFn, contextValues);
+      const template = getValidListItem(templateFn, contextValues);
 
       if (template && schemaType) {
         return {
