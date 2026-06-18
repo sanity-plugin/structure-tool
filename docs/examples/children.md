@@ -4,7 +4,9 @@ The `children` property allows you to create nested list structures. You can nes
 
 ## Standard Nesting {#standard-nesting}
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Profile',
   children: [
@@ -18,9 +20,17 @@ The `children` property allows you to create nested list structures. You can nes
 }
 ```
 
+```ts [Helpers]
+helpers.children('Profile', [helpers.listing('author'), helpers.listing('user')]);
+```
+
+:::
+
 ## Deep Nesting (Nested Children) {#deep-nesting}
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Content Management',
   children: [
@@ -49,3 +59,15 @@ The `children` property allows you to create nested list structures. You can nes
   ],
 }
 ```
+
+```ts [Helpers]
+helpers.children('Content Management', [
+  helpers.children('Marketing', [
+    helpers.children('Campaigns', [helpers.listing('summerSale'), helpers.listing('winterSale')]),
+    helpers.listing('adChannel'),
+  ]),
+  helpers.listing('blogPost'),
+]);
+```
+
+:::

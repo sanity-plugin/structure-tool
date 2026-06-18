@@ -2,9 +2,19 @@
 
 The `hideAddButton` property removes the "Add" (plus) icon from the document list.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   hideAddButton: true,
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  hideAddButton: true,
+});
+```
+
+:::

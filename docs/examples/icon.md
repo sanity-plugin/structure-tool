@@ -2,7 +2,9 @@
 
 The `icon` property allows you to add a visual indicator to the left of the title.
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { UsersIcon } from '@sanity/icons';
 
 {
@@ -10,3 +12,13 @@ import { UsersIcon } from '@sanity/icons';
   icon: UsersIcon,
 }
 ```
+
+```ts [Helpers]
+import { UsersIcon } from '@sanity/icons';
+
+helpers.listing('author', {
+  icon: UsersIcon,
+});
+```
+
+:::

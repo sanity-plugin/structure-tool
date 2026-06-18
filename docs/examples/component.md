@@ -2,7 +2,9 @@
 
 The `component` property allows you to render a custom React component as the view for a list item.
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { MyDashboard } from './components/MyDashboard';
 
 {
@@ -10,3 +12,11 @@ import { MyDashboard } from './components/MyDashboard';
   component: MyDashboard,
 }
 ```
+
+```ts [Helpers]
+import { MyDashboard } from './components/MyDashboard';
+
+helpers.component('Analytics Dashboard', MyDashboard);
+```
+
+:::

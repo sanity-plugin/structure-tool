@@ -6,7 +6,9 @@ The `filter` property allows you to limit which documents are shown in a list us
 
 You can use `filter` alongside `schemaType` to show a subset of documents.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Active Authors',
   schemaType: 'author',
@@ -14,11 +16,22 @@ You can use `filter` alongside `schemaType` to show a subset of documents.
 }
 ```
 
+```ts [Helpers]
+helpers.listing('author', {
+  title: 'Active Authors',
+  filter: 'isActive == true',
+});
+```
+
+:::
+
 ## Organized Sub-sections {#organized-sub-sections}
 
 Filters are commonly used within `children` to create organized views of the same document type.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Authors',
   children: [
@@ -37,11 +50,29 @@ Filters are commonly used within `children` to create organized views of the sam
 }
 ```
 
+```ts [Helpers]
+helpers.children('Authors', [
+  helpers.listing('author', {
+    title: 'Active',
+    filter: 'isActive == true',
+  }),
+  helpers.listing('author', {
+    title: 'Inactive',
+    filter: 'isActive != true',
+    hideAddButton: true,
+  }),
+]);
+```
+
+:::
+
 ## Using Filter Parameters {#using-filter-parameters}
 
 Use `filterParams` to pass dynamic values to your GROQ query.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Authors from GROQ',
   filter: '_type == $author',
@@ -51,11 +82,25 @@ Use `filterParams` to pass dynamic values to your GROQ query.
 }
 ```
 
+```ts [Helpers]
+helpers.filters({
+  title: 'Authors from GROQ',
+  filter: '_type == $author',
+  filterParams: {
+    author: 'author',
+  },
+});
+```
+
+:::
+
 ## Multiple Document Types {#multiple-document-types}
 
 You can create a mixed list of multiple document types by using a more complex GROQ filter.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Authors + Homepage from GROQ',
   filter: '_type == $author || _type == $homepage',
@@ -66,6 +111,19 @@ You can create a mixed list of multiple document types by using a more complex G
 }
 ```
 
+```ts [Helpers]
+helpers.filters({
+  title: 'Authors + Homepage from GROQ',
+  filter: '_type == $author || _type == $homepage',
+  filterParams: {
+    author: 'author',
+    homepage: 'homepage',
+  },
+});
+```
+
+:::
+
 ## Function-based Filtering {#function-based-filtering}
 
 You can pass a function to both `filter` and `filterParams` to dynamically control the list based on the current user. The following two examples achieve the exact same result:
@@ -74,7 +132,9 @@ You can pass a function to both `filter` and `filterParams` to dynamically contr
 
 In this approach, you return the entire GROQ string from the `filter` function.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'My Posts',
   schemaType: 'post',
@@ -82,11 +142,22 @@ In this approach, you return the entire GROQ string from the `filter` function.
 }
 ```
 
+```ts [Helpers]
+helpers.listing('post', {
+  title: 'My Posts',
+  filter: ({ currentUser }) => `author == "${currentUser.id}"`,
+});
+```
+
+:::
+
 ### 2. Using Dynamic Filter Parameters {#using-dynamic-filter-parameters}
 
 In this approach, you keep the `filter` string static and use a function for `filterParams` to pass the user ID.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'My Posts',
   schemaType: 'post',
@@ -97,11 +168,25 @@ In this approach, you keep the `filter` string static and use a function for `fi
 }
 ```
 
+```ts [Helpers]
+helpers.listing('post', {
+  title: 'My Posts',
+  filter: 'author == $userId',
+  filterParams: ({ currentUser }) => ({
+    userId: currentUser.id,
+  }),
+});
+```
+
+:::
+
 ### 3. Combining Both {#combining-both}
 
 You can also combine both for more complex logic.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'My Role-based Documents',
   schemaType: 'post',
@@ -115,11 +200,29 @@ You can also combine both for more complex logic.
 }
 ```
 
+```ts [Helpers]
+helpers.listing('post', {
+  title: 'My Role-based Documents',
+  filter: ({ currentUser }) =>
+    currentUser.roles.includes('administrator')
+      ? 'status == $status'
+      : 'author == $userId && status == $status',
+  filterParams: ({ currentUser }) => ({
+    status: 'published',
+    userId: currentUser.id,
+  }),
+});
+```
+
+:::
+
 ## Combined with Roles & Workspaces {#combined-with-roles-workspaces}
 
 Filters work seamlessly with other properties like `roles` and `workspaces`.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Internal Authors',
   schemaType: 'author',
@@ -128,3 +231,14 @@ Filters work seamlessly with other properties like `roles` and `workspaces`.
   filter: 'isInternal == true',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  title: 'Internal Authors',
+  workspaces: ['admin-workspace'],
+  roles: ['administrator'],
+  filter: 'isInternal == true',
+});
+```
+
+:::

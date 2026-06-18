@@ -4,26 +4,46 @@ The `schemaType` property links the list item to a specific document type define
 
 ## Standard Usage {#standard-usage}
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author');
+```
+
+:::
 
 ## With Custom Title {#with-custom-title}
 
 By default, the plugin generates a title based on the `schemaType`. You can override it using the `title` property.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Contributors',
   schemaType: 'author',
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  title: 'Contributors',
+});
+```
+
+:::
 
 ## With Custom Icon {#with-custom-icon}
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { UsersIcon } from '@sanity/icons';
 
 {
@@ -32,9 +52,21 @@ import { UsersIcon } from '@sanity/icons';
 }
 ```
 
+```ts [Helpers]
+import { UsersIcon } from '@sanity/icons';
+
+helpers.listing('author', {
+  icon: UsersIcon,
+});
+```
+
+:::
+
 ## With Combined (Title + Icon) {#with-combined}
 
-```ts
+::: code-group
+
+```ts [JSON]
 import { UsersIcon } from '@sanity/icons';
 
 {
@@ -43,14 +75,35 @@ import { UsersIcon } from '@sanity/icons';
   icon: UsersIcon,
 }
 ```
+
+```ts [Helpers]
+import { UsersIcon } from '@sanity/icons';
+
+helpers.listing('author', {
+  title: 'Contributors',
+  icon: UsersIcon,
+});
+```
+
+:::
 
 ## With Disabled Pluralization {#with-disabled-pluralization}
 
 Use `isPlural: false` to display the singular name as defined in your schema.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'author',
   isPlural: false,
 }
 ```
+
+```ts [Helpers]
+helpers.listing('author', {
+  isPlural: false,
+});
+```
+
+:::

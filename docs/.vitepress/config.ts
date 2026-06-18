@@ -96,6 +96,10 @@ export default defineConfig({
             link: '/guide/list-items',
           },
           {
+            text: 'Helpers',
+            link: '/guide/helpers',
+          },
+          {
             text: 'Comparison',
             link: '/guide/comparison',
           },
@@ -131,6 +135,10 @@ export default defineConfig({
               {
                 text: 'singleton',
                 link: '/examples/singleton',
+              },
+              {
+                text: 'component',
+                link: '/examples/component',
               },
               {
                 text: 'children',

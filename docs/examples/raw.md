@@ -21,7 +21,9 @@ While the `raw` property is powerful, it comes with specific constraints:
 
 In this example, we use the native `S.listItem()` to create a highly customized entry.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   raw: (S) =>
     S.listItem()
@@ -35,11 +37,28 @@ In this example, we use the native `S.listItem()` to create a highly customized 
 }
 ```
 
+```ts [Helpers]
+helpers.raw((S) =>
+  S.listItem()
+    .title('Custom Sorted Posts')
+    .child(
+      S.documentTypeList('post')
+        .title('Posts by Title')
+        .filter('_type == "post"')
+        .defaultOrdering([{ field: 'title', direction: 'asc' }]),
+    ),
+);
+```
+
+:::
+
 ## Accessing Context {#accessing-context}
 
 The `raw` callback also provides access to the Sanity `context`, which includes the `currentUser`, `dataset`, `projectId`, and more.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   raw: (S, context) => {
     const { currentUser } = context;
@@ -54,6 +73,22 @@ The `raw` callback also provides access to the Sanity `context`, which includes 
   },
 }
 ```
+
+```ts [Helpers]
+helpers.raw((S, context) => {
+  const { currentUser } = context;
+
+  return S.listItem()
+    .title(`My Assigned Tasks (${currentUser?.name})`)
+    .child(
+      S.documentTypeList('task')
+        .filter('_type == "task" && assignee._ref == $userId')
+        .params({ userId: currentUser?.id }),
+    );
+});
+```
+
+:::
 
 ::: warning Use Sparingly
 While powerful, using `raw` breaks away from the declarative benefits of this plugin. We recommend using it only when the standard properties (`schemaType`, `filter`, `singleton`, etc.) are insufficient for your needs.
