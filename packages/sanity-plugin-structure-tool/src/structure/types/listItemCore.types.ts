@@ -1,36 +1,33 @@
 import type { SetNonNullable } from 'type-fest';
 
 import type {
-  StructureToolCallbackParams,
+  StructureToolGenericParam,
   StructureToolParams,
 } from '@/structure/types/common.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 // Workspaces
 
-interface ListItemWorkspacesParams<
-  T extends SetNonNullable<StructureToolParams, 'DefaultWorkspaces'>,
-> extends StructureToolCallbackParams<T> {
-  defaultWorkspaces: T['DefaultWorkspaces'];
-}
-
 export type ListItemWorkspaces<
   T extends SetNonNullable<StructureToolParams, 'Workspaces' | 'DefaultWorkspaces'>,
-> =
-  | T['Workspaces'][number][]
-  | ((params: ListItemWorkspacesParams<T>) => T['Workspaces'][number][]);
+> = StructureToolGenericParam<
+  T,
+  T['Workspaces'][number][],
+  {
+    defaultWorkspaces: T['DefaultWorkspaces'];
+  }
+>;
 
 // Roles
 
-interface ListItemRolesParams<
-  T extends SetNonNullable<StructureToolParams, 'Roles' | 'DefaultRoles'>,
-> extends StructureToolCallbackParams<T> {
-  defaultRoles: T['DefaultRoles'];
-}
-
 export type ListItemRoles<T extends SetNonNullable<StructureToolParams, 'Roles' | 'DefaultRoles'>> =
-  | T['Roles'][number][]
-  | ((params: ListItemRolesParams<T>) => T['Roles'][number][]);
+  StructureToolGenericParam<
+    T,
+    T['Roles'][number][],
+    {
+      defaultRoles: T['DefaultRoles'];
+    }
+  >;
 
 export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = SimpleMerge<
   [

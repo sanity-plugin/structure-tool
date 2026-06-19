@@ -7,6 +7,8 @@ export const renderListItem: RenderListItem = (params) => {
 
   const renderItem: RenderItem = (item) => {
     const {
+      id,
+      displayTitle,
       schemaType,
       icon,
       singleton,
@@ -22,8 +24,6 @@ export const renderListItem: RenderListItem = (params) => {
       templates,
       raw,
       isDivider,
-      id,
-      displayTitle,
     } = item;
 
     if (raw) return raw(S, context);
