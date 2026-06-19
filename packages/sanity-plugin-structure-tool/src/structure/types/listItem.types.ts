@@ -24,6 +24,7 @@ export interface ListItemCore {
   icon?: IconComponent | ComponentType | ReactNode;
   singleton?: boolean;
   component?: UserComponent;
+  componentProps?: Record<string, unknown>;
   apiVersion?: string;
   filter?: string;
   filterParams?: Record<string, unknown>;

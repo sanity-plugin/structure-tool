@@ -11,6 +11,7 @@ export const renderListItem: RenderListItem = (params) => {
       icon,
       singleton,
       component,
+      componentProps,
       children,
       apiVersion,
       filter,
@@ -45,7 +46,11 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
-        .child(() => S.component(component).id(id));
+        .child(() =>
+          S.component(component)
+            .options({ ...componentProps })
+            .id(id),
+        );
     }
 
     if (!schemaType && filter) {
