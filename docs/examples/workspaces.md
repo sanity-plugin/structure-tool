@@ -1,6 +1,13 @@
-# `workspaces` Examples {#workspaces-examples}
+# `workspaces` {#workspaces}
 
-The `workspaces` property allows you to restrict the visibility of a list item to specific Sanity workspaces. This is ideal for multi-tenant setups where certain document types should only appear in specific environments.
+- **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
+- **Optional**: Yes
+
+The `workspaces` property allows you to restrict the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin configuration.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ::: info Prerequisite
 To use this property, you must first define your available workspaces in the [plugin configuration](../guide/setup/configuration#advanced-example).

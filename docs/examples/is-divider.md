@@ -1,4 +1,7 @@
-# `isDivider` Examples {#is-divider-examples}
+# `isDivider` {#is-divider}
+
+- **Type**: `boolean | ((params: CallbackParams) => boolean)`
+- **Optional**: Yes (Default: `false`)
 
 The `isDivider` property renders a visual separator in the desk list.
 

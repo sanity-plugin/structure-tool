@@ -1,4 +1,7 @@
-# `raw` Examples {#raw-examples}
+# `raw` {#raw}
+
+- **Type**: `(S: StructureBuilder, context: ConfigContext) => ListItem`
+- **Optional**: Yes
 
 The `raw` property serves as the "Escape Hatch". It allows you to bypass the declarative JSON configuration and use the native [Sanity Structure Builder API](https://www.sanity.io/docs/structure-builder-introduction) directly for a specific list item.
 

@@ -1,4 +1,7 @@
-# `schemaType` Examples {#schema-type-examples}
+# `schemaType` {#schema-type}
+
+- **Type**: `string | ((params: CallbackParams) => string)`
+- **Optional**: Yes
 
 The `schemaType` property links the list item to a specific document type defined in your Sanity schema.
 
@@ -104,6 +107,24 @@ Use `isPlural: false` to display the singular name as defined in your schema.
 helpers.listing('author', {
   isPlural: false,
 });
+```
+
+:::
+
+## Dynamic Schema Type (Callback) {#dynamic-schema-type}
+
+You can set the `schemaType` dynamically using a callback function:
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: ({ workspace }) => workspace === 'blog' ? 'post' : 'product',
+}
+```
+
+```ts [Helpers]
+helpers.listing(({ workspace }) => (workspace === 'blog' ? 'post' : 'product'));
 ```
 
 :::

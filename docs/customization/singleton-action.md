@@ -1,6 +1,6 @@
 # Singleton Action {#singleton-action}
 
-When you define a [Singleton](/guide/list-items#singleton) in your structure, you typically want to prevent users from performing certain actions that could break the singleton pattern, such as deleting the document, duplicating it, or unpublishing it.
+When you define a [Singleton](/examples/singleton) in your structure, you typically want to prevent users from performing certain actions that could break the singleton pattern, such as deleting the document, duplicating it, or unpublishing it.
 
 The **Sanity Structure Tool** provides a built-in `SingletonAction` helper to handle this automatically.
 

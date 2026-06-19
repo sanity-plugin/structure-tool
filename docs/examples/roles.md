@@ -1,6 +1,13 @@
-# `roles` Examples {#roles-examples}
+# `roles` {#roles}
 
-The `roles` property allows you to restrict the visibility of a list item to specific user roles. This ensures that sensitive documents or administrative tools are only accessible to authorized team members.
+- **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
+- **Optional**: Yes
+
+The `roles` property allows you to restrict the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the `defaultRoles`.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ::: info Prerequisite
 To use this property, you must first define your available roles in the [plugin configuration](../guide/setup/configuration#roles).

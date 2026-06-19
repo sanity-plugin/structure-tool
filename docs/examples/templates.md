@@ -1,4 +1,7 @@
-# `templates` Examples {#templates-examples}
+# `templates` {#templates}
+
+- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Optional**: Yes
 
 The `templates` property allows you to define default values for new documents created from a specific list item. These are automatically mapped to [Sanity Initial Value Templates](https://www.sanity.io/docs/studio/initial-value-templates).
 
@@ -71,6 +74,33 @@ You can define multiple list items for the same `schemaType` with different init
     },
   }),
 ];
+```
+
+:::
+
+## Dynamic Templates (Callback) {#dynamic-templates}
+
+You can define initial value templates dynamically using a callback function:
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: 'post',
+  templates: ({ workspace }) => ({
+    workspaceSource: workspace,
+    isActive: workspace === 'production',
+  }),
+}
+```
+
+```ts [Helpers]
+helpers.listing('post', {
+  templates: ({ workspace }) => ({
+    workspaceSource: workspace,
+    isActive: workspace === 'production',
+  }),
+});
 ```
 
 :::

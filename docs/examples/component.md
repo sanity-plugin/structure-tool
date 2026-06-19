@@ -1,6 +1,11 @@
-# `component` Examples {#component-examples}
+# `component` {#component}
 
-The `component` property allows you to render a custom React component as the view for a list item.
+- **Type**: `UserComponent`
+- **Optional**: Yes
+
+The `component` property allows you to render a custom React component as the child (view) of the list item. This is useful for creating custom dashboards, analytics views, or any other non-document based content.
+
+## Standard Usage {#standard-usage}
 
 ::: code-group
 

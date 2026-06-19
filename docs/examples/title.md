@@ -1,4 +1,7 @@
-# `title` Examples {#title-examples}
+# `title` {#title}
+
+- **Type**: `string | ((params: CallbackParams) => string)`
+- **Optional**: Yes (Required if `children` is present)
 
 The `title` property sets the display name for the list item in the Sanity desk menu.
 
@@ -62,6 +65,28 @@ You can use the `title` property with `helpers.divider` to create a labeled sepa
 
 ```ts [Helpers]
 helpers.divider('Content Section');
+```
+
+:::
+
+## Dynamic Title (Callback) {#dynamic-title}
+
+You can set the `title` dynamically using a callback function:
+
+::: code-group
+
+```ts [JSON]
+{
+  title: ({ workspace }) => `${workspace === 'production' ? 'Live' : 'Staging'} Settings`,
+  schemaType: 'settings',
+  singleton: true,
+}
+```
+
+```ts [Helpers]
+helpers.singleton('settings', {
+  title: ({ workspace }) => `${workspace === 'production' ? 'Live' : 'Staging'} Settings`,
+});
 ```
 
 :::

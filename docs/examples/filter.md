@@ -1,6 +1,20 @@
-# `filter` + `filterParams` Examples {#filter-filter-params-examples}
+# `filter` and `filterParams` {#filter-filter-params}
 
-The `filter` property allows you to limit which documents are shown in a list using a GROQ filter string or a function.
+The `filter` and `filterParams` properties allow you to customize and limit the documents shown in a list item using GROQ queries. Together, they enable you to build scoped, conditional, and role-based views of your datasets.
+
+## `filter`
+
+- **Type**: `string | ((params: CallbackParams) => string)`
+- **Optional**: Yes
+
+A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
+
+## `filterParams`
+
+- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Optional**: Yes
+
+Parameters to be used within the `filter` GROQ string.
 
 ## Basic Filtering {#basic-filtering}
 
@@ -238,6 +252,27 @@ helpers.listing('author', {
   workspaces: ['admin-workspace'],
   roles: ['administrator'],
   filter: 'isInternal == true',
+});
+```
+
+:::
+
+## Dynamic Filter based on Workspace (Callback) {#dynamic-filter-workspace}
+
+You can define the `filter` and `filterParams` dynamically using workspace context:
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: 'author',
+  filter: ({ workspace }) => workspace === 'production' ? 'status == "active"' : 'true',
+}
+```
+
+```ts [Helpers]
+helpers.listing('author', {
+  filter: ({ workspace }) => (workspace === 'production' ? 'status == "active"' : 'true'),
 });
 ```
 

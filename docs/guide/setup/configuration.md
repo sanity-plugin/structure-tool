@@ -52,7 +52,7 @@ The `structureToolPlugin` function accepts a configuration object with the follo
 
 ### `title` {#title}
 
-- **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
 - **Required**: Yes
 
 The title of the structure in the Sanity desk.
@@ -63,7 +63,7 @@ title: 'Project Name',
 
 ### `emptyListTitle` {#empty-list-title}
 
-- **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
 - **Optional**: Yes
 
 The title shown when a document list has no items configured.
