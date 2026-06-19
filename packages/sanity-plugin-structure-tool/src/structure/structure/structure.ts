@@ -1,5 +1,5 @@
 import { getContextValues } from '@/helpers/getContextValues';
-import { getListItems } from '@/helpers/getListItems';
+import { getWorkspaceListItem } from '@/structure/getWorkspaceListItem/getWorkspaceListItem';
 import { renderListItem } from '@/structure/renderListItem/renderListItem';
 
 import type { StructureResolver } from 'sanity/structure';
@@ -25,7 +25,7 @@ export const structure =
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
-    const workspaceListItems = getListItems<T>({
+    const workspaceListItems = getWorkspaceListItem<T>({
       S,
       workspace,
       context: validContext,
