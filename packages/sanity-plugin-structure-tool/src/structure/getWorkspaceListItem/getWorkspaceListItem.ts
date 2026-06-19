@@ -18,7 +18,7 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 export const getWorkspaceListItem = <T extends StructureToolParams>(
   params: GetWorkspaceListItem<T>,
 ): ListItemExtended<T>[] => {
-  const { S, context, id, options } = params;
+  const { S, context, id: globalId, options } = params;
   const {
     workspaces: globalWorkspaces,
     defaultWorkspaces,
@@ -34,6 +34,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
     return items.reduce<ListItemExtended<T>[]>((acc, listItem, index) => {
       const {
+        id: idFn,
         title: titleFn,
         schemaType: schemaTypeFn,
         singleton: singletonFn,
@@ -81,12 +82,28 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         return finalTitle || '';
       })();
 
-      const uniqueId = [itemId, index + 1].join(constants.URL_PATH_SEPARATOR);
+      const { uniqueId, id } = (() => {
+        const uniqueIdValue = [itemId, index + 1].join(constants.URL_PATH_SEPARATOR);
+        const sanitizedPaths = sanitizeUrl(displayTitle).split(' ');
+
+        const idValue = [uniqueIdValue, ...sanitizedPaths].join(constants.URL_PATH_SEPARATOR);
+
+        const userEnteredId = getValidListItem(idFn, {
+          ...contextValues,
+          values: {
+            uniqueId: uniqueIdValue,
+            sanitizedPaths,
+            id: idValue,
+            slugify: sanitizeUrl,
+          },
+        });
+
+        return { uniqueId: uniqueIdValue, id: userEnteredId ?? idValue };
+      })();
+
       const listItemObj = {
         ...restListItem,
-        id: [uniqueId, ...sanitizeUrl(displayTitle).toLowerCase().split(' ')].join(
-          constants.URL_PATH_SEPARATOR,
-        ),
+        id,
         displayTitle,
         children,
         schemaType,
@@ -145,5 +162,5 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
     }, []);
   };
 
-  return getWorkspaceItem({ id, listItems });
+  return getWorkspaceItem({ id: globalId, listItems });
 };

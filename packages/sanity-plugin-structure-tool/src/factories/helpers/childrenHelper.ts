@@ -4,7 +4,7 @@ import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type ChildrenHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'icon'>]
+  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'id' | 'icon'>]
 >;
 
 type ChildrenHelperParams<T extends StructureToolParams> = SimpleMerge<

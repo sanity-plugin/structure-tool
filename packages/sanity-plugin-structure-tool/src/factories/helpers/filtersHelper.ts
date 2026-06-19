@@ -11,6 +11,7 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
     SetRequired<
       Pick<
         ListItem<T>,
+        | 'id'
         | 'title'
         | 'icon'
         | 'apiVersion'

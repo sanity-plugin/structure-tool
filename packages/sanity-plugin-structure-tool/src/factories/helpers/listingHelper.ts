@@ -11,6 +11,7 @@ type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
     RequireOneOrNone<Pick<ListItem<T>, 'hideAddButton' | 'templates'>>,
     Pick<
       ListItem<T>,
+      | 'id'
       | 'title'
       | 'icon'
       | 'apiVersion'

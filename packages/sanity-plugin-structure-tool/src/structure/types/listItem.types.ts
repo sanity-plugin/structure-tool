@@ -9,6 +9,19 @@ import type {
 } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
+import type { sanitizeUrl } from '@/utils';
+
+// Id
+
+export type ListItemId = Record<
+  'values',
+  {
+    uniqueId: string;
+    sanitizedPaths: string[];
+    id: string;
+    slugify: typeof sanitizeUrl;
+  }
+>;
 
 // Default Ordering
 
@@ -59,6 +72,7 @@ export type ListItem<T extends StructureToolParams> = SimpleMerge<
     Pick<ListItemCore, DefaultListItem>,
     DynamicListItemProps<T>,
     {
+      id?: StructureToolGenericParam<T, string, ListItemId>;
       children?: StructureToolGenericParam<T, ListItem<T>[]>;
     },
   ]
