@@ -9,3 +9,7 @@ interface RenderListItemParams<T extends StructureToolParams> extends StructureC
 export type RenderListItem = <T extends StructureToolParams>(
   params: RenderListItemParams<T>,
 ) => ReturnType<ListItemRaw>;
+
+export type RenderItem = <T extends StructureToolParams>(
+  params: ListItemExtended<T>,
+) => ReturnType<ListItemRaw>;
