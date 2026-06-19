@@ -11,7 +11,7 @@ export const renderListItem: RenderListItem = (params) => {
       icon,
       singleton,
       component,
-      componentProps,
+      componentOptions,
       children,
       apiVersion,
       filter,
@@ -50,7 +50,7 @@ export const renderListItem: RenderListItem = (params) => {
         .icon(icon)
         .child(() =>
           S.component(component)
-            .options({ ...componentProps })
+            .options({ ...componentOptions })
             .id(id),
         );
     }

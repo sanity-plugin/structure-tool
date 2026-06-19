@@ -4,7 +4,7 @@ import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 type ComponentHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'icon' | 'componentProps'>]
+  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'icon' | 'componentOptions'>]
 >;
 
 type ComponentHelperParams<T extends StructureToolParams> = SimpleMerge<
