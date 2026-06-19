@@ -4,7 +4,6 @@ import { structureTool } from 'sanity/structure';
 import { defineListItem } from '@/factories/defineListItem';
 import { defineListItems } from '@/factories/defineListItems';
 import { helpers } from '@/factories/helpers';
-import { getAllListItems } from '@/helpers/getAllListItems';
 import { structure } from '@/structure/structure/structure';
 import { templates } from '@/structure/templates/templates';
 
@@ -40,29 +39,21 @@ export const structureToolPlugin = <
   }
 
   return {
-    structure: definePlugin(({ listItems }) => {
-      const flatListItems = getAllListItems<DefaultsStructureToolParams>(listItems);
-
-      return {
-        name: 'sanity-plugin-structure-tool',
-        plugins: [
-          structureTool({
-            structure: structure<DefaultsStructureToolParams>({
-              ...params,
-              listItems,
-            }),
+    structure: definePlugin(({ listItems }) => ({
+      name: 'sanity-plugin-structure-tool',
+      plugins: [
+        structureTool({
+          structure: structure<DefaultsStructureToolParams>({
+            ...params,
+            listItems,
           }),
-        ],
-        schema: {
-          templates: templates<DefaultsStructureToolParams>({ flatListItems }),
-        },
-      };
-    }),
-    templates: ({ listItems }) => {
-      const flatListItems = getAllListItems<DefaultsStructureToolParams>(listItems);
-
-      return templates<DefaultsStructureToolParams>({ flatListItems });
-    },
+        }),
+      ],
+      schema: {
+        templates: templates<DefaultsStructureToolParams>({ listItems }),
+      },
+    })),
+    templates,
     defineListItems,
     defineListItem,
     helpers,

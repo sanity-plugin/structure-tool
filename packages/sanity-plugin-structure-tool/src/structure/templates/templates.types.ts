@@ -4,7 +4,7 @@ import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
 interface TemplatesParams<T extends StructureToolParams> {
-  flatListItems: ListItem<T>[];
+  listItems: ListItem<T>[];
 }
 
 export type Templates = <T extends StructureToolParams>(

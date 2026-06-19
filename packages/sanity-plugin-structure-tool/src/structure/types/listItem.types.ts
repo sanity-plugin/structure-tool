@@ -48,7 +48,7 @@ export type ListItem<T extends StructureToolParams> = SimpleMerge<
     Pick<ListItemCore, DefaultListItem>,
     DynamicListItemProps<T>,
     {
-      children?: ListItem<T>[];
+      children?: StructureToolGenericParam<T, ListItem<T>[]>;
     },
   ]
 >;

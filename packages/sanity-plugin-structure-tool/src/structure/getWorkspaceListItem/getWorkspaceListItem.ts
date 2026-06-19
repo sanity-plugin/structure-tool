@@ -35,7 +35,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         title: titleFn,
         schemaType: schemaTypeFn,
         singleton: singletonFn,
-        children,
+        children: childrenFn,
         apiVersion: apiVersionFn,
         filter: filterFn,
         filterParams: filterParamsFn,
@@ -53,6 +53,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
       const schemaType = getValidListItem(schemaTypeFn, listItemParams);
       const singleton = getValidListItem(singletonFn, listItemParams);
+      const children = getValidListItem(childrenFn, listItemParams);
       const title = getValidListItem(titleFn, listItemParams);
       const apiVersion = getValidListItem(apiVersionFn, listItemParams);
       const filter = getValidListItem(filterFn, listItemParams);

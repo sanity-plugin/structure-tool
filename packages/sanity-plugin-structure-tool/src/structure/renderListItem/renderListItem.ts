@@ -33,7 +33,7 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
-        .child(
+        .child(() =>
           S.list()
             .title(displayTitle)
             .items(children.map((child) => renderItem(child)).filter((child) => child !== null)),
@@ -45,7 +45,7 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
-        .child(S.component(component).id(id));
+        .child(() => S.component(component).id(id));
     }
 
     if (!schemaType && filter) {

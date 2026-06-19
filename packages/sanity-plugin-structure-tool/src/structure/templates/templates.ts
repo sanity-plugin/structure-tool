@@ -1,12 +1,15 @@
+import { getAllListItems } from '@/helpers/getAllListItems';
 import { getContextValues } from '@/helpers/getContextValues';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { Templates } from '@/structure/templates/templates.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 
 export const templates: Templates = (params) => (prev, context) => {
-  const { flatListItems } = params;
+  const { listItems } = params;
 
   const contextValues = getContextValues(context);
+  const flatListItems = getAllListItems<StructureToolParams>(context, listItems);
 
   const templatesItems = flatListItems
     .map((item) => {
