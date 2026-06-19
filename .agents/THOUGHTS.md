@@ -39,5 +39,3 @@ The plugin doesn't just build the menu; it influences the document creation flow
 
 - **Limitation**: Bound helpers (like `helpers.singleton` and `helpers.divider`) are specialized to enforce static properties (`singleton: true` and `isDivider: true` respectively). They cannot accept dynamic callback functions that compute these boolean values on runtime.
 - **Solution**: To define a list item with a dynamic/conditional singleton or divider property, developers should bypass the helpers and use a raw JSON object configuration instead.
-
-
