@@ -6,53 +6,7 @@ Here is a glimpse of what's coming in future releases:
 
 ## Planned Features {#planned-features}
 
-### 1. Enhanced Ordering (`defaultOrdering`) {#enhanced-ordering}
-
-More granular control over how documents are ordered within lists.
-
-::: code-group
-
-```ts [JSON]
-{
-  schemaType: 'post',
-  defaultOrdering: {
-    _createdAt: 'desc',
-  },
-}
-```
-
-```ts [Helpers]
-helpers.listing('post', {
-  defaultOrdering: {
-    _createdAt: 'desc',
-  },
-});
-```
-
-:::
-
-### 2. Layout Options (`defaultLayout`) {#layout-options}
-
-Presets and configuration options to switch between different list layouts.
-
-::: code-group
-
-```ts [JSON]
-{
-  schemaType: 'gallery',
-  defaultLayout: 'media', // Upcoming: 'default' | 'card' | 'media' | 'detail' | 'block'
-}
-```
-
-```ts [Helpers]
-helpers.listing('gallery', {
-  defaultLayout: 'media', // Upcoming: 'default' | 'card' | 'media' | 'detail' | 'block'
-});
-```
-
-:::
-
-### 3. Menu Items (`menuItems`) {#menu-items}
+### 1. Menu Items (`menuItems`) {#menu-items}
 
 Support for defining custom menu actions and icons at the top of document lists.
 
@@ -89,7 +43,7 @@ helpers.listing('product', {
 
 :::
 
-### 4. View Customization (`views`) {#view-customization}
+### 2. View Customization (`views`) {#view-customization}
 
 Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
 
@@ -131,7 +85,7 @@ helpers.singleton('post', {
 
 :::
 
-### 5. TypeScript & Validation {#typescript-validation}
+### 3. TypeScript & Validation {#typescript-validation}
 
 We are working on providing a robust, type-safe experience and built-in validation for your JSON structures.
 

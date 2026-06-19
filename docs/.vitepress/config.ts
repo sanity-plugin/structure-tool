@@ -141,6 +141,10 @@ export default defineConfig({
                 link: '/examples/component',
               },
               {
+                text: 'componentOptions',
+                link: '/examples/component-options',
+              },
+              {
                 text: 'children',
                 link: '/examples/children',
               },
@@ -151,6 +155,14 @@ export default defineConfig({
               {
                 text: 'filter + filterParams',
                 link: '/examples/filter',
+              },
+              {
+                text: 'defaultOrdering',
+                link: '/examples/default-ordering',
+              },
+              {
+                text: 'defaultLayout',
+                link: '/examples/default-layout',
               },
               {
                 text: 'workspaces',
