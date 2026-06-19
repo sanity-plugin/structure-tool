@@ -1,6 +1,7 @@
 import pluralize from 'pluralize-esm';
 
 import { constants } from '@/constants';
+import { getContextValues } from '@/helpers/getContextValues';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
 import { getValidListItem } from '@/helpers/getValidListItem';
@@ -17,8 +18,7 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 export const getWorkspaceListItem = <T extends StructureToolParams>(
   params: GetWorkspaceListItem<T>,
 ): ListItemExtended<T>[] => {
-  const { S, workspace, context, id, options } = params;
-  const { currentUser } = context;
+  const { S, context, id, options } = params;
   const {
     workspaces: globalWorkspaces,
     defaultWorkspaces,
@@ -26,6 +26,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
     defaultRoles,
     listItems,
   } = options;
+
+  const contextValues = getContextValues(context);
 
   const getWorkspaceItem = (childParams: GetWorkspaceItem<T>): ListItemExtended<T>[] => {
     const { id: itemId, listItems: items } = childParams;
@@ -49,19 +51,19 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
       const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
       const roles = 'roles' in listItem ? listItem.roles : undefined;
 
-      const listItemParams = { workspace, currentUser, context };
+      const { workspace, currentUser } = contextValues;
 
-      const schemaType = getValidListItem(schemaTypeFn, listItemParams);
-      const singleton = getValidListItem(singletonFn, listItemParams);
-      const children = getValidListItem(childrenFn, listItemParams);
-      const title = getValidListItem(titleFn, listItemParams);
-      const apiVersion = getValidListItem(apiVersionFn, listItemParams);
-      const filter = getValidListItem(filterFn, listItemParams);
-      const filterParams = getValidListItem(filterParamsFn, listItemParams);
-      const hideAddButton = getValidListItem(hideAddButtonFn, listItemParams);
-      const templates = getValidListItem(templatesFn, listItemParams);
-      const isDivider = getValidListItem(isDividerFn, listItemParams);
-      const isPlural = getValidListItem(isPluralFn, listItemParams);
+      const schemaType = getValidListItem(schemaTypeFn, contextValues);
+      const singleton = getValidListItem(singletonFn, contextValues);
+      const children = getValidListItem(childrenFn, contextValues);
+      const title = getValidListItem(titleFn, contextValues);
+      const apiVersion = getValidListItem(apiVersionFn, contextValues);
+      const filter = getValidListItem(filterFn, contextValues);
+      const filterParams = getValidListItem(filterParamsFn, contextValues);
+      const hideAddButton = getValidListItem(hideAddButtonFn, contextValues);
+      const templates = getValidListItem(templatesFn, contextValues);
+      const isDivider = getValidListItem(isDividerFn, contextValues);
+      const isPlural = getValidListItem(isPluralFn, contextValues);
 
       const displayTitle = (() => {
         const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
@@ -98,9 +100,11 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         }
 
         const isInWorkspacesList = globalWorkspaces.includes(workspace);
-        const hasAccess = getWorkspacesWithDefaults(defaultWorkspaces, workspaces).includes(
-          workspace,
-        );
+        const hasAccess = getWorkspacesWithDefaults<T>(
+          workspaces,
+          defaultWorkspaces,
+          contextValues,
+        ).includes(workspace);
 
         return { hasWorkspaceEnabled: true, hasWorkspaceAccess: isInWorkspacesList && hasAccess };
       })();
@@ -111,7 +115,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         if (!defaultRoles || !globalRoles) return { hasRoleEnabled: false, hasRoleAccess: true };
 
         const hasAccess = getCurrentUserRoles<T>({ currentUser, roles: globalRoles }).some((role) =>
-          getRolesWithDefaults(defaultRoles, roles).includes(role),
+          getRolesWithDefaults<T>(roles, defaultRoles, contextValues).includes(role),
         );
 
         return { hasRoleEnabled: true, hasRoleAccess: hasAccess };

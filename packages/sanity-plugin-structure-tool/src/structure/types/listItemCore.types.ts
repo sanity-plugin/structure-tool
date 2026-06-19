@@ -1,18 +1,21 @@
 import type { SetNonNullable } from 'type-fest';
 
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type {
+  StructureToolCallbackParams,
+  StructureToolParams,
+} from '@/structure/types/common.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
 // Workspaces
 
 interface ListItemWorkspacesParams<
-  T extends Pick<SetNonNullable<StructureToolParams>, 'DefaultWorkspaces'>,
-> {
+  T extends SetNonNullable<StructureToolParams, 'DefaultWorkspaces'>,
+> extends StructureToolCallbackParams<T> {
   defaultWorkspaces: T['DefaultWorkspaces'];
 }
 
 export type ListItemWorkspaces<
-  T extends Pick<SetNonNullable<StructureToolParams>, 'Workspaces' | 'DefaultWorkspaces'>,
+  T extends SetNonNullable<StructureToolParams, 'Workspaces' | 'DefaultWorkspaces'>,
 > =
   | T['Workspaces'][number][]
   | ((params: ListItemWorkspacesParams<T>) => T['Workspaces'][number][]);
@@ -20,14 +23,14 @@ export type ListItemWorkspaces<
 // Roles
 
 interface ListItemRolesParams<
-  T extends Pick<SetNonNullable<StructureToolParams>, 'Roles' | 'DefaultRoles'>,
-> {
+  T extends SetNonNullable<StructureToolParams, 'Roles' | 'DefaultRoles'>,
+> extends StructureToolCallbackParams<T> {
   defaultRoles: T['DefaultRoles'];
 }
 
-export type ListItemRoles<
-  T extends Pick<SetNonNullable<StructureToolParams>, 'Roles' | 'DefaultRoles'>,
-> = T['Roles'][number][] | ((params: ListItemRolesParams<T>) => T['Roles'][number][]);
+export type ListItemRoles<T extends SetNonNullable<StructureToolParams, 'Roles' | 'DefaultRoles'>> =
+  | T['Roles'][number][]
+  | ((params: ListItemRolesParams<T>) => T['Roles'][number][]);
 
 export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = SimpleMerge<
   [
@@ -37,6 +40,8 @@ export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = Simp
             workspaces?: ListItemWorkspaces<{
               Workspaces: T['Workspaces'];
               DefaultWorkspaces: T['DefaultWorkspaces'];
+              Roles: T['Roles'];
+              DefaultRoles: T['DefaultRoles'];
             }>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -47,6 +52,8 @@ export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = Simp
       ? T['DefaultRoles'] extends SetNonNullable<StructureToolParams>['DefaultRoles']
         ? {
             roles?: ListItemRoles<{
+              Workspaces: T['Workspaces'];
+              DefaultWorkspaces: T['DefaultWorkspaces'];
               Roles: T['Roles'];
               DefaultRoles: T['DefaultRoles'];
             }>;

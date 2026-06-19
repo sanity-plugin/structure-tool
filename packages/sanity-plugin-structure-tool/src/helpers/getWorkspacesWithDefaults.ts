@@ -1,23 +1,28 @@
+import { getValidListItem } from '@/helpers/getValidListItem';
+
 import type { SetNonNullable } from 'type-fest';
 
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type {
+  StructureToolCallbackParams,
+  StructureToolParams,
+} from '@/structure/types/common.types';
 import type { ListItemWorkspaces } from '@/structure/types/listItemCore.types';
 
-type GetWorkspacesWithDefaults = (
-  defaultWorkspaces: NonNullable<StructureToolParams['DefaultWorkspaces']>,
-  workspaces:
-    | ListItemWorkspaces<
-        Pick<SetNonNullable<StructureToolParams>, 'Workspaces' | 'DefaultWorkspaces'>
-      >
-    | undefined,
+type GetWorkspacesWithDefaults = <T extends StructureToolParams>(
+  workspaces: ListItemWorkspaces<SetNonNullable<T, 'Workspaces' | 'DefaultWorkspaces'>> | undefined,
+  defaultWorkspaces: NonNullable<T['DefaultWorkspaces']>,
+  contextValues: StructureToolCallbackParams<T>,
 ) => string[];
 
 export const getWorkspacesWithDefaults: GetWorkspacesWithDefaults = (
-  defaultWorkspaces,
   workspaces,
+  defaultWorkspaces,
+  contextValues,
 ) => {
   if (typeof workspaces === 'function') {
-    return [...new Set(workspaces({ defaultWorkspaces }))];
+    const workspacesValue = getValidListItem(workspaces, { ...contextValues, defaultWorkspaces });
+
+    return [...new Set(workspacesValue)];
   }
 
   return [...new Set([...defaultWorkspaces, ...(workspaces ?? [])])];
