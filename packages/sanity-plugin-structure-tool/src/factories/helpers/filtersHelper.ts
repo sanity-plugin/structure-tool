@@ -9,7 +9,16 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListItemWithWorkspacesAndRoles<T>,
     SetRequired<
-      Pick<ListItem<T>, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams'>,
+      Pick<
+        ListItem<T>,
+        | 'title'
+        | 'icon'
+        | 'apiVersion'
+        | 'filter'
+        | 'filterParams'
+        | 'defaultOrdering'
+        | 'defaultLayout'
+      >,
       'title' | 'filter'
     >,
   ]

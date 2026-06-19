@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from 'react';
+import type { PreviewLayoutKey, SortOrderingItem } from 'sanity';
 import type { ListBuilder, StructureBuilder, UserComponent } from 'sanity/structure';
 
 import type {
@@ -8,6 +9,13 @@ import type {
 } from '@/structure/types/common.types';
 import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
+
+// Default Ordering
+
+type ListItemDefaultOrdering = Record<
+  string,
+  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
+>;
 
 // Raw
 
@@ -28,6 +36,8 @@ export interface ListItemCore {
   apiVersion?: string;
   filter?: string;
   filterParams?: Record<string, unknown>;
+  defaultOrdering?: ListItemDefaultOrdering;
+  defaultLayout?: PreviewLayoutKey;
   hideAddButton?: boolean;
   templates?: Record<string, unknown>;
   raw?: ListItemRaw;

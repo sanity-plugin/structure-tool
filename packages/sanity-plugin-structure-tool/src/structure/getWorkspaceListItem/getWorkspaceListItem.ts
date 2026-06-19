@@ -42,6 +42,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         apiVersion: apiVersionFn,
         filter: filterFn,
         filterParams: filterParamsFn,
+        defaultOrdering: defaultOrderingFn,
+        defaultLayout: defaultLayoutFn,
         hideAddButton: hideAddButtonFn,
         templates: templatesFn,
         isDivider: isDividerFn,
@@ -62,6 +64,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
       const apiVersion = getValidListItem(apiVersionFn, contextValues);
       const filter = getValidListItem(filterFn, contextValues);
       const filterParams = getValidListItem(filterParamsFn, contextValues);
+      const defaultOrdering = getValidListItem(defaultOrderingFn, contextValues);
+      const defaultLayout = getValidListItem(defaultLayoutFn, contextValues);
       const hideAddButton = getValidListItem(hideAddButtonFn, contextValues);
       const templates = getValidListItem(templatesFn, contextValues);
       const isDivider = getValidListItem(isDividerFn, contextValues);
@@ -91,6 +95,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         apiVersion,
         filter,
         filterParams,
+        defaultOrdering,
+        defaultLayout,
         hideAddButton,
         templates,
         isDivider,

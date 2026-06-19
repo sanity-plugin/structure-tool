@@ -9,7 +9,17 @@ type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
   [
     ListItemWithWorkspacesAndRoles<T>,
     RequireOneOrNone<Pick<ListItem<T>, 'hideAddButton' | 'templates'>>,
-    Pick<ListItem<T>, 'title' | 'icon' | 'apiVersion' | 'filter' | 'filterParams' | 'isPlural'>,
+    Pick<
+      ListItem<T>,
+      | 'title'
+      | 'icon'
+      | 'apiVersion'
+      | 'filter'
+      | 'filterParams'
+      | 'defaultOrdering'
+      | 'defaultLayout'
+      | 'isPlural'
+    >,
   ]
 >;
 

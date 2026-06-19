@@ -16,6 +16,8 @@ export const renderListItem: RenderListItem = (params) => {
       apiVersion,
       filter,
       filterParams,
+      defaultOrdering,
+      defaultLayout,
       hideAddButton,
       templates,
       raw,
@@ -75,6 +77,19 @@ export const renderListItem: RenderListItem = (params) => {
             schemaBuilder = schemaBuilder.apiVersion(apiVersion);
           }
 
+          if (defaultOrdering) {
+            schemaBuilder = schemaBuilder.defaultOrdering(
+              Object.entries(defaultOrdering).map(([field, value]) => ({
+                field,
+                ...(typeof value === 'string' ? { direction: value } : value),
+              })),
+            );
+          }
+
+          if (defaultLayout) {
+            schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+          }
+
           return schemaBuilder;
         });
     }
@@ -114,6 +129,19 @@ export const renderListItem: RenderListItem = (params) => {
 
         if (apiVersion) {
           schemaBuilder = schemaBuilder.apiVersion(apiVersion);
+        }
+
+        if (defaultOrdering) {
+          schemaBuilder = schemaBuilder.defaultOrdering(
+            Object.entries(defaultOrdering).map(([field, value]) => ({
+              field,
+              ...(typeof value === 'string' ? { direction: value } : value),
+            })),
+          );
+        }
+
+        if (defaultLayout) {
+          schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
         }
 
         if (hideAddButton) {
