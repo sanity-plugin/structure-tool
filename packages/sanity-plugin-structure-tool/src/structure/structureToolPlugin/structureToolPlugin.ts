@@ -54,14 +54,14 @@ export const structureToolPlugin = <
           }),
         ],
         schema: {
-          templates: templates<DefaultsStructureToolParams>(flatListItems),
+          templates: templates<DefaultsStructureToolParams>({ flatListItems }),
         },
       };
     }),
     templates: ({ listItems }) => {
       const flatListItems = getAllListItems<DefaultsStructureToolParams>(listItems);
 
-      return templates<DefaultsStructureToolParams>(flatListItems);
+      return templates<DefaultsStructureToolParams>({ flatListItems });
     },
     defineListItems,
     defineListItem,

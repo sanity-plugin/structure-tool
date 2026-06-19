@@ -3,7 +3,9 @@ import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { Templates } from '@/structure/templates/templates.types';
 
-export const templates: Templates = (flatListItems) => (prev, context) => {
+export const templates: Templates = (params) => (prev, context) => {
+  const { flatListItems } = params;
+
   const contextValues = getContextValues(context);
 
   const templatesItems = flatListItems
@@ -26,7 +28,7 @@ export const templates: Templates = (flatListItems) => (prev, context) => {
               type: typeof value,
             };
           }),
-          value: (params: unknown) => params,
+          value: (input: unknown) => input,
         };
       }
 

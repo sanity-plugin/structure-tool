@@ -7,32 +7,30 @@ import { getValidListItem } from '@/helpers/getValidListItem';
 import { getWorkspacesWithDefaults } from '@/helpers/getWorkspacesWithDefaults';
 import { sanitizeUrl } from '@/utils';
 
-import type { StructureBuilder } from 'sanity/structure';
-
-import type { StructureListItemsParams } from '@/structure/structure/structure.types';
 import type {
-  StructureToolParams,
-  ValidSanityContext,
-  Workspace,
-} from '@/structure/types/common.types';
+  StructureCommonParams,
+  StructureListItemsParams,
+} from '@/structure/structure/structure.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemExtended } from '@/structure/types/listItem.types';
 
-export const getListItems = <T extends StructureToolParams>(
-  S: StructureBuilder,
-  workspace: Workspace<T>,
-  context: ValidSanityContext,
-  id: string,
-  params: StructureListItemsParams<T>,
-): ListItemExtended<T>[] => {
-  const { currentUser } = context;
+interface GetListItemsParams<T extends StructureToolParams> extends StructureCommonParams<T> {
+  id: string;
+  options: StructureListItemsParams<T>;
+}
 
+export const getListItems = <T extends StructureToolParams>(
+  params: GetListItemsParams<T>,
+): ListItemExtended<T>[] => {
+  const { S, workspace, context, id, options } = params;
+  const { currentUser } = context;
   const {
     workspaces: globalWorkspaces,
     defaultWorkspaces,
     roles: globalRoles,
     defaultRoles,
     listItems,
-  } = params;
+  } = options;
 
   return listItems.reduce<ListItemExtended<T>[]>((acc, listItem, index) => {
     const {
@@ -125,9 +123,15 @@ export const getListItems = <T extends StructureToolParams>(
     if (children && children.length > 0) {
       acc.push({
         ...listItemObj,
-        children: getListItems(S, workspace, context, uniqueId, {
-          ...params,
-          listItems: children,
+        children: getListItems({
+          S,
+          workspace,
+          context,
+          id: uniqueId,
+          options: {
+            ...params,
+            listItems: children,
+          },
         }),
       });
     } else {

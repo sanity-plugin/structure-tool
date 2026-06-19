@@ -1,15 +1,11 @@
-import type { StructureBuilder } from 'sanity/structure';
-
-import type {
-  StructureToolParams,
-  ValidSanityContext,
-  Workspace,
-} from '@/structure/types/common.types';
+import type { StructureCommonParams } from '@/structure/structure/structure.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemExtended, ListItemRaw } from '@/structure/types/listItem.types';
 
+interface RenderListItemParams<T extends StructureToolParams> extends StructureCommonParams<T> {
+  listItem: ListItemExtended<T>;
+}
+
 export type RenderListItem = <T extends StructureToolParams>(
-  S: StructureBuilder,
-  workspace: Workspace<T>,
-  context: ValidSanityContext,
-  listItem: ListItemExtended<T>,
+  params: RenderListItemParams<T>,
 ) => ReturnType<ListItemRaw>;

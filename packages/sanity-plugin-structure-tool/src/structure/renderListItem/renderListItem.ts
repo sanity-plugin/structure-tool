@@ -2,7 +2,8 @@ import { constants } from '@/constants';
 
 import type { RenderListItem } from '@/structure/renderListItem/renderListItem.types';
 
-export const renderListItem: RenderListItem = (S, workspace, context, listItem) => {
+export const renderListItem: RenderListItem = (params) => {
+  const { S, workspace, context, listItem } = params;
   const {
     schemaType,
     icon,
@@ -35,7 +36,7 @@ export const renderListItem: RenderListItem = (S, workspace, context, listItem) 
           .title(displayTitle)
           .items(
             children
-              .map((child) => renderListItem(S, workspace, context, child))
+              .map((child) => renderListItem({ S, workspace, context, listItem: child }))
               .filter((child) => child !== null),
           ),
       );

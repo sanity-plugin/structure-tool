@@ -1,5 +1,5 @@
 import { getContextValues } from '@/helpers/getContextValues';
-import { getWorkspaceListItems } from '@/helpers/getWorkspaceListItems';
+import { getListItems } from '@/helpers/getListItems';
 import { renderListItem } from '@/structure/renderListItem/renderListItem';
 
 import type { StructureResolver } from 'sanity/structure';
@@ -25,7 +25,13 @@ export const structure =
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
-    const workspaceListItems = getWorkspaceListItems<T>(S, workspace, validContext, restParams);
+    const workspaceListItems = getListItems<T>({
+      S,
+      workspace,
+      context: validContext,
+      id: '1',
+      options: restParams,
+    });
 
     if (!workspaceListItems || workspaceListItems.length === 0) {
       return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
@@ -35,7 +41,7 @@ export const structure =
       .title(displayTitle)
       .items(
         workspaceListItems
-          .map((listItem) => renderListItem<T>(S, workspace, validContext, listItem))
+          .map((listItem) => renderListItem<T>({ S, workspace, context: validContext, listItem }))
           .filter((item) => item !== null),
       );
   };
