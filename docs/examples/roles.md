@@ -1,9 +1,9 @@
 # `roles` {#roles}
 
-- **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
+- **Type**: `string[] | ((params: CallbackParams & { defaultRoles: string[] }) => string[])`
 - **Optional**: Yes
 
-The `roles` property allows you to restrict the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the `defaultRoles`.
+The `roles` property allows you to restrict the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the active desk context (`workspace`, `currentUser`, `context`) and the `defaultRoles` defined in your configuration.
 
 ::: info Note
 When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
@@ -99,7 +99,44 @@ helpers.listing('dashboard', {
 
 :::
 
-### 3. Using with Workspaces {#using-with-workspaces}
+### 3. Role Restriction based on Workspace {#role-restriction-based-on-workspace}
+
+You can use the active `workspace` parameter to dynamically customize role access.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Feedback',
+  schemaType: 'feedback',
+  // In the internal testing workspace, allow 'tester' role in addition to default roles
+  roles: ({ defaultRoles, workspace }) => {
+    if (workspace === 'internal-testing') {
+      return [...defaultRoles, 'tester'];
+    }
+
+    return defaultRoles;
+  },
+}
+```
+
+```ts [Helpers]
+helpers.listing('feedback', {
+  title: 'Feedback',
+  // In the internal testing workspace, allow 'tester' role in addition to default roles
+  roles: ({ defaultRoles, workspace }) => {
+    if (workspace === 'internal-testing') {
+      return [...defaultRoles, 'tester'];
+    }
+
+    return defaultRoles;
+  },
+});
+```
+
+:::
+
+### 4. Using with Workspaces {#using-with-workspaces}
 
 You can combine `roles` with the `workspaces` property to create multi-layered access control. This ensures an item is only visible for certain roles **and** only in specific workspaces.
 

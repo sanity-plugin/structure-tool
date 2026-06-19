@@ -1,9 +1,9 @@
 # `workspaces` {#workspaces}
 
-- **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
+- **Type**: `string[] | ((params: CallbackParams & { defaultWorkspaces: string[] }) => string[])`
 - **Optional**: Yes
 
-The `workspaces` property allows you to restrict the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin configuration.
+The `workspaces` property allows you to restrict the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the workspace, currentUser, context, and the `defaultWorkspaces` defined in your plugin configuration.
 
 ::: info Note
 When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
@@ -99,7 +99,45 @@ helpers.listing('logs', {
 
 :::
 
-### 3. Using with Roles {#using-with-roles}
+### 3. Workspace Access via User Roles {#workspace-access-via-user-roles}
+
+You can use the logged-in user's roles (`currentUser`) to dynamically grant access to additional workspaces.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'System Settings',
+  schemaType: 'systemSettings',
+  singleton: true,
+  // Show to administrators in all default workspaces plus 'admin-workspace'
+  workspaces: ({ defaultWorkspaces, currentUser }) => {
+    if (currentUser.roles.some((role) => role.name === 'administrator')) {
+      return [...defaultWorkspaces, 'admin-workspace'];
+    }
+
+    return defaultWorkspaces;
+  },
+}
+```
+
+```ts [Helpers]
+helpers.singleton('systemSettings', {
+  title: 'System Settings',
+  // Show to administrators in all default workspaces plus 'admin-workspace'
+  workspaces: ({ defaultWorkspaces, currentUser }) => {
+    if (currentUser.roles.some((role) => role.name === 'administrator')) {
+      return [...defaultWorkspaces, 'admin-workspace'];
+    }
+
+    return defaultWorkspaces;
+  },
+});
+```
+
+:::
+
+### 4. Using with Roles {#using-with-roles}
 
 You can combine `workspaces` with the `roles` property to create multi-layered access control. This ensures an item is only visible in specific workspaces **and** only to users with certain roles.
 
