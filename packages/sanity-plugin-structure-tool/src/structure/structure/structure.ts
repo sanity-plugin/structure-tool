@@ -1,4 +1,5 @@
 import { getContextValues } from '@/helpers/getContextValues';
+import { getValidListItem } from '@/helpers/getValidListItem';
 import { getWorkspaceListItem } from '@/structure/getWorkspaceListItem/getWorkspaceListItem';
 import { renderListItem } from '@/structure/renderListItem/renderListItem';
 
@@ -11,17 +12,12 @@ export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
   (S, context) => {
     const { title, emptyListTitle, ...restParams } = params;
-    const { workspace, currentUser, context: validContext } = getContextValues<T>(context);
 
-    const displayTitle =
-      typeof title === 'function'
-        ? title({ workspace, currentUser, context: validContext })
-        : title;
+    const contextValues = getContextValues<T>(context);
+    const { workspace, context: validContext } = contextValues;
 
-    const displayEmptyListTitle =
-      typeof emptyListTitle === 'function'
-        ? emptyListTitle({ workspace, currentUser, context: validContext })
-        : emptyListTitle;
+    const displayTitle = getValidListItem(title, contextValues);
+    const displayEmptyListTitle = getValidListItem(emptyListTitle, contextValues);
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
@@ -29,19 +25,20 @@ export const structure =
       S,
       workspace,
       context: validContext,
-      id: '1',
       options: restParams,
     });
 
-    if (!workspaceListItems || workspaceListItems.length === 0) {
-      return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
-    }
-
-    return S.list()
+    const listItemRenderer = S.list()
       .title(displayTitle)
       .items(
         workspaceListItems
           .map((listItem) => renderListItem<T>({ S, workspace, context: validContext, listItem }))
           .filter((item) => item !== null),
       );
+
+    if (listItemRenderer.getItems()?.length === 0) {
+      return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
+    }
+
+    return listItemRenderer;
   };

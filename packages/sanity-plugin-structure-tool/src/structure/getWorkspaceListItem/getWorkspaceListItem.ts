@@ -17,7 +17,7 @@ import type { ListItemExtended } from '@/structure/types/listItem.types';
 export const getWorkspaceListItem = <T extends StructureToolParams>(
   params: GetWorkspaceListItem<T>,
 ): ListItemExtended<T>[] => {
-  const { S, context, id: globalId, options } = params;
+  const { S, context, options } = params;
   const {
     workspaces: globalWorkspaces,
     defaultWorkspaces,
@@ -122,5 +122,5 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
     }, []);
   };
 
-  return getWorkspaceItem({ id: globalId, listItems });
+  return getWorkspaceItem({ id: constants.UNIQUE_ID_FIRST_VALUE, listItems });
 };

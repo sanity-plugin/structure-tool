@@ -7,7 +7,6 @@ import type { StructureToolParams } from '@/structure/types/common.types';
 export interface GetWorkspaceListItem<
   T extends StructureToolParams,
 > extends StructureCommonParams<T> {
-  id: string;
   options: StructureListItemsParams<T>;
 }
 
