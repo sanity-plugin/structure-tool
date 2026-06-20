@@ -14,12 +14,14 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
         | 'id'
         | 'title'
         | 'icon'
+        | 'showIcons'
         | 'apiVersion'
         | 'filter'
         | 'filterParams'
         | 'defaultOrdering'
         | 'defaultLayout'
-        | 'showIcons'
+        | 'menuItemGroups'
+        | 'menuItems'
       >,
       'title' | 'filter'
     >,

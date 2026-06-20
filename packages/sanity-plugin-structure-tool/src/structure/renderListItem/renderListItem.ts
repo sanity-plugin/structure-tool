@@ -22,6 +22,8 @@ export const renderListItem: RenderListItem = (params) => {
       filterParams,
       defaultOrdering,
       defaultLayout,
+      menuItemGroups,
+      menuItems,
       hideAddButton,
       templates,
       raw,
@@ -39,12 +41,22 @@ export const renderListItem: RenderListItem = (params) => {
         .id(id)
         .icon(icon)
         .showIcon(showIcon)
-        .child(() =>
-          S.list()
+        .child(() => {
+          let schemaBuilder = S.list()
             .title(displayTitle)
             .items(children.map((child) => renderItem(child)).filter((child) => child !== null))
-            .showIcons(showIcons),
-        );
+            .showIcons(showIcons);
+
+          if (menuItemGroups) {
+            schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+          }
+
+          if (menuItems) {
+            schemaBuilder = schemaBuilder.menuItems(menuItems);
+          }
+
+          return schemaBuilder;
+        });
     }
 
     if (component) {
@@ -53,11 +65,21 @@ export const renderListItem: RenderListItem = (params) => {
         .id(id)
         .icon(icon)
         .showIcon(showIcon)
-        .child(() =>
-          S.component(component)
+        .child(() => {
+          let schemaBuilder = S.component(component)
             .options({ ...componentOptions })
-            .id(id),
-        );
+            .id(id);
+
+          if (menuItemGroups) {
+            schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+          }
+
+          if (menuItems) {
+            schemaBuilder = schemaBuilder.menuItems(menuItems);
+          }
+
+          return schemaBuilder;
+        });
     }
 
     if (!schemaType && filter) {
@@ -91,6 +113,14 @@ export const renderListItem: RenderListItem = (params) => {
                 ...(typeof value === 'string' ? { direction: value } : value),
               })),
             );
+          }
+
+          if (menuItemGroups) {
+            schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+          }
+
+          if (menuItems) {
+            schemaBuilder = schemaBuilder.menuItems(menuItems);
           }
 
           if (defaultLayout) {
@@ -151,6 +181,14 @@ export const renderListItem: RenderListItem = (params) => {
 
         if (defaultLayout) {
           schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+        }
+
+        if (menuItemGroups) {
+          schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+        }
+
+        if (menuItems) {
+          schemaBuilder = schemaBuilder.menuItems(menuItems);
         }
 
         if (hideAddButton) {

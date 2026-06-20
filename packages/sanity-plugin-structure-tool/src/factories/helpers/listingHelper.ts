@@ -14,13 +14,15 @@ type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
       | 'id'
       | 'title'
       | 'icon'
+      | 'showIcons'
       | 'apiVersion'
       | 'filter'
       | 'filterParams'
       | 'defaultOrdering'
       | 'defaultLayout'
+      | 'menuItemGroups'
+      | 'menuItems'
       | 'isPlural'
-      | 'showIcons'
     >,
   ]
 >;

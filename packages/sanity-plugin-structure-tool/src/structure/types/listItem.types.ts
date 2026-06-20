@@ -1,6 +1,12 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { PreviewLayoutKey, SortOrderingItem } from 'sanity';
-import type { ListBuilder, StructureBuilder, UserComponent } from 'sanity/structure';
+import type {
+  ListBuilder,
+  MenuItem,
+  MenuItemGroup,
+  StructureBuilder,
+  UserComponent,
+} from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
@@ -52,6 +58,8 @@ export interface ListItemCore {
   filterParams?: Record<string, unknown>;
   defaultOrdering?: ListItemDefaultOrdering;
   defaultLayout?: PreviewLayoutKey;
+  menuItemGroups?: MenuItemGroup[];
+  menuItems?: MenuItem[];
   hideAddButton?: boolean;
   templates?: Record<string, unknown>;
   raw?: ListItemRaw;
