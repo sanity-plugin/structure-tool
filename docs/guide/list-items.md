@@ -46,6 +46,7 @@ Click on any property name below to view its complete type definition, details, 
 | [`title`](../examples/title)                   | Yes                    | The display name for the list item in the Sanity desk menu.          |
 | [`schemaType`](../examples/schema-type)        | Yes                    | The name of the document type defined in your Sanity schema.         |
 | [`icon`](../examples/icon)                     | Yes                    | The icon to display to the left of the title.                        |
+| [`showIcons`](../examples/show-icons)           | Yes                    | Controls whether icons are displayed for items inside this list.     |
 | [`singleton`](../examples/singleton)           | Yes (Default: `false`) | Treats the item as a single document rather than a list.             |
 | [`component`](../examples/component)           | Yes                    | Renders a custom React component as the view for a list item.        |
 | [`componentOptions`](../examples/component-options) | Yes                  | Passes custom options or properties to your custom component.        |

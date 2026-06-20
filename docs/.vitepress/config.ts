@@ -137,6 +137,10 @@ export default defineConfig({
                 link: '/examples/icon',
               },
               {
+                text: 'showIcons',
+                link: '/examples/show-icons',
+              },
+              {
                 text: 'singleton',
                 link: '/examples/singleton',
               },
