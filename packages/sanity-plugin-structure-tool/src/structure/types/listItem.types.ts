@@ -59,7 +59,7 @@ export interface ListItemCore {
   isPlural?: boolean;
 }
 
-type DefaultListItem = 'icon' | 'component' | 'raw';
+export type DefaultListItem = 'icon' | 'component' | 'raw';
 
 type DynamicListItemProps<T extends StructureToolParams> = {
   [K in Exclude<keyof ListItemCore, DefaultListItem>]?: StructureToolGenericParam<
@@ -79,15 +79,13 @@ export type ListItem<T extends StructureToolParams> = SimpleMerge<
   ]
 >;
 
+export interface ListItemExtendedItems<T extends StructureToolParams> {
+  id: string;
+  displayTitle: string;
+  children: ListItemExtended<T>[];
+  showIcon: boolean;
+}
+
 export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
-  [
-    ListItemCore,
-    ListItemWithWorkspacesAndRoles<T>,
-    {
-      id: string;
-      displayTitle: string;
-      children: ListItemExtended<T>[];
-      showIcon: boolean;
-    },
-  ]
+  [ListItemCore, ListItemWithWorkspacesAndRoles<T>, ListItemExtendedItems<T>]
 >;

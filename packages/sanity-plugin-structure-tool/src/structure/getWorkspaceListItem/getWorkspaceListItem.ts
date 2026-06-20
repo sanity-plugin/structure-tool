@@ -1,11 +1,10 @@
-import pluralize from 'pluralize-esm';
-
 import { constants } from '@/constants';
 import { getContextValues } from '@/helpers/getContextValues';
 import { getCurrentUserRoles } from '@/helpers/getCurrentUserRoles';
 import { getRolesWithDefaults } from '@/helpers/getRolesWithDefaults';
 import { getValidListItem } from '@/helpers/getValidListItem';
 import { getWorkspacesWithDefaults } from '@/helpers/getWorkspacesWithDefaults';
+import { getComputedListItems } from '@/structure/getComputedListItems/getComputedListItems';
 import { sanitizeUrl } from '@/utils';
 
 import type {
@@ -28,65 +27,21 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
   } = options;
 
   const contextValues = getContextValues(context);
+  const { workspace, currentUser } = contextValues;
 
   const getWorkspaceItem = (childParams: GetWorkspaceItem<T>): ListItemExtended<T>[] => {
     const { id: itemId, listItems: items } = childParams;
 
     return items.reduce<ListItemExtended<T>[]>((acc, listItem, index) => {
-      const {
-        id: idFn,
-        title: titleFn,
-        icon,
-        schemaType: schemaTypeFn,
-        showIcons: showIconsFn,
-        singleton: singletonFn,
-        componentOptions: componentOptionsFn,
-        children: childrenFn,
-        apiVersion: apiVersionFn,
-        filter: filterFn,
-        filterParams: filterParamsFn,
-        defaultOrdering: defaultOrderingFn,
-        defaultLayout: defaultLayoutFn,
-        hideAddButton: hideAddButtonFn,
-        templates: templatesFn,
-        isDivider: isDividerFn,
-        isPlural: isPluralFn,
-        ...restListItem
-      } = listItem;
+      const { id: idFn } = listItem;
 
-      const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
-      const roles = 'roles' in listItem ? listItem.roles : undefined;
+      // All Items
+      const computedListItem = getComputedListItems({ S, listItem, context });
 
-      const { workspace, currentUser } = contextValues;
-
-      const title = getValidListItem(titleFn, contextValues);
-      const schemaType = getValidListItem(schemaTypeFn, contextValues);
-      const showIcon = icon !== false;
-      const showIcons = getValidListItem(showIconsFn, contextValues);
-      const singleton = getValidListItem(singletonFn, contextValues);
-      const componentOptions = getValidListItem(componentOptionsFn, contextValues);
-      const children = getValidListItem(childrenFn, contextValues);
-      const apiVersion = getValidListItem(apiVersionFn, contextValues);
-      const filter = getValidListItem(filterFn, contextValues);
-      const filterParams = getValidListItem(filterParamsFn, contextValues);
-      const defaultOrdering = getValidListItem(defaultOrderingFn, contextValues);
-      const defaultLayout = getValidListItem(defaultLayoutFn, contextValues);
-      const hideAddButton = getValidListItem(hideAddButtonFn, contextValues);
-      const templates = getValidListItem(templatesFn, contextValues);
-      const isDivider = getValidListItem(isDividerFn, contextValues);
-      const isPlural = getValidListItem(isPluralFn, contextValues);
-
-      const displayTitle = (() => {
-        const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
-        const isItPlural = title ? false : (isPlural ?? !singleton);
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        const mainTitle = title || (schemaTitle ?? '');
-
-        const finalTitle = isItPlural ? pluralize(mainTitle) : mainTitle;
-        return finalTitle || '';
-      })();
-
+      // Unique ID & ID
       const { uniqueId, id } = (() => {
+        const { displayTitle } = computedListItem;
+
         const uniqueIdValue = [itemId, index + 1].join(constants.URL_PATH_SEPARATOR);
         const sanitizedPaths = sanitizeUrl(displayTitle).split(' ');
 
@@ -105,29 +60,17 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         return { uniqueId: uniqueIdValue, id: userEnteredId ?? idValue };
       })();
 
-      const listItemObj = {
-        ...restListItem,
-        id,
-        displayTitle,
-        schemaType,
-        icon,
-        showIcon,
-        showIcons,
-        singleton,
-        componentOptions,
-        children,
-        apiVersion,
-        filter,
-        filterParams,
-        defaultOrdering,
-        defaultLayout,
-        hideAddButton,
-        templates,
-        isDivider,
-        isPlural,
-      };
+      // ListItemObj
+      const listItemObj = (() => {
+        const { icon, component, raw, ...restListItem } = listItem;
 
+        return { ...restListItem, ...computedListItem, id, icon, component, raw };
+      })();
+
+      // Workspace
       const { hasWorkspaceEnabled, hasWorkspaceAccess } = (() => {
+        const workspaces = 'workspaces' in listItem ? listItem.workspaces : undefined;
+
         if (!defaultWorkspaces || !globalWorkspaces) {
           return { hasWorkspaceEnabled: false, hasWorkspaceAccess: true };
         }
@@ -144,7 +87,10 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
       if (hasWorkspaceEnabled && !hasWorkspaceAccess) return acc;
 
+      // Roles
       const { hasRoleEnabled, hasRoleAccess } = (() => {
+        const roles = 'roles' in listItem ? listItem.roles : undefined;
+
         if (!defaultRoles || !globalRoles) return { hasRoleEnabled: false, hasRoleAccess: true };
 
         const hasAccess = getCurrentUserRoles<T>({ currentUser, roles: globalRoles }).some((role) =>
@@ -156,14 +102,21 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
       if (hasRoleEnabled && !hasRoleAccess) return acc;
 
-      if (children && children.length > 0) {
-        acc.push({
-          ...listItemObj,
-          children: getWorkspaceItem({ id: uniqueId, listItems: children }),
-        });
-      } else {
-        acc.push({ ...listItemObj, children: [] });
-      }
+      // Children
+      const childrenListItem = (() => {
+        const { children } = computedListItem;
+
+        if (children && children.length > 0) {
+          return {
+            ...listItemObj,
+            children: getWorkspaceItem({ id: uniqueId, listItems: children }),
+          };
+        }
+
+        return { ...listItemObj, children: [] };
+      })();
+
+      acc.push(childrenListItem);
 
       return acc;
     }, []);
