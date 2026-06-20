@@ -11,6 +11,8 @@ export const renderListItem: RenderListItem = (params) => {
       displayTitle,
       schemaType,
       icon,
+      showIcon,
+      showIcons,
       singleton,
       component,
       componentOptions,
@@ -24,8 +26,6 @@ export const renderListItem: RenderListItem = (params) => {
       templates,
       raw,
       isDivider,
-      showIcon,
-      showIcons,
     } = item;
 
     if (raw) return raw(S, context);

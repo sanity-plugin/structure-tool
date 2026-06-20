@@ -42,7 +42,8 @@ export type ListItemRaw = (
 export interface ListItemCore {
   title?: string;
   schemaType?: string;
-  icon?: IconComponent | ComponentType | ReactNode;
+  icon?: IconComponent | ComponentType | ReactNode | false;
+  showIcons?: boolean;
   singleton?: boolean;
   component?: UserComponent;
   componentOptions?: Record<string, unknown>;
@@ -86,6 +87,7 @@ export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
       id: string;
       displayTitle: string;
       children: ListItemExtended<T>[];
+      showIcon: boolean;
     },
   ]
 >;

@@ -38,6 +38,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         title: titleFn,
         icon,
         schemaType: schemaTypeFn,
+        showIcons: showIconsFn,
         singleton: singletonFn,
         componentOptions: componentOptionsFn,
         children: childrenFn,
@@ -50,7 +51,6 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         templates: templatesFn,
         isDivider: isDividerFn,
         isPlural: isPluralFn,
-        showIcons: showIconsFn,
         ...restListItem
       } = listItem;
 
@@ -61,6 +61,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
       const title = getValidListItem(titleFn, contextValues);
       const schemaType = getValidListItem(schemaTypeFn, contextValues);
+      const showIcon = icon !== false;
+      const showIcons = getValidListItem(showIconsFn, contextValues);
       const singleton = getValidListItem(singletonFn, contextValues);
       const componentOptions = getValidListItem(componentOptionsFn, contextValues);
       const children = getValidListItem(childrenFn, contextValues);
@@ -73,8 +75,6 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
       const templates = getValidListItem(templatesFn, contextValues);
       const isDivider = getValidListItem(isDividerFn, contextValues);
       const isPlural = getValidListItem(isPluralFn, contextValues);
-      const showIcons = getValidListItem(showIconsFn, contextValues);
-      const showIcon = icon !== false;
 
       const displayTitle = (() => {
         const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
@@ -111,6 +111,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         displayTitle,
         schemaType,
         icon,
+        showIcon,
+        showIcons,
         singleton,
         componentOptions,
         children,
@@ -123,8 +125,6 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         templates,
         isDivider,
         isPlural,
-        showIcons,
-        showIcon,
       };
 
       const { hasWorkspaceEnabled, hasWorkspaceAccess } = (() => {
