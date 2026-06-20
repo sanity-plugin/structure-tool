@@ -1,6 +1,6 @@
 {
   "name": "@structure-tool/lint-staged-config",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "@structure-tool/lint-staged-config description",
   "author": "Nisharg Shah <nishargshah3101@gmail.com>",

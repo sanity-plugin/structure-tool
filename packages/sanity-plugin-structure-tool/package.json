@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-structure-tool",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A JSON based powerful structure tool for Sanity Studio",
   "keywords": [
     "structure",
