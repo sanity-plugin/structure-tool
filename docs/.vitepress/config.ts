@@ -173,6 +173,14 @@ export default defineConfig({
                 link: '/examples/default-layout',
               },
               {
+                text: 'menuItemGroups',
+                link: '/examples/menu-item-groups',
+              },
+              {
+                text: 'menuItems',
+                link: '/examples/menu-items',
+              },
+              {
                 text: 'workspaces',
                 link: '/examples/workspaces',
               },

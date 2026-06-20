@@ -56,6 +56,8 @@ Click on any property name below to view its complete type definition, details, 
 | [`filterParams`](../examples/filter)                | Yes                    | Parameters to be used within the `filter` GROQ string.               |
 | [`defaultOrdering`](../examples/default-ordering)   | Yes                    | Sets the default sorting order for document lists.                   |
 | [`defaultLayout`](../examples/default-layout)       | Yes                    | Specifies the default layout style for documents listed.             |
+| [`menuItemGroups`](../examples/menu-item-groups)    | Yes                    | Groups custom actions/items in the pane header menu.                 |
+| [`menuItems`](../examples/menu-items)               | Yes                    | Defines custom actions/items in the pane header menu.                |
 | [`workspaces`](../examples/workspaces)              | Yes                    | Restricts the visibility of the list item to specific workspaces.    |
 | [`roles`](../examples/roles)                        | Yes                    | Restricts the visibility of the list item to specific user roles.    |
 | [`hideAddButton`](../examples/hide-add-button)      | Yes (Default: `false`) | Hides the "Add" button (plus icon) for the document list.            |
