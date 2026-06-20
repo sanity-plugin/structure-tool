@@ -121,6 +121,10 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: 'id',
+                link: '/examples/id',
+              },
+              {
                 text: 'title',
                 link: '/examples/title',
               },

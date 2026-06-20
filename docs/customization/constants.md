@@ -18,3 +18,23 @@ if (documentId.endsWith(constants.SINGLETON_KEY)) {
   // ...
 }
 ```
+
+---
+
+### `URL_PATH_SEPARATOR` {#url-path-separator}
+
+The character used as a separator when generating unique list item paths and IDs.
+
+### Usage Example {#usage-example-url-path-separator}
+
+```ts
+import { constants } from 'sanity-plugin-structure-tool';
+
+helpers.listing('category', {
+  title: 'My Custom Category',
+  id: ({ workspace, values }) => {
+    // Generate a workspace-specific custom ID like: 'production.1.2.3.custom'
+    return [workspace, values.uniqueId, 'custom'].join(constants.URL_PATH_SEPARATOR);
+  },
+});
+```

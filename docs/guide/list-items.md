@@ -42,6 +42,7 @@ Click on any property name below to view its complete type definition, details, 
 
 | Property                                       | Optional               | Description                                                          |
 | :--------------------------------------------- | :--------------------- | :------------------------------------------------------------------- |
+| [`id`](../examples/id)                         | Yes                    | Uniquely identifies the list item in the desk menu path.             |
 | [`title`](../examples/title)                   | Yes                    | The display name for the list item in the Sanity desk menu.          |
 | [`schemaType`](../examples/schema-type)        | Yes                    | The name of the document type defined in your Sanity schema.         |
 | [`icon`](../examples/icon)                     | Yes                    | The icon to display to the left of the title.                        |
