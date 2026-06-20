@@ -24,6 +24,26 @@ const listItems = defineListItems(({ helpers }) => [
         title: 'Contributors',
         icon: AddUserIcon,
       }),
+      helpers.divider('No Icon for List Item (icon: false)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Author Listing (Hidden Icon)',
+        icon: false,
+      }),
+      helpers.divider('No Icons for Child List (showIcons: false)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors (No Icons)',
+        showIcons: false,
+      }),
+      helpers.divider('Custom Id (id: custom-static-id)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Custom Id',
+        id: 'custom-static-id',
+      }),
+      helpers.divider('API Version (2025-02-19)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors',
+        apiVersion: '2025-02-19',
+      }),
     ],
   },
   {
@@ -115,6 +135,51 @@ const listItems = defineListItems(({ helpers }) => [
           author: schemaNames.AUTHOR,
           setting: schemaNames.SETTING,
         },
+      }),
+    ],
+  },
+
+  {
+    title: 'Default Ordering',
+    children: [
+      helpers.divider('Sorting: Author by Name'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Sort by Name (Asc)',
+        defaultOrdering: {
+          name: 'asc',
+        },
+      }),
+      helpers.divider('Sorting: Author by Updated At'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Sort by Updated At (desc)',
+        defaultOrdering: {
+          _updatedAt: 'desc',
+        },
+      }),
+    ],
+  },
+  {
+    title: 'Default Layout',
+    children: [
+      helpers.divider('Default Layout'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Default Layout',
+        defaultLayout: 'default',
+      }),
+      helpers.divider('Block Layout'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Block Layout',
+        defaultLayout: 'block',
+      }),
+      helpers.divider('Detail Layout'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Detail Layout',
+        defaultLayout: 'detail',
+      }),
+      helpers.divider('Media Layout'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Media Layout',
+        defaultLayout: 'media',
       }),
     ],
   },
