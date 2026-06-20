@@ -19,6 +19,7 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
         | 'filterParams'
         | 'defaultOrdering'
         | 'defaultLayout'
+        | 'showIcons'
       >,
       'title' | 'filter'
     >,

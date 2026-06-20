@@ -20,6 +20,7 @@ type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
       | 'defaultOrdering'
       | 'defaultLayout'
       | 'isPlural'
+      | 'showIcons'
     >,
   ]
 >;

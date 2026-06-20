@@ -36,6 +36,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
       const {
         id: idFn,
         title: titleFn,
+        icon,
         schemaType: schemaTypeFn,
         singleton: singletonFn,
         componentOptions: componentOptionsFn,
@@ -49,6 +50,7 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         templates: templatesFn,
         isDivider: isDividerFn,
         isPlural: isPluralFn,
+        showIcons: showIconsFn,
         ...restListItem
       } = listItem;
 
@@ -57,11 +59,11 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
 
       const { workspace, currentUser } = contextValues;
 
+      const title = getValidListItem(titleFn, contextValues);
       const schemaType = getValidListItem(schemaTypeFn, contextValues);
       const singleton = getValidListItem(singletonFn, contextValues);
       const componentOptions = getValidListItem(componentOptionsFn, contextValues);
       const children = getValidListItem(childrenFn, contextValues);
-      const title = getValidListItem(titleFn, contextValues);
       const apiVersion = getValidListItem(apiVersionFn, contextValues);
       const filter = getValidListItem(filterFn, contextValues);
       const filterParams = getValidListItem(filterParamsFn, contextValues);
@@ -71,6 +73,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
       const templates = getValidListItem(templatesFn, contextValues);
       const isDivider = getValidListItem(isDividerFn, contextValues);
       const isPlural = getValidListItem(isPluralFn, contextValues);
+      const showIcons = getValidListItem(showIconsFn, contextValues);
+      const showIcon = icon !== false;
 
       const displayTitle = (() => {
         const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
@@ -105,10 +109,11 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         ...restListItem,
         id,
         displayTitle,
-        children,
         schemaType,
+        icon,
         singleton,
         componentOptions,
+        children,
         apiVersion,
         filter,
         filterParams,
@@ -118,6 +123,8 @@ export const getWorkspaceListItem = <T extends StructureToolParams>(
         templates,
         isDivider,
         isPlural,
+        showIcons,
+        showIcon,
       };
 
       const { hasWorkspaceEnabled, hasWorkspaceAccess } = (() => {

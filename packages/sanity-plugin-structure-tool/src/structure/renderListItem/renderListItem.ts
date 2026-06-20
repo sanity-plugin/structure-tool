@@ -24,6 +24,8 @@ export const renderListItem: RenderListItem = (params) => {
       templates,
       raw,
       isDivider,
+      showIcon,
+      showIcons,
     } = item;
 
     if (raw) return raw(S, context);
@@ -36,10 +38,12 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
+        .showIcon(showIcon)
         .child(() =>
           S.list()
             .title(displayTitle)
-            .items(children.map((child) => renderItem(child)).filter((child) => child !== null)),
+            .items(children.map((child) => renderItem(child)).filter((child) => child !== null))
+            .showIcons(showIcons),
         );
     }
 
@@ -48,6 +52,7 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
+        .showIcon(showIcon)
         .child(() =>
           S.component(component)
             .options({ ...componentOptions })
@@ -60,11 +65,13 @@ export const renderListItem: RenderListItem = (params) => {
         .title(displayTitle)
         .id(id)
         .icon(icon)
+        .showIcon(showIcon)
         .child(() => {
           let schemaBuilder = S.documentList()
             .title(displayTitle)
             .menuItems([])
-            .initialValueTemplates([]);
+            .initialValueTemplates([])
+            .showIcons(showIcons);
 
           if (filter || filterParams) {
             schemaBuilder = schemaBuilder
@@ -102,6 +109,7 @@ export const renderListItem: RenderListItem = (params) => {
       .id(id)
       .icon(icon)
       .schemaType(schemaType)
+      .showIcon(showIcon)
       .child(() => {
         if (singleton) {
           let schemaBuilder = S.editor()
@@ -125,7 +133,8 @@ export const renderListItem: RenderListItem = (params) => {
           .params({
             schemaType,
             ...filterParams,
-          });
+          })
+          .showIcons(showIcons);
 
         if (apiVersion) {
           schemaBuilder = schemaBuilder.apiVersion(apiVersion);
