@@ -1,285 +1,65 @@
 # List Items {#list-items}
 
-The core of **Sanity Structure Tool** is the `ListItem` configuration. This guide explains every property you can use to define your desk structure.
+The core of **Sanity Structure Tool** is the `ListItem` configuration. This guide provides a complete index of all configuration properties.
 
-## `title` {#title}
-
-- **Type**: `string`
-- **Optional**: Yes (Required if `children` is present)
-- **Examples**: [See Examples](../examples/title)
-
-The display name for the list item. While optional for standard items (where it can be inferred from `schemaType`), it is **mandatory** for items that act as folders (containing `children`).
-
-```ts
-{
-  title: 'My Custom Title',
-}
-```
-
-## `schemaType` {#schema-type}
-
-- **Type**: `string`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/schema-type)
-
-The name of the document type defined in your Sanity schema. Providing this will automatically link the list item to that document type.
-
-```ts
-{
-  schemaType: 'author',
-}
-```
-
-## `icon` {#icon}
-
-- **Type**: `IconComponent | ComponentType | ReactNode`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/icon)
-
-The icon to display to the left of the title. You can use standard Sanity icons or custom React components.
-
-```ts
-import { UserIcon } from '@sanity/icons';
-
-{
-  schemaType: 'author',
-  icon: UserIcon,
-}
-```
-
-## `singleton` {#singleton}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/singleton)
-
-When set to `true`, this item is treated as a single document rather than a list. The plugin will automatically handle the document ID and editor view.
-
-::: warning Note
-When `singleton: true` is enabled, the `apiVersion` and `templates` properties are **not supported** and should not be used.
+::: info Using Helpers
+You can define list items using either raw objects or the built-in [Helpers](./helpers). Helpers provide enhanced type intelligence and a more expressive syntax.
 :::
 
-```ts
-{
-  title: 'Global Settings',
-  schemaType: 'settings',
-  singleton: true,
-}
-```
+## Dynamic Values (Callbacks) {#dynamic-values}
 
-## `children` {#children}
-
-- **Type**: `ListItem[]`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/children)
-
-An array of `ListItem` objects to create a nested list. This is the primary way to build hierarchical structures.
-
-::: info Note
-When adding `children`, you **must** also provide a `title` so it can be labeled correctly in the desk menu.
-:::
+Almost every property on a `ListItem` supports **dynamic values**. Instead of passing a static value, you can pass a callback function that receives the active desk context:
 
 ```ts
-{
-  title: 'Profile',
-  children: [
-    {
-      schemaType: 'author',
-    },
-    {
-      schemaType: 'user',
-    },
-  ],
-}
+({ workspace, currentUser, context }) => value;
 ```
 
-## `apiVersion` {#api-versioning}
+This dynamic callback pattern allows you to compute structure values dynamically based on the current workspace, logged-in user, or Sanity context.
 
-- **Type**: `string`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/api-version)
+### Callback Parameters
 
-Specifies the Sanity API version to use for this specific list item.
+| Parameter     | Type            | Description                          |
+| :------------ | :-------------- | :----------------------------------- |
+| `workspace`   | `string`        | The active workspace name.           |
+| `currentUser` | `CurrentUser`   | The currently logged-in Sanity user. |
+| `context`     | `ConfigContext` | The raw Sanity config context.       |
 
-::: warning Note
-This property is **not compatible** with items marked as `singleton: true`.
-:::
+### Example
 
 ```ts
-{
-  schemaType: 'author',
-  apiVersion: '2025-02-19',
-}
+helpers.listing('author', {
+  // Compute title dynamically based on workspace
+  title: ({ workspace }) => (workspace === 'staging' ? 'Review Authors' : 'Authors'),
+  // Hide add button dynamically for non-admin users
+  hideAddButton: ({ currentUser }) =>
+    !currentUser.roles.some((role) => role.name === 'administrator'),
+});
 ```
 
-## `filter` {#filter}
+## Property Reference {#properties}
 
-- **Type**: `string | ((params: { currentUser: CurrentUser }) => string)`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/filter)
+Click on any property name below to view its complete type definition, details, and interactive usage examples (Standard JSON vs Helpers).
 
-A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
-
-::: warning Note
-If you provide a `filter` without a `schemaType`, you cannot use `hideAddButton` or `templates` for that item.
-:::
-
-```ts
-{
-  schemaType: 'author',
-  filter: 'isActive == true',
-}
-```
-
-## `filterParams` {#filter-params}
-
-- **Type**: `Record<string, unknown> | ((params: { currentUser: CurrentUser }) => Record<string, unknown>)`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/filter)
-
-Parameters to be used within the `filter` GROQ string.
-
-```ts
-{
-  schemaType: 'author',
-  filter: 'type == $type',
-  filterParams: {
-    type: 'news'
-  },
-}
-```
-
-## `workspaces` {#workspaces}
-
-- **Type**: `string[] | ((params: { defaultWorkspaces: string[] }) => string[])`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/workspaces)
-
-Restricts the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the `defaultWorkspaces` defined in your plugin configuration.
-
-::: info Note
-When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
-:::
-
-```ts
-{
-  schemaType: 'adminSettings',
-  workspaces: ['workspace1'],
-}
-```
-
-## `roles` {#roles}
-
-- **Type**: `string[] | ((params: { defaultRoles: string[] }) => string[])`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/roles)
-
-Restricts the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the `defaultRoles`.
-
-::: info Note
-When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
-:::
-
-```ts
-{
-  schemaType: 'settings',
-  roles: ['administrator', 'editor'],
-}
-```
-
-## `hideAddButton` {#hide-add-button}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/hide-add-button)
-
-When set to `true`, the "Add" button (plus icon) will be hidden for this document list.
-
-::: warning Note
-This property cannot be used in combination with `templates`. Additionally, it is not supported when a `filter` is used without a `schemaType`.
-:::
-
-```ts
-{
-  schemaType: 'author',
-  hideAddButton: true,
-}
-```
-
-## `templates` {#templates}
-
-- **Type**: `Record<string, unknown>`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/templates)
-
-Used to pass initial value templates for new documents created from this list item.
-
-::: warning Note
-This property cannot be used if `hideAddButton` is present. It is also **not supported** for `singleton` items or when a `filter` is used without a `schemaType`.
-:::
-
-```ts
-{
-  schemaType: 'post',
-  templates: {
-    isActive: false,
-  },
-}
-```
-
-## `raw` {#raw}
-
-- **Type**: `(S: StructureBuilder, context: StructureResolverContext) => ListItem`
-- **Optional**: Yes
-- **Examples**: [See Examples](../examples/raw)
-
-The "Escape Hatch". Allows you to use the native Sanity `Structure Builder` API directly for this specific item. You also have access to the `context` (containing `currentUser`, `projectId`, etc.).
-
-```ts
-{
-  raw: (S) => S.listItem().title('Advanced Item').child(...),
-}
-```
-
-::: warning Use Sparingly
-When using `raw`, you are responsible for handling your own visibility logic (workspaces/roles) for any nested children.
-:::
-
-## `isDivider` {#is-divider}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `false`)
-- **Examples**: [See Examples](../examples/is-divider)
-
-When set to `true`, this item renders as a visual separator in the desk list. Other properties (except `title`) are ignored.
-
-```ts
-{
-  title: 'Content Section',
-  isDivider: true,
-}
-```
-
-## `isPlural` {#is-plural}
-
-- **Type**: `boolean`
-- **Optional**: Yes (Default: `true`)
-- **Examples**: [See Examples](../examples/is-plural)
-
-Controls whether the auto-generated title should be pluralized when no custom `title` is provided.
-
-::: details Note
-For items marked as `singleton: true`, pluralization is **disabled by default** since singletons are singular by nature. However, you can manually set `isPlural: true` if you wish to pluralize a singleton's title.
-
-::: details Recommendation
-We recommend giving your `schema` a **singular** title (e.g., `Author` instead of `Authors`). The plugin will then automatically pluralize it for the list view (e.g., "Authors").
-:::
-
-When `isPlural` is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
-
-```ts
-{
-  schemaType: 'author',
-  isPlural: false,
-}
-```
+| Property                                            | Optional               | Description                                                          |
+| :-------------------------------------------------- | :--------------------- | :------------------------------------------------------------------- |
+| [`id`](../examples/id)                              | Yes                    | Uniquely identifies the list item in the desk menu path.             |
+| [`title`](../examples/title)                        | Yes                    | The display name for the list item in the Sanity desk menu.          |
+| [`schemaType`](../examples/schema-type)             | Yes                    | The name of the document type defined in your Sanity schema.         |
+| [`icon`](../examples/icon)                          | Yes                    | The icon to display to the left of the title.                        |
+| [`showIcons`](../examples/show-icons)               | Yes                    | Controls whether icons are displayed for items inside this list.     |
+| [`singleton`](../examples/singleton)                | Yes (Default: `false`) | Treats the item as a single document rather than a list.             |
+| [`component`](../examples/component)                | Yes                    | Renders a custom React component as the view for a list item.        |
+| [`componentOptions`](../examples/component-options) | Yes                    | Passes custom options or properties to your custom component.        |
+| [`children`](../examples/children)                  | Yes                    | An array of `ListItem` objects to create a nested list.              |
+| [`apiVersion`](../examples/api-version)             | Yes                    | Specifies the Sanity API version to use for this specific list item. |
+| [`filter`](../examples/filter)                      | Yes                    | A GROQ filter string to limit which documents are shown.             |
+| [`filterParams`](../examples/filter)                | Yes                    | Parameters to be used within the `filter` GROQ string.               |
+| [`defaultOrdering`](../examples/default-ordering)   | Yes                    | Sets the default sorting order for document lists.                   |
+| [`defaultLayout`](../examples/default-layout)       | Yes                    | Specifies the default layout style for documents listed.             |
+| [`workspaces`](../examples/workspaces)              | Yes                    | Restricts the visibility of the list item to specific workspaces.    |
+| [`roles`](../examples/roles)                        | Yes                    | Restricts the visibility of the list item to specific user roles.    |
+| [`hideAddButton`](../examples/hide-add-button)      | Yes (Default: `false`) | Hides the "Add" button (plus icon) for the document list.            |
+| [`templates`](../examples/templates)                | Yes                    | Passes initial value templates for new documents.                    |
+| [`raw`](../examples/raw)                            | Yes                    | The "Escape Hatch" to use the native Sanity Structure Builder API.   |
+| [`isDivider`](../examples/is-divider)               | Yes (Default: `false`) | Renders as a visual separator in the desk list.                      |
+| [`isPlural`](../examples/is-plural)                 | Yes (Default: `true`)  | Controls automatic pluralization of the auto-generated title.        |

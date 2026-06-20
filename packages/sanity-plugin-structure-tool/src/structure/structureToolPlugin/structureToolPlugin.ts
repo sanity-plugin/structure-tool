@@ -3,7 +3,7 @@ import { structureTool } from 'sanity/structure';
 
 import { defineListItem } from '@/factories/defineListItem';
 import { defineListItems } from '@/factories/defineListItems';
-import { getAllListItems } from '@/helpers/getAllListItems';
+import { helpers } from '@/factories/helpers';
 import { structure } from '@/structure/structure/structure';
 import { templates } from '@/structure/templates/templates';
 
@@ -11,44 +11,51 @@ import type {
   StructureToolPluginOutput,
   StructureToolPluginParams,
 } from '@/structure/structureToolPlugin/structureToolPlugin.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
 
 export const structureToolPlugin = <
-  const Workspaces extends readonly string[] | undefined = undefined,
-  const DefaultWorkspaces extends readonly string[] | undefined = undefined,
-  const Roles extends readonly string[] | undefined = undefined,
-  const DefaultRoles extends readonly string[] | undefined = undefined,
+  const Workspaces extends StructureToolParams['Workspaces'] = undefined,
+  const DefaultWorkspaces extends StructureToolParams['DefaultWorkspaces'] = undefined,
+  const Roles extends StructureToolParams['Roles'] = undefined,
+  const DefaultRoles extends StructureToolParams['DefaultRoles'] = undefined,
 >(
-  params: StructureToolPluginParams<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-): StructureToolPluginOutput<Workspaces, DefaultWorkspaces, Roles, DefaultRoles> => ({
-  structure: definePlugin(({ listItems }) => {
-    const flatListItems = getAllListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(
-      listItems,
-    );
+  params: StructureToolPluginParams<{
+    Workspaces: Workspaces;
+    DefaultWorkspaces: DefaultWorkspaces;
+    Roles: Roles;
+    DefaultRoles: DefaultRoles;
+  }>,
+): StructureToolPluginOutput<{
+  Workspaces: Workspaces;
+  DefaultWorkspaces: DefaultWorkspaces;
+  Roles: Roles;
+  DefaultRoles: DefaultRoles;
+}> => {
+  interface DefaultsStructureToolParams {
+    Workspaces: Workspaces;
+    DefaultWorkspaces: DefaultWorkspaces;
+    Roles: Roles;
+    DefaultRoles: DefaultRoles;
+  }
 
-    return {
+  return {
+    structure: definePlugin(({ listItems }) => ({
       name: 'sanity-plugin-structure-tool',
       plugins: [
         structureTool({
-          structure: structure<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>({
+          structure: structure<DefaultsStructureToolParams>({
             ...params,
             listItems,
           }),
         }),
       ],
       schema: {
-        templates: templates<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(flatListItems),
+        templates: templates<DefaultsStructureToolParams>({ listItems }),
       },
-    };
-  }),
-  templates: ({ listItems }) => {
-    const flatListItems = getAllListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(
-      listItems,
-    );
-
-    return templates<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(flatListItems);
-  },
-  defineListItems: (listItems) =>
-    defineListItems<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(listItems),
-  defineListItem: (listItem) =>
-    defineListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>(listItem),
-});
+    })),
+    templates,
+    defineListItems,
+    defineListItem,
+    helpers,
+  };
+};

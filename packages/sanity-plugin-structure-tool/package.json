@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-structure-tool",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A JSON based powerful structure tool for Sanity Studio",
   "keywords": [
     "structure",
@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "build:dev": "tsdown --watch",
+    "build:watch": "tsdown --watch",
     "format": "prettier . --check --log-level silent --ignore-path ../../.gitignore",
     "format:fix": "prettier . --write --log-level silent --ignore-path ../../.gitignore",
     "lint": "eslint .",
@@ -73,6 +73,7 @@
     "node": ">=18"
   },
   "inlinedDependencies": {
-    "type-fest": "5.6.0"
+    "tagged-tag": "1.0.0",
+    "type-fest": "5.7.0"
   }
 }

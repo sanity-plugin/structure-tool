@@ -1,0 +1,40 @@
+# Sanity Plugin Structure Tool
+
+Welcome! This repository uses a `.agents` folder to store in-depth technical documentation and "memory" for AI assistants.
+
+## Getting Started
+
+For a comprehensive understanding of the project, please refer to:
+
+- [.agents/PROJECT_OVERVIEW.md](./.agents/PROJECT_OVERVIEW.md)
+- [.agents/CORE_FEATURES.md](./.agents/CORE_FEATURES.md)
+- [.agents/TECHNICAL_IMPLEMENTATION.md](./.agents/TECHNICAL_IMPLEMENTATION.md)
+- [.agents/DEVELOPMENT_GUIDE.md](./.agents/DEVELOPMENT_GUIDE.md)
+- [.agents/CONVENTIONS.md](./.agents/CONVENTIONS.md)
+
+## Key Locations
+
+- **Core Plugin**: `packages/sanity-plugin-structure-tool`
+- **Example Studio**: `apps/studio`
+- **Documentation**: `docs`
+
+Refer to the files above for specific implementation details and coding standards.
+
+---
+
+## Agent Coding Rules
+
+### Helper Callback Pattern
+
+When working with list item definitions or documenting them:
+
+- Remember that `defineListItems` and `defineListItem` support a callback parameter `({ helpers }) => ...`.
+- This callback avoids the need to import `helpers` globally or contextually in every single file.
+- When writing documentation (such as `.md` files in `docs/`), always present both the plain JSON-like object format and the helper-based format (using both the direct import and callback signatures) to ensure completeness.
+
+---
+
+## Agent Tool Constraints
+
+- **DO NOT** run linting, formatting, or type-checking commands (e.g., `pnpm lint`, `pnpm format`, `pnpm typecheck`, `eslint`, `prettier`, `tsc`, `script:lint`). The user will handle these manually before pushing.
+- **DO NOT** run `git add` or any git commit commands. The user will manually review, stage, and commit changes if they are correct.

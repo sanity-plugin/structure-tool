@@ -96,6 +96,10 @@ export default defineConfig({
             link: '/guide/list-items',
           },
           {
+            text: 'Helpers',
+            link: '/guide/helpers',
+          },
+          {
             text: 'Comparison',
             link: '/guide/comparison',
           },
@@ -117,6 +121,10 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: 'id',
+                link: '/examples/id',
+              },
+              {
                 text: 'title',
                 link: '/examples/title',
               },
@@ -129,8 +137,20 @@ export default defineConfig({
                 link: '/examples/icon',
               },
               {
+                text: 'showIcons',
+                link: '/examples/show-icons',
+              },
+              {
                 text: 'singleton',
                 link: '/examples/singleton',
+              },
+              {
+                text: 'component',
+                link: '/examples/component',
+              },
+              {
+                text: 'componentOptions',
+                link: '/examples/component-options',
               },
               {
                 text: 'children',
@@ -143,6 +163,14 @@ export default defineConfig({
               {
                 text: 'filter + filterParams',
                 link: '/examples/filter',
+              },
+              {
+                text: 'defaultOrdering',
+                link: '/examples/default-ordering',
+              },
+              {
+                text: 'defaultLayout',
+                link: '/examples/default-layout',
               },
               {
                 text: 'workspaces',

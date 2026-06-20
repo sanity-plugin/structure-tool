@@ -1,10 +1,15 @@
-# `children` Examples {#children-examples}
+# `children` {#children}
+
+- **Type**: `ListItem[] | ((params: CallbackParams) => ListItem[])`
+- **Optional**: Yes
 
 The `children` property allows you to create nested list structures. You can nest children multiple levels deep to create complex hierarchies.
 
 ## Standard Nesting {#standard-nesting}
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Profile',
   children: [
@@ -18,9 +23,17 @@ The `children` property allows you to create nested list structures. You can nes
 }
 ```
 
+```ts [Helpers]
+helpers.children('Profile', [helpers.listing('author'), helpers.listing('user')]);
+```
+
+:::
+
 ## Deep Nesting (Nested Children) {#deep-nesting}
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Content Management',
   children: [
@@ -49,3 +62,38 @@ The `children` property allows you to create nested list structures. You can nes
   ],
 }
 ```
+
+```ts [Helpers]
+helpers.children('Content Management', [
+  helpers.children('Marketing', [
+    helpers.children('Campaigns', [helpers.listing('summerSale'), helpers.listing('winterSale')]),
+    helpers.listing('adChannel'),
+  ]),
+  helpers.listing('blogPost'),
+]);
+```
+
+:::
+
+## Dynamic Children (Callback) {#dynamic-children}
+
+You can define `children` dynamically using a callback function:
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Content',
+  children: ({ workspace }) => workspace === 'blog'
+    ? [{ schemaType: 'post' }]
+    : [{ schemaType: 'product' }],
+}
+```
+
+```ts [Helpers]
+helpers.children('Content', ({ workspace }) =>
+  workspace === 'blog' ? [helpers.listing('post')] : [helpers.listing('product')],
+);
+```
+
+:::

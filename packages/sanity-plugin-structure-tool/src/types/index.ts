@@ -1,1 +1,1 @@
-export type { ListItem, ListItemWithoutGenerics } from '@/structure/types/listItem.types';
+export type { ListItem, ListItemCore } from '@/structure/types/listItem.types';

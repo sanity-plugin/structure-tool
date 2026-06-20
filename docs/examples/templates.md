@@ -1,4 +1,7 @@
-# `templates` Examples {#templates-examples}
+# `templates` {#templates}
+
+- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Optional**: Yes
 
 The `templates` property allows you to define default values for new documents created from a specific list item. These are automatically mapped to [Sanity Initial Value Templates](https://www.sanity.io/docs/studio/initial-value-templates).
 
@@ -6,7 +9,9 @@ The `templates` property allows you to define default values for new documents c
 
 In this example, when a user creates a new "Post" from this list item, the `status` field will default to `draft` and `publishedAt` will be set to the current date.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   schemaType: 'post',
   templates: {
@@ -16,12 +21,25 @@ In this example, when a user creates a new "Post" from this list item, the `stat
 }
 ```
 
+```ts [Helpers]
+helpers.listing('post', {
+  templates: {
+    status: 'draft',
+    publishedAt: new Date().toISOString(),
+  },
+});
+```
+
+:::
+
 ## Multiple Templates for Same Type {#multiple-templates-for-same-type}
 
 You can define multiple list items for the same `schemaType` with different initial values. The plugin will automatically generate unique template IDs for each.
 
-```ts
-const listItems = defineListItems([
+::: code-group
+
+```ts [JSON]
+[
   {
     title: 'Featured Posts',
     schemaType: 'post',
@@ -37,8 +55,55 @@ const listItems = defineListItems([
       category: 'news',
     },
   },
-]);
+];
 ```
+
+```ts [Helpers]
+[
+  helpers.listing('post', {
+    title: 'Featured Posts',
+    templates: {
+      isFeatured: true,
+      category: 'featured',
+    },
+  }),
+  helpers.listing('post', {
+    title: 'News Posts',
+    templates: {
+      category: 'news',
+    },
+  }),
+];
+```
+
+:::
+
+## Dynamic Templates (Callback) {#dynamic-templates}
+
+You can define initial value templates dynamically using a callback function:
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: 'post',
+  templates: ({ workspace }) => ({
+    workspaceSource: workspace,
+    isActive: workspace === 'production',
+  }),
+}
+```
+
+```ts [Helpers]
+helpers.listing('post', {
+  templates: ({ workspace }) => ({
+    workspaceSource: workspace,
+    isActive: workspace === 'production',
+  }),
+});
+```
+
+:::
 
 ## Registration {#registration}
 

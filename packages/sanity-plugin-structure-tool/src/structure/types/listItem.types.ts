@@ -1,74 +1,91 @@
 import type { ComponentType, ReactNode } from 'react';
-import type { CurrentUser } from 'sanity';
-import type { ListBuilder, StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import type { RequireOneOrNone, SetNonNullable } from 'type-fest';
+import type { PreviewLayoutKey, SortOrderingItem } from 'sanity';
+import type { ListBuilder, StructureBuilder, UserComponent } from 'sanity/structure';
 
-import type { ListItemCore } from '@/structure/types/listItemCore.types';
+import type {
+  StructureToolGenericParam,
+  StructureToolParams,
+  ValidSanityContext,
+} from '@/structure/types/common.types';
+import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
+import type { sanitizeUrl } from '@/utils';
 
-// Filter & Filter Params
+// Id
 
-interface ListItemFilterCallbackParams {
-  currentUser: CurrentUser;
-}
+export type ListItemId = Record<
+  'values',
+  {
+    uniqueId: string;
+    sanitizedPaths: string[];
+    id: string;
+    slugify: typeof sanitizeUrl;
+  }
+>;
 
-export type ListItemFilter = string | ((params: ListItemFilterCallbackParams) => string);
+// Default Ordering
 
-export type ListItemFilterParams =
-  | Record<string, unknown>
-  | ((params: ListItemFilterCallbackParams) => Record<string, unknown>);
+type ListItemDefaultOrdering = Record<
+  string,
+  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
+>;
 
 // Raw
 
 export type ListItemRaw = (
   S: StructureBuilder,
-  context: SetNonNullable<StructureResolverContext, 'currentUser'>,
+  context: ValidSanityContext,
 ) => Parameters<ListBuilder['items']>[0][number] | null;
 
-export type ListItemWithoutGenerics = RequireOneOrNone<
-  {
-    title?: string;
-    schemaType?: string;
-    icon?: IconComponent | ComponentType | ReactNode;
-    singleton?: boolean;
-    apiVersion?: string;
-    filter?: ListItemFilter;
-    filterParams?: ListItemFilterParams;
-    hideAddButton?: boolean;
-    templates?: Record<string, unknown>;
-    raw?: ListItemRaw;
-    isDivider?: boolean;
-    isPlural?: boolean;
-  },
-  'hideAddButton' | 'templates'
->;
+// Core
 
-export type ListItem<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
+export interface ListItemCore {
+  title?: string;
+  schemaType?: string;
+  icon?: IconComponent | ComponentType | ReactNode | false;
+  showIcons?: boolean;
+  singleton?: boolean;
+  component?: UserComponent;
+  componentOptions?: Record<string, unknown>;
+  apiVersion?: string;
+  filter?: string;
+  filterParams?: Record<string, unknown>;
+  defaultOrdering?: ListItemDefaultOrdering;
+  defaultLayout?: PreviewLayoutKey;
+  hideAddButton?: boolean;
+  templates?: Record<string, unknown>;
+  raw?: ListItemRaw;
+  isDivider?: boolean;
+  isPlural?: boolean;
+}
+
+export type DefaultListItem = 'icon' | 'component' | 'raw';
+
+type DynamicListItemProps<T extends StructureToolParams> = {
+  [K in Exclude<keyof ListItemCore, DefaultListItem>]?: StructureToolGenericParam<
+    T,
+    ListItemCore[K]
+  >;
+};
+
+export type ListItem<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
+    Pick<ListItemCore, DefaultListItem>,
+    DynamicListItemProps<T>,
     {
-      children?: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+      id?: StructureToolGenericParam<T, string, ListItemId>;
+      children?: StructureToolGenericParam<T, ListItem<T>[]>;
     },
   ]
 >;
 
-export type ListItemExtended<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = SimpleMerge<
-  [
-    ListItemCore<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-    {
-      id: string;
-      displayTitle: string;
-      children: ListItemExtended<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
-    },
-  ]
+export interface ListItemExtendedItems<T extends StructureToolParams> {
+  id: string;
+  displayTitle: string;
+  children: ListItemExtended<T>[];
+  showIcon: boolean;
+}
+
+export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
+  [ListItemCore, ListItemWithWorkspacesAndRoles<T>, ListItemExtendedItems<T>]
 >;

@@ -1,25 +1,30 @@
+import { getContextValues } from '@/helpers/getContextValues';
+import { getValidListItem } from '@/helpers/getValidListItem';
+
+import type { ConfigContext } from 'sanity';
+
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export const getAllListItems = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  listItems: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-): ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[] => {
-  const schemaTypes = [] as ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[];
+export const getAllListItems = <T extends StructureToolParams>(
+  context: ConfigContext,
+  listItems: ListItem<T>[],
+): ListItem<T>[] => {
+  const contextValues = getContextValues(context);
 
-  const getListItems = (
-    items: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>[],
-  ): void => {
+  const schemaTypes = [] as ListItem<T>[];
+
+  const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
-      if (item?.schemaType) {
+      const schemaType = getValidListItem(item?.schemaType, contextValues);
+      const children = getValidListItem(item?.children, contextValues);
+
+      if (schemaType) {
         schemaTypes.push(item);
       }
 
-      if (item?.children?.length) {
-        getListItems(item.children);
+      if (children?.length) {
+        getListItems(children);
       }
     }
   };

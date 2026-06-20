@@ -1,6 +1,13 @@
-# `workspaces` Examples {#workspaces-examples}
+# `workspaces` {#workspaces}
 
-The `workspaces` property allows you to restrict the visibility of a list item to specific Sanity workspaces. This is ideal for multi-tenant setups where certain document types should only appear in specific environments.
+- **Type**: `string[] | ((params: CallbackParams & { defaultWorkspaces: string[] }) => string[])`
+- **Optional**: Yes
+
+The `workspaces` property allows you to restrict the visibility of the list item to specific Sanity workspaces. You can provide either a static array of workspaces or a function that returns an array based on the workspace, currentUser, context, and the `defaultWorkspaces` defined in your plugin configuration.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultWorkspaces`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ::: info Prerequisite
 To use this property, you must first define your available workspaces in the [plugin configuration](../guide/setup/configuration#advanced-example).
@@ -10,14 +17,27 @@ To use this property, you must first define your available workspaces in the [pl
 
 When you provide a static array, the workspaces you list are **concatenated** with the `defaultWorkspaces` defined in your configuration.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Admin Only Settings',
   schemaType: 'settings',
+  singleton: true,
   // This item will appear in 'admin-workspace' and all default workspaces
   workspaces: ['admin-workspace'],
 }
 ```
+
+```ts [Helpers]
+helpers.singleton('settings', {
+  title: 'Admin Only Settings',
+  // This item will appear in 'admin-workspace' and all default workspaces
+  workspaces: ['admin-workspace'],
+});
+```
+
+:::
 
 ## Dynamic Workspaces (Callback) {#dynamic-workspaces}
 
@@ -27,7 +47,9 @@ Using a callback function gives you full control. Unlike the static array, the r
 
 Use a callback to return a static array if you want the item to appear **only** in specific workspaces, ignoring the `defaultWorkspaces`.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Staging Tools',
   schemaType: 'stagingConfig',
@@ -37,11 +59,24 @@ Use a callback to return a static array if you want the item to appear **only** 
 }
 ```
 
+```ts [Helpers]
+helpers.listing('stagingConfig', {
+  title: 'Staging Tools',
+  // By using a callback, we ensure this ONLY appears in 'staging-workspace'
+  // even if other workspaces are set as defaults.
+  workspaces: () => ['staging-workspace'],
+});
+```
+
+:::
+
 ### 2. Filtering Defaults {#filtering-defaults}
 
 You can dynamically filter the `defaultWorkspaces` based on naming conventions or environment logic.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Logs',
   schemaType: 'logs',
@@ -52,11 +87,63 @@ You can dynamically filter the `defaultWorkspaces` based on naming conventions o
 }
 ```
 
-### 3. Using with Roles {#using-with-roles}
+```ts [Helpers]
+helpers.listing('logs', {
+  title: 'Logs',
+  // Dynamically show in all default workspaces except 'staging-workspace'
+  workspaces: ({ defaultWorkspaces }) => {
+    return defaultWorkspaces.filter((item) => item !== 'staging-workspace');
+  },
+});
+```
+
+:::
+
+### 3. Workspace Access via User Roles {#workspace-access-via-user-roles}
+
+You can use the logged-in user's roles (`currentUser`) to dynamically grant access to additional workspaces.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'System Settings',
+  schemaType: 'systemSettings',
+  singleton: true,
+  // Show to administrators in all default workspaces plus 'admin-workspace'
+  workspaces: ({ defaultWorkspaces, currentUser }) => {
+    if (currentUser.roles.some((role) => role.name === 'administrator')) {
+      return [...defaultWorkspaces, 'admin-workspace'];
+    }
+
+    return defaultWorkspaces;
+  },
+}
+```
+
+```ts [Helpers]
+helpers.singleton('systemSettings', {
+  title: 'System Settings',
+  // Show to administrators in all default workspaces plus 'admin-workspace'
+  workspaces: ({ defaultWorkspaces, currentUser }) => {
+    if (currentUser.roles.some((role) => role.name === 'administrator')) {
+      return [...defaultWorkspaces, 'admin-workspace'];
+    }
+
+    return defaultWorkspaces;
+  },
+});
+```
+
+:::
+
+### 4. Using with Roles {#using-with-roles}
 
 You can combine `workspaces` with the `roles` property to create multi-layered access control. This ensures an item is only visible in specific workspaces **and** only to users with certain roles.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Financial Reports',
   schemaType: 'revenue',
@@ -66,5 +153,17 @@ You can combine `workspaces` with the `roles` property to create multi-layered a
   roles: ['administrator'],
 }
 ```
+
+```ts [Helpers]
+helpers.listing('revenue', {
+  title: 'Financial Reports',
+  // Visible only in 'finance-workspace'
+  workspaces: () => ['finance-workspace'],
+  // Only for users with the 'administrator' role
+  roles: ['administrator'],
+});
+```
+
+:::
 
 For more details on role-based restrictions, see the **[roles](./roles)**.

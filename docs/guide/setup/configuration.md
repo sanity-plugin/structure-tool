@@ -11,7 +11,7 @@ A minimal setup with just a static title.
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { structure, defineListItems, defineListItem, templates } = structureToolPlugin({
+export const { structure, defineListItems, helpers } = structureToolPlugin({
   title: 'Project Name',
 });
 ```
@@ -27,7 +27,7 @@ A complete setup utilizing dynamic titles, custom roles, and workspaces for enha
 ```ts [src/structure/index.ts]
 import { structureToolPlugin } from 'sanity-plugin-structure-tool';
 
-export const { structure, defineListItems, defineListItem, templates } = structureToolPlugin({
+export const { structure, defineListItems, helpers } = structureToolPlugin({
   // Dynamic title based on active workspace
   title: ({ workspace }) => `${workspace} Workspace`,
 
@@ -52,7 +52,7 @@ The `structureToolPlugin` function accepts a configuration object with the follo
 
 ### `title` {#title}
 
-- **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
 - **Required**: Yes
 
 The title of the structure in the Sanity desk.
@@ -63,7 +63,7 @@ title: 'Project Name',
 
 ### `emptyListTitle` {#empty-list-title}
 
-- **Type**: `string | ((params: { workspace: string, context: StructureResolverContext }) => string)`
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
 - **Optional**: Yes
 
 The title shown when a document list has no items configured.
@@ -140,6 +140,12 @@ export default defineConfig({
 
 :::
 
+### `helpers` {#return-helpers}
+
+A set of helper functions (`listing`, `singleton`, `divider`, etc.) that are used to define your structure with full type safety.
+
+[Read the full guide on helpers](../helpers).
+
 ### `defineListItems` {#return-define-list-items}
 
 A helper used to define the entire hierarchy of your Sanity desk. It ensures that the array of items you provide follows the `ListItem` schema and utilizes any `workspaces/roles` defined during initialization.
@@ -150,7 +156,9 @@ A helper used to define the entire hierarchy of your Sanity desk. It ensures tha
 
 Similar to `defineListItems`, but used for defining a single `ListItem`. This is particularly useful when you want to create modular sections or reuse items across different lists.
 
-```ts
+::: code-group
+
+```ts [JSON]
 export const shopSection = defineListItem({
   title: 'Shop',
   children: [
@@ -170,6 +178,17 @@ export const shopSection = defineListItem({
   ],
 });
 ```
+
+```ts [Helpers]
+export const shopSection = helpers.children('Shop', [
+  helpers.listing('product'),
+  helpers.listing('category'),
+  helpers.divider('Sales Information'),
+  helpers.listing('discount'),
+]);
+```
+
+:::
 
 ### `templates` {#return-templates}
 

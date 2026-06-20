@@ -1,9 +1,22 @@
-import type { Templates } from '@/structure/templates/templates.types';
+import { getAllListItems } from '@/helpers/getAllListItems';
+import { getContextValues } from '@/helpers/getContextValues';
+import { getValidListItem } from '@/helpers/getValidListItem';
 
-export const templates: Templates = (flatListItems) => (prev) => {
+import type { Templates } from '@/structure/templates/templates.types';
+import type { StructureToolParams } from '@/structure/types/common.types';
+
+export const templates: Templates = (params) => (prev, context) => {
+  const { listItems } = params;
+
+  const contextValues = getContextValues(context);
+  const flatListItems = getAllListItems<StructureToolParams>(context, listItems);
+
   const templatesItems = flatListItems
     .map((item) => {
-      const { schemaType, templates: template } = item;
+      const { schemaType: schemaTypeFn, templates: templateFn } = item;
+
+      const schemaType = getValidListItem(schemaTypeFn, contextValues);
+      const template = getValidListItem(templateFn, contextValues);
 
       if (template && schemaType) {
         return {
@@ -18,7 +31,7 @@ export const templates: Templates = (flatListItems) => (prev) => {
               type: typeof value,
             };
           }),
-          value: (params: unknown) => params,
+          value: (input: unknown) => input,
         };
       }
 

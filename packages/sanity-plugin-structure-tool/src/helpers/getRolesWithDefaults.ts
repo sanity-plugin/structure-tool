@@ -1,13 +1,24 @@
+import { getValidListItem } from '@/helpers/getValidListItem';
+
+import type { SetNonNullable } from 'type-fest';
+
+import type {
+  StructureToolCallbackParams,
+  StructureToolParams,
+} from '@/structure/types/common.types';
 import type { ListItemRoles } from '@/structure/types/listItemCore.types';
 
-type GetRolesWithDefaults = (
-  defaultRoles: readonly string[],
-  roles: ListItemRoles<readonly string[], readonly string[]> | undefined,
+type GetRolesWithDefaults = <T extends StructureToolParams>(
+  roles: ListItemRoles<SetNonNullable<T, 'Roles' | 'DefaultRoles'>> | undefined,
+  defaultRoles: NonNullable<T['DefaultRoles']>,
+  contextValues: StructureToolCallbackParams<T>,
 ) => string[];
 
-export const getRolesWithDefaults: GetRolesWithDefaults = (defaultRoles, roles) => {
+export const getRolesWithDefaults: GetRolesWithDefaults = (roles, defaultRoles, contextValues) => {
   if (typeof roles === 'function') {
-    return [...new Set(roles({ defaultRoles }))];
+    const rolesValue = getValidListItem(roles, { ...contextValues, defaultRoles });
+
+    return [...new Set(rolesValue)];
   }
 
   return [...new Set([...defaultRoles, ...(roles ?? [])])];

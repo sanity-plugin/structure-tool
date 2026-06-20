@@ -1,0 +1,37 @@
+import type { StructureToolParams } from '@/structure/types/common.types';
+import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
+import type { ListItem } from '@/types';
+import type { SimpleMerge } from '@/types/lib.types';
+
+type RawHelperCoreParams<T extends StructureToolParams> = ListItemWithWorkspacesAndRoles<T>;
+
+type RawHelperParams<T extends StructureToolParams> = SimpleMerge<
+  [
+    ListItemWithWorkspacesAndRoles<T>,
+    {
+      raw: NonNullable<ListItem<T>['raw']>;
+    },
+  ]
+>;
+
+type RawHelperOutput<T extends StructureToolParams> = RawHelperParams<T>;
+
+export interface RawHelper<T extends StructureToolParams> {
+  (params: RawHelperParams<T>): RawHelperOutput<T>;
+
+  (raw: NonNullable<ListItem<T>['raw']>, params?: RawHelperCoreParams<T>): RawHelperOutput<T>;
+}
+
+export const rawHelper = <T extends StructureToolParams>(
+  rawOrParams: RawHelperParams<T> | NonNullable<ListItem<T>['raw']>,
+  params?: RawHelperCoreParams<T>,
+): RawHelperOutput<T> => {
+  if (typeof rawOrParams === 'object') {
+    return rawOrParams;
+  }
+
+  return {
+    ...params,
+    raw: rawOrParams,
+  };
+};

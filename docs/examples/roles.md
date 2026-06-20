@@ -1,6 +1,13 @@
-# `roles` Examples {#roles-examples}
+# `roles` {#roles}
 
-The `roles` property allows you to restrict the visibility of a list item to specific user roles. This ensures that sensitive documents or administrative tools are only accessible to authorized team members.
+- **Type**: `string[] | ((params: CallbackParams & { defaultRoles: string[] }) => string[])`
+- **Optional**: Yes
+
+The `roles` property allows you to restrict the visibility of the list item to specific user roles. Like `workspaces`, this can be a static array or a function receiving the active desk context (`workspace`, `currentUser`, `context`) and the `defaultRoles` defined in your configuration.
+
+::: info Note
+When using a **static array**, the provided values are **concatenated** with the `defaultRoles`. When using a **callback function**, the returned array is treated as the **final value**, giving you full control over the resulting list.
+:::
 
 ::: info Prerequisite
 To use this property, you must first define your available roles in the [plugin configuration](../guide/setup/configuration#roles).
@@ -10,14 +17,27 @@ To use this property, you must first define your available roles in the [plugin 
 
 When you provide a static array, the roles you list are **concatenated** with the `defaultRoles` defined in your configuration.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Global Settings',
   schemaType: 'settings',
+  singleton: true,
   // This item will appear for 'administrator' and all default roles
   roles: ['administrator'],
 }
 ```
+
+```ts [Helpers]
+helpers.singleton('settings', {
+  title: 'Global Settings',
+  // This item will appear for 'administrator' and all default roles
+  roles: ['administrator'],
+});
+```
+
+:::
 
 ## Dynamic Roles (Callback) {#dynamic-roles-callback}
 
@@ -27,7 +47,9 @@ Using a callback function gives you full control. Unlike the static array, the r
 
 Use a callback to return a static array if you want the item to appear **only** for specific roles, ignoring the `defaultRoles`.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Financial Reports',
   schemaType: 'revenue',
@@ -37,11 +59,24 @@ Use a callback to return a static array if you want the item to appear **only** 
 }
 ```
 
+```ts [Helpers]
+helpers.listing('revenue', {
+  title: 'Financial Reports',
+  // By using a callback, we ensure this ONLY appears for 'finance-admin'
+  // even if other roles are set as defaults.
+  roles: () => ['finance-admin'],
+});
+```
+
+:::
+
 ### 2. Filtering Defaults {#filtering-defaults}
 
 You can dynamically filter the `defaultRoles` based on your project's logic.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Editor Dashboard',
   schemaType: 'dashboard',
@@ -52,11 +87,62 @@ You can dynamically filter the `defaultRoles` based on your project's logic.
 }
 ```
 
-### 3. Using with Workspaces {#using-with-workspaces}
+```ts [Helpers]
+helpers.listing('dashboard', {
+  title: 'Editor Dashboard',
+  // Dynamically show for all default roles except 'viewer'
+  roles: ({ defaultRoles }) => {
+    return defaultRoles.filter((role) => role !== 'viewer');
+  },
+});
+```
+
+:::
+
+### 3. Role Restriction based on Workspace {#role-restriction-based-on-workspace}
+
+You can use the active `workspace` parameter to dynamically customize role access.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Feedback',
+  schemaType: 'feedback',
+  // In the internal testing workspace, allow 'tester' role in addition to default roles
+  roles: ({ defaultRoles, workspace }) => {
+    if (workspace === 'internal-testing') {
+      return [...defaultRoles, 'tester'];
+    }
+
+    return defaultRoles;
+  },
+}
+```
+
+```ts [Helpers]
+helpers.listing('feedback', {
+  title: 'Feedback',
+  // In the internal testing workspace, allow 'tester' role in addition to default roles
+  roles: ({ defaultRoles, workspace }) => {
+    if (workspace === 'internal-testing') {
+      return [...defaultRoles, 'tester'];
+    }
+
+    return defaultRoles;
+  },
+});
+```
+
+:::
+
+### 4. Using with Workspaces {#using-with-workspaces}
 
 You can combine `roles` with the `workspaces` property to create multi-layered access control. This ensures an item is only visible for certain roles **and** only in specific workspaces.
 
-```ts
+::: code-group
+
+```ts [JSON]
 {
   title: 'Internal Debug Tools',
   schemaType: 'debugInfo',
@@ -66,5 +152,17 @@ You can combine `roles` with the `workspaces` property to create multi-layered a
   workspaces: () => ['development-workspace'],
 }
 ```
+
+```ts [Helpers]
+helpers.listing('debugInfo', {
+  title: 'Internal Debug Tools',
+  // Visible only for the 'developer' role
+  roles: () => ['developer'],
+  // Only in the 'development-workspace'
+  workspaces: () => ['development-workspace'],
+});
+```
+
+:::
 
 For more details on workspace-based restrictions, see the **[workspaces](./workspaces)**.

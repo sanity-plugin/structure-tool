@@ -1,21 +1,23 @@
+import { helpers } from '@/factories/helpers';
+
+import type { Helpers } from '@/factories/helpers';
+import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export type DefineListItemType<
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
-> = (
-  listItem: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+interface DefineListItemParams<T extends StructureToolParams> {
+  helpers: Helpers<T>;
+}
 
-export type DefineListItem = <
-  Workspaces extends readonly string[] | undefined,
-  DefaultWorkspaces extends readonly string[] | undefined,
-  Roles extends readonly string[] | undefined,
-  DefaultRoles extends readonly string[] | undefined,
->(
-  listItem: ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>,
-) => ListItem<Workspaces, DefaultWorkspaces, Roles, DefaultRoles>;
+export type DefineListItem<T extends StructureToolParams> = (
+  listItem: ((params: DefineListItemParams<T>) => ListItem<T>) | ListItem<T>,
+) => ListItem<T>;
 
-export const defineListItem: DefineListItem = (listItem) => listItem;
+export const defineListItem = <T extends StructureToolParams>(
+  listItem: Parameters<DefineListItem<T>>[0],
+): ReturnType<DefineListItem<T>> => {
+  if (typeof listItem === 'function') {
+    return listItem({ helpers });
+  }
+
+  return listItem;
+};

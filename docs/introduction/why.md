@@ -2,7 +2,7 @@
 
 Sanity Studio's native `Structure Builder` is incredibly powerful, but as projects grow, building complex, nested structures with it can become verbose, repetitive, and difficult to maintain.
 
-**Sanity Structure Tool** is designed to simplify this process by providing a **declarative, JSON-based API** for defining your studio's structure.
+**Sanity Structure Tool** is designed to simplify this process by providing a **declarative, JSON-based API** or type-safe **helpers** for defining your studio's structure.
 
 ## The Problem {#the-problem}
 
@@ -18,7 +18,7 @@ This imperative approach can lead to a structure file that is hard to read and e
 
 ## The Solution {#the-solution}
 
-Sanity Structure Tool allows you to define your structure as a clean, hierarchical data structure.
+Sanity Structure Tool allows you to define your structure as a clean, hierarchical data structure using either plain JSON-based objects or expressive, type-safe **helpers**.
 
 ### 1. Declarative Syntax {#declarative-syntax}
 
@@ -26,7 +26,7 @@ Instead of chaining methods, you define what you want your structure to look lik
 
 ### 2. Built-in Singleton Support {#built-in-singleton-support}
 
-Creating a singleton is as simple as adding `singleton: true` to your configuration. The plugin handles the document ID generation, the editor view, and the filtering automatically.
+Creating a singleton is as simple as adding `singleton: true` to your JSON configuration, or using `helpers.singleton('...')`. The plugin handles the document ID generation, the editor view, and the filtering automatically.
 
 ### 3. Automatic Pluralization {#automatic-pluralization}
 
@@ -34,7 +34,7 @@ By default, the plugin uses `pluralize` to generate titles for your document lis
 
 ### 4. Workspace & Role Awareness {#workspace-role-awareness}
 
-The tool is built with multi-role and multi-workspace environments in mind. You can easily restrict visibility of specific list items based on the workspace or the current user's roles.
+The tool is built with multi-role and multi-workspace environments in mind. You can easily restrict visibility of specific list items based on the workspace or the current user's roles using JSON configuration properties or helpers.
 
 ### 5. Developer Experience (DX) {#developer-experience-dx}
 
@@ -42,7 +42,7 @@ With full TypeScript support, you get autocompletion and type safety for your st
 
 ### 6. Escape Hatch {#escape-hatch}
 
-Need to do something highly custom that the JSON API doesn't support? You can use the `raw` property to drop back into the standard Sanity Structure Builder whenever you need to.
+Need to do something highly custom that the declarative API doesn't support? You can use the `raw` property in your JSON configuration or `helpers.raw` to drop back into the standard Sanity Structure Builder whenever you need to.
 
 ## Conclusion {#conclusion}
 

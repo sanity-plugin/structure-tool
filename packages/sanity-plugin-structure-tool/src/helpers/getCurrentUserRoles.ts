@@ -1,14 +1,16 @@
 import type { DocumentActionsContext } from 'sanity';
 
-interface GetUserRolesParams<Roles extends readonly string[] | undefined> extends Pick<
+import type { StructureToolParams } from '@/structure/types/common.types';
+
+interface GetUserRolesParams<T extends StructureToolParams> extends Pick<
   DocumentActionsContext,
   'currentUser'
 > {
-  roles: Roles;
+  roles: T['Roles'];
 }
 
-type GetCurrentUserRoles = <Roles extends readonly string[] | undefined>(
-  params: GetUserRolesParams<Roles>,
+type GetCurrentUserRoles = <T extends StructureToolParams>(
+  params: GetUserRolesParams<T>,
 ) => string[];
 
 export const getCurrentUserRoles: GetCurrentUserRoles = (params) => {

@@ -1,24 +1,39 @@
-# `isDivider` Examples {#is-divider-examples}
+# `isDivider` {#is-divider}
+
+- **Type**: `boolean | ((params: CallbackParams) => boolean)`
+- **Optional**: Yes (Default: `false`)
 
 The `isDivider` property renders a visual separator in the desk list.
 
-## Without Title {#without-title}
+## Simple Divider {#simple-divider}
 
-Use this to create a simple horizontal line separator.
+::: code-group
 
-```ts
+```ts [JSON]
 {
   isDivider: true,
 }
 ```
 
-## With Title {#with-title}
+```ts [Helpers]
+helpers.divider();
+```
 
-Adding a `title` to a divider creates a labeled section header.
+:::
 
-```ts
+## Divider with Title {#divider-with-title}
+
+::: code-group
+
+```ts [JSON]
 {
-  title: 'Content Section',
+  title: 'Settings',
   isDivider: true,
 }
 ```
+
+```ts [Helpers]
+helpers.divider('Settings');
+```
+
+:::
