@@ -266,7 +266,7 @@ If you do not want to import the generated `helpers` object in every structure f
 ::: code-group
 
 ```ts [src/structure/listItems.ts]
-import { defineListItems } from 'sanity-plugin-structure-tool';
+import { defineListItems } from './index';
 
 export default defineListItems(({ helpers }) => [
   helpers.divider('General'),
