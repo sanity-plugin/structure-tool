@@ -1,5 +1,5 @@
 import type { ConfigContext, CurrentUser } from 'sanity';
-import type { StructureBuilder } from 'sanity/structure';
+import type { ListBuilder, StructureBuilder } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
 import type { SimpleMerge } from '@/types/lib.types';
@@ -103,3 +103,9 @@ export type StructureToolGenericParam<
   R,
   U = unknown,
 > = R | ((params: StructureToolCallbackParams<T, U>) => R);
+
+/**
+ * The return type for a resolved list item in Sanity structure builder.
+ * Resolves to the elements accepted by Sanity's `ListBuilder.items()`, or `null` if the item is omitted/filtered out.
+ */
+export type ListItemReturn = Parameters<ListBuilder['items']>[0][number] | null;

@@ -1,8 +1,9 @@
 import type { SortOrderingItem } from 'sanity';
-import type { ListBuilder, StructureBuilder } from 'sanity/structure';
+import type { StructureBuilder } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
 import type {
+  ListItemReturn,
   StructureToolGenericParam,
   StructureToolParams,
   ValidSanityContext,
@@ -48,10 +49,7 @@ export type ListItemDefaultOrdering = Record<
  * A callback function to construct a list item or divider imperatively using the native Sanity `StructureBuilder`.
  * Returns `null` if the item shouldn't be rendered.
  */
-export type ListItemRaw = (
-  S: StructureBuilder,
-  context: ValidSanityContext,
-) => Parameters<ListBuilder['items']>[0][number] | null;
+export type ListItemRaw = (S: StructureBuilder, context: ValidSanityContext) => ListItemReturn;
 
 /**
  * Restricts visibility of a list item to specific workspaces.

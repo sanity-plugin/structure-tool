@@ -1,1 +1,4 @@
-export type { ListItem, ListItemCore } from '@/structure/types/listItem.types';
+/**
+ * Core ListItem configuration type.
+ */
+export type { ListItem } from '@/structure/types/listItem.types';

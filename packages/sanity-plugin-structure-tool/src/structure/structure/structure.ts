@@ -20,6 +20,7 @@ export const structure =
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
+    // TODO: PROVIDE IT IN GLOBAL PLUGIN PARAMS
     const listItemRenderer = S.list()
       .title(displayTitle)
       .items(
