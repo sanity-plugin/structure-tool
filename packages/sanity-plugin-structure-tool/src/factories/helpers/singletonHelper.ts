@@ -4,7 +4,10 @@ import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefin
 import type { SimpleMerge } from '@/types/lib.types';
 
 type SingletonHelperRestParams<T extends StructureToolParams> = SimpleMerge<
-  [WorkspacesAndRolesListItem<T>, Pick<ListItemCore<T>, 'id' | 'title' | 'icon' | 'isPlural'>]
+  [
+    WorkspacesAndRolesListItem<T>,
+    Pick<ListItemCore<T>, 'id' | 'title' | 'icon' | 'templates' | 'isPlural'>,
+  ]
 >;
 
 type SingletonHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
