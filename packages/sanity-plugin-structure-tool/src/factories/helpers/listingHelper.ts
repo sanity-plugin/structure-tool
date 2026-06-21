@@ -1,16 +1,16 @@
 import type { RequireOneOrNone } from 'type-fest';
 
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItem } from '@/types';
+import type { ListItemCore } from '@/structure/types/listItem.types';
+import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
+type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
-    RequireOneOrNone<Pick<ListItem<T>, 'hideAddButton' | 'templates'>>,
+    WorkspacesAndRolesListItem<T>,
+    RequireOneOrNone<Pick<ListItemCore<T>, 'hideAddButton' | 'templates'>>,
     Pick<
-      ListItem<T>,
+      ListItemCore<T>,
       | 'id'
       | 'title'
       | 'icon'
@@ -27,29 +27,29 @@ type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
   ]
 >;
 
-type ListingHelperParams<T extends StructureToolParams> = SimpleMerge<
+type ListingHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListingHelperCoreParams<T>,
+    ListingHelperRestParams<T>,
     {
-      schemaType: NonNullable<ListItem<T>['schemaType']>;
+      schemaType: NonNullable<ListItemCore<T>['schemaType']>;
     },
   ]
 >;
 
-type ListingHelperOutput<T extends StructureToolParams> = ListingHelperParams<T>;
+type ListingHelperOutput<T extends StructureToolParams> = ListingHelperOnlyParams<T>;
 
 export interface ListingHelper<T extends StructureToolParams> {
-  (params: ListingHelperParams<T>): ListingHelperOutput<T>;
+  (params: ListingHelperOnlyParams<T>): ListingHelperOutput<T>;
 
   (
-    schemaType: NonNullable<ListItem<T>['schemaType']>,
-    params?: ListingHelperCoreParams<T>,
+    schemaType: NonNullable<ListItemCore<T>['schemaType']>,
+    params?: ListingHelperRestParams<T>,
   ): ListingHelperOutput<T>;
 }
 
 export const listingHelper = <T extends StructureToolParams>(
-  schemaTypeOrParams: ListingHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
-  params?: ListingHelperCoreParams<T>,
+  schemaTypeOrParams: ListingHelperOnlyParams<T> | NonNullable<ListItemCore<T>['schemaType']>,
+  params?: ListingHelperRestParams<T>,
 ): ListingHelperOutput<T> => {
   if (typeof schemaTypeOrParams === 'object') {
     return schemaTypeOrParams;

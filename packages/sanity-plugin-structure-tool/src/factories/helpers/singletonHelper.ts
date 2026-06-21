@@ -1,24 +1,24 @@
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItem } from '@/types';
+import type { ListItemCore } from '@/structure/types/listItem.types';
+import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-type SingletonHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
-  [ListItemWithWorkspacesAndRoles<T>, Pick<ListItem<T>, 'id' | 'title' | 'icon' | 'isPlural'>]
+type SingletonHelperRestParams<T extends StructureToolParams> = SimpleMerge<
+  [WorkspacesAndRolesListItem<T>, Pick<ListItemCore<T>, 'id' | 'title' | 'icon' | 'isPlural'>]
 >;
 
-type SingletonHelperParams<T extends StructureToolParams> = SimpleMerge<
+type SingletonHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
   [
-    SingletonHelperCoreParams<T>,
+    SingletonHelperRestParams<T>,
     {
-      schemaType: NonNullable<ListItem<T>['schemaType']>;
+      schemaType: NonNullable<ListItemCore<T>['schemaType']>;
     },
   ]
 >;
 
 type SingletonHelperOutput<T extends StructureToolParams> = SimpleMerge<
   [
-    SingletonHelperParams<T>,
+    SingletonHelperOnlyParams<T>,
     {
       singleton: true;
     },
@@ -26,17 +26,17 @@ type SingletonHelperOutput<T extends StructureToolParams> = SimpleMerge<
 >;
 
 export interface SingletonHelper<T extends StructureToolParams> {
-  (params: SingletonHelperParams<T>): SingletonHelperOutput<T>;
+  (params: SingletonHelperOnlyParams<T>): SingletonHelperOutput<T>;
 
   (
-    schemaType: NonNullable<ListItem<T>['schemaType']>,
-    params?: SingletonHelperCoreParams<T>,
+    schemaType: NonNullable<ListItemCore<T>['schemaType']>,
+    params?: SingletonHelperRestParams<T>,
   ): SingletonHelperOutput<T>;
 }
 
 export const singletonHelper = <T extends StructureToolParams>(
-  schemaTypeOrParams: SingletonHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
-  params?: SingletonHelperCoreParams<T>,
+  schemaTypeOrParams: SingletonHelperOnlyParams<T> | NonNullable<ListItemCore<T>['schemaType']>,
+  params?: SingletonHelperRestParams<T>,
 ): SingletonHelperOutput<T> => {
   if (typeof schemaTypeOrParams === 'object') {
     return {

@@ -1,41 +1,41 @@
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItem } from '@/types';
+import type { ListItem, ListItemCore } from '@/structure/types/listItem.types';
+import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-type ChildrenHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
+type ChildrenHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
-    Pick<ListItem<T>, 'id' | 'icon' | 'showIcons' | 'menuItemGroups' | 'menuItems'>,
+    WorkspacesAndRolesListItem<T>,
+    Pick<ListItemCore<T>, 'id' | 'icon' | 'showIcons' | 'menuItemGroups' | 'menuItems'>,
   ]
 >;
 
-type ChildrenHelperParams<T extends StructureToolParams> = SimpleMerge<
+type ChildrenHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
+    ChildrenHelperRestParams<T>,
     {
-      title: NonNullable<ListItem<T>['title']>;
+      title: NonNullable<ListItemCore<T>['title']>;
       children: NonNullable<ListItem<T>['children']>;
     },
   ]
 >;
 
-type ChildrenHelperOutput<T extends StructureToolParams> = ChildrenHelperParams<T>;
+type ChildrenHelperOutput<T extends StructureToolParams> = ChildrenHelperOnlyParams<T>;
 
 export interface ChildrenHelper<T extends StructureToolParams> {
-  (params: ChildrenHelperParams<T>): ChildrenHelperOutput<T>;
+  (params: ChildrenHelperOnlyParams<T>): ChildrenHelperOutput<T>;
 
   (
-    title: NonNullable<ListItem<T>['title']>,
-    children: ListItem<T>[],
-    params?: ChildrenHelperCoreParams<T>,
+    title: NonNullable<ListItemCore<T>['title']>,
+    children: ListItemCore<T>[],
+    params?: ChildrenHelperRestParams<T>,
   ): ChildrenHelperOutput<T>;
 }
 
 export const childrenHelper = <T extends StructureToolParams>(
-  titleOrParams: ChildrenHelperParams<T> | NonNullable<ListItem<T>['title']>,
-  children?: ListItem<T>[],
-  params?: ChildrenHelperCoreParams<T>,
+  titleOrParams: ChildrenHelperOnlyParams<T> | NonNullable<ListItemCore<T>['title']>,
+  children?: ListItemCore<T>[],
+  params?: ChildrenHelperRestParams<T>,
 ): ChildrenHelperOutput<T> => {
   if (typeof titleOrParams === 'object') {
     return titleOrParams;

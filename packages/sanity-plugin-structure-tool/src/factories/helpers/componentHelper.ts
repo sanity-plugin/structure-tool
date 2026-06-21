@@ -1,41 +1,41 @@
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItem } from '@/types';
+import type { ListItemCore } from '@/structure/types/listItem.types';
+import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-type ComponentHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
+type ComponentHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
-    Pick<ListItem<T>, 'id' | 'icon' | 'componentOptions' | 'menuItemGroups' | 'menuItems'>,
+    WorkspacesAndRolesListItem<T>,
+    Pick<ListItemCore<T>, 'id' | 'icon' | 'componentOptions' | 'menuItemGroups' | 'menuItems'>,
   ]
 >;
 
-type ComponentHelperParams<T extends StructureToolParams> = SimpleMerge<
+type ComponentHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
+    ComponentHelperRestParams<T>,
     {
-      title: NonNullable<ListItem<T>['title']>;
-      component: NonNullable<ListItem<T>['component']>;
+      title: NonNullable<ListItemCore<T>['title']>;
+      component: NonNullable<ListItemCore<T>['component']>;
     },
   ]
 >;
 
-type ComponentHelperOutput<T extends StructureToolParams> = ComponentHelperParams<T>;
+type ComponentHelperOutput<T extends StructureToolParams> = ComponentHelperOnlyParams<T>;
 
 export interface ComponentHelper<T extends StructureToolParams> {
-  (params: ComponentHelperParams<T>): ComponentHelperOutput<T>;
+  (params: ComponentHelperOnlyParams<T>): ComponentHelperOutput<T>;
 
   (
-    title: NonNullable<ListItem<T>['title']>,
-    component: NonNullable<ListItem<T>['component']>,
-    params?: ComponentHelperCoreParams<T>,
+    title: NonNullable<ListItemCore<T>['title']>,
+    component: NonNullable<ListItemCore<T>['component']>,
+    params?: ComponentHelperRestParams<T>,
   ): ComponentHelperOutput<T>;
 }
 
 export const componentHelper = <T extends StructureToolParams>(
-  titleOrParams: ComponentHelperParams<T> | NonNullable<ListItem<T>['title']>,
-  component?: NonNullable<ListItem<T>['component']>,
-  params?: ComponentHelperCoreParams<T>,
+  titleOrParams: ComponentHelperOnlyParams<T> | NonNullable<ListItemCore<T>['title']>,
+  component?: NonNullable<ListItemCore<T>['component']>,
+  params?: ComponentHelperRestParams<T>,
 ): ComponentHelperOutput<T> => {
   if (typeof titleOrParams === 'object') {
     return titleOrParams;
