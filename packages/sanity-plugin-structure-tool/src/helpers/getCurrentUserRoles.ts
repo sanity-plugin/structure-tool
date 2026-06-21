@@ -1,9 +1,7 @@
-import type { DocumentActionsContext } from 'sanity';
-
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type { StructureToolParams, ValidSanityContext } from '@/structure/types/common.types';
 
 interface GetUserRolesParams<T extends StructureToolParams> extends Pick<
-  DocumentActionsContext,
+  ValidSanityContext,
   'currentUser'
 > {
   roles: T['Roles'];
@@ -15,8 +13,6 @@ type GetCurrentUserRoles = <T extends StructureToolParams>(
 
 export const getCurrentUserRoles: GetCurrentUserRoles = (params) => {
   const { currentUser, roles } = params;
-
-  if (!currentUser) return [];
 
   return currentUser.roles.reduce<string[]>((acc, role) => {
     const { name } = role;

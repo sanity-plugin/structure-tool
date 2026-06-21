@@ -6,9 +6,9 @@ import type { ConfigContext } from 'sanity';
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export const getAllListItems = <T extends StructureToolParams>(
-  context: ConfigContext,
+export const getFlatListItems = <T extends StructureToolParams>(
   listItems: ListItem<T>[],
+  context: ConfigContext,
 ): ListItem<T>[] => {
   const contextValues = getContextValues(context);
 
@@ -17,7 +17,8 @@ export const getAllListItems = <T extends StructureToolParams>(
   const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
       const schemaType = getValidListItem(item?.schemaType, contextValues);
-      const children = getValidListItem(item?.children, contextValues);
+      // FIXME
+      const children = getValidListItem(item?.children, { ...contextValues, childOptions: {} });
 
       if (schemaType) {
         schemaTypes.push(item);

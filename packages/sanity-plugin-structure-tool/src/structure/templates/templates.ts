@@ -1,5 +1,5 @@
-import { getAllListItems } from '@/helpers/getAllListItems';
 import { getContextValues } from '@/helpers/getContextValues';
+import { getFlatListItems } from '@/helpers/getFlatListItems';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { Templates } from '@/structure/templates/templates.types';
@@ -9,7 +9,7 @@ export const templates: Templates = (params) => (prev, context) => {
   const { listItems } = params;
 
   const contextValues = getContextValues(context);
-  const flatListItems = getAllListItems<StructureToolParams>(context, listItems);
+  const flatListItems = getFlatListItems<StructureToolParams>(listItems, context);
 
   const templatesItems = flatListItems
     .map((item) => {
