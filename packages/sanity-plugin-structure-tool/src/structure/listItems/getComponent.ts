@@ -23,10 +23,10 @@ export const getComponent: ListItemKey = (params) => {
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
-    .child(() => {
+    .child((_, childOption) => {
       let schemaBuilder = S.component(component)
         .id(id)
-        .options({ ...componentOptions })
+        .options({ childOption, ...componentOptions })
         .menuItemGroups(menuItemGroups);
 
       if (menuItems) {
