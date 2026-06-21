@@ -1,6 +1,11 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { PreviewLayoutKey } from 'sanity';
-import type { MenuItem, MenuItemGroup, UserComponent } from 'sanity/structure';
+import type {
+  ChildResolverOptions,
+  MenuItem,
+  MenuItemGroup,
+  UserComponent,
+} from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
@@ -117,7 +122,13 @@ export type ListItem<T extends StructureToolParams> = SimpleMerge<
       /**
        * Nested child list items. Can be an array or a dynamic callback function returning list items.
        */
-      children?: StructureToolGenericParam<T, ListItem<T>[]>;
+      children?: StructureToolGenericParam<
+        T,
+        ListItem<T>[],
+        {
+          childOptions: ChildResolverOptions;
+        }
+      >;
     },
   ]
 >;

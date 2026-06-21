@@ -6,7 +6,7 @@ import type {
   StructureToolCallbackParams,
   StructureToolParams,
 } from '@/structure/types/common.types';
-import type { ListItemRoles } from '@/structure/types/listItemCore.types';
+import type { ListItemRoles } from '@/structure/types/listItemDefinitions.types';
 
 type GetRolesWithDefaults = <T extends StructureToolParams>(
   roles: ListItemRoles<SetNonNullable<T, 'Roles' | 'DefaultRoles'>> | undefined,

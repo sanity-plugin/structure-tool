@@ -109,3 +109,13 @@ export type StructureToolGenericParam<
  * Resolves to the elements accepted by Sanity's `ListBuilder.items()`, or `null` if the item is omitted/filtered out.
  */
 export type ListItemReturn = Parameters<ListBuilder['items']>[0][number] | null;
+
+/**
+ * Utility type to extract the raw/original type of a `StructureToolGenericParam` configuration value.
+ * Resolves the callback return type or the direct value type `R`.
+ *
+ * @template T - The generic configuration parameter type.
+ */
+export type GetListItemOriginalType<T> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  T extends StructureToolGenericParam<infer _P, infer R, infer _U> ? R : never;

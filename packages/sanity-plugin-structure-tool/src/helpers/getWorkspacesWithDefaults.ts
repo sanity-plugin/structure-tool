@@ -6,7 +6,7 @@ import type {
   StructureToolCallbackParams,
   StructureToolParams,
 } from '@/structure/types/common.types';
-import type { ListItemWorkspaces } from '@/structure/types/listItemCore.types';
+import type { ListItemWorkspaces } from '@/structure/types/listItemDefinitions.types';
 
 type GetWorkspacesWithDefaults = <T extends StructureToolParams>(
   workspaces: ListItemWorkspaces<SetNonNullable<T, 'Workspaces' | 'DefaultWorkspaces'>> | undefined,
