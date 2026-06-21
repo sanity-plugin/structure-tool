@@ -7,14 +7,14 @@ export const getComponent: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { icon, component, ...restListItem } = listItem;
+  const { icon, component } = listItem;
 
   const {
     title = '',
     componentOptions,
     menuItemGroups = [],
     menuItems,
-  } = getComputedListItems({ listItem: restListItem, context });
+  } = getComputedListItems({ listItem, context });
 
   const { id } = generateId(title, params);
 

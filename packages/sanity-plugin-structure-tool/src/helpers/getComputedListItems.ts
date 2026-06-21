@@ -1,6 +1,8 @@
 import { getContextValues } from '@/helpers/getContextValues';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
+import type { Entries } from 'type-fest';
+
 import type {
   GetListItemOriginalType,
   StructureCommonParams,
@@ -28,8 +30,22 @@ export type GetComputedListItems = <T extends StructureToolParams>(
 export const getComputedListItems: GetComputedListItems = ({ listItem, context }) => {
   const contextValues = getContextValues(context);
 
+  const notAllowedListItems = new Set(['id', 'icon', 'component', 'raw']);
+
+  const allowedListItems = (Object.entries(listItem) as Entries<typeof listItem>).reduce<
+    Entries<typeof listItem>
+  >((acc, value) => {
+    const [key] = value;
+
+    if (!notAllowedListItems.has(key)) {
+      acc.push(value);
+    }
+
+    return acc;
+  }, []);
+
   const result = Object.fromEntries(
-    Object.entries(listItem).map(([key, value]) => [key, getValidListItem(value, contextValues)]),
+    allowedListItems.map(([key, value]) => [key, getValidListItem(value, contextValues)]),
   );
 
   return result;
