@@ -1,5 +1,3 @@
-import type { RequireOneOrNone } from 'type-fest';
-
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItemCore } from '@/structure/types/listItem.types';
 import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
@@ -8,7 +6,6 @@ import type { SimpleMerge } from '@/types/lib.types';
 type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
     WorkspacesAndRolesListItem<T>,
-    RequireOneOrNone<Pick<ListItemCore<T>, 'hideAddButton' | 'templates'>>,
     Pick<
       ListItemCore<T>,
       | 'id'
@@ -22,6 +19,8 @@ type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
       | 'defaultLayout'
       | 'menuItemGroups'
       | 'menuItems'
+      | 'hideAddButton'
+      | 'templates'
       | 'isPlural'
     >,
   ]

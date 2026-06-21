@@ -1,7 +1,6 @@
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
 import { getDisplayTitle } from '@/helpers/getDisplayTitle';
-import { templates } from '@/structure/templates/templates';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -22,6 +21,7 @@ export const getListing: ListItemKey = (params) => {
     menuItemGroups = [],
     menuItems,
     hideAddButton,
+    templates,
   } = getComputedListItems({ listItem, context });
 
   const displayTitle = getDisplayTitle({ ...listItemsParams, listItem });
@@ -64,7 +64,7 @@ export const getListing: ListItemKey = (params) => {
       }
 
       if (hideAddButton) {
-        return schemaBuilder.menuItems([]).initialValueTemplates([]);
+        return schemaBuilder.initialValueTemplates([]);
       }
 
       if (templates) {
