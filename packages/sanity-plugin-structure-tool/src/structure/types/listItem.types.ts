@@ -1,99 +1,52 @@
 import type { ComponentType, ReactNode } from 'react';
-import type { PreviewLayoutKey, SortOrderingItem } from 'sanity';
-import type {
-  ListBuilder,
-  MenuItem,
-  MenuItemGroup,
-  StructureBuilder,
-  UserComponent,
-} from 'sanity/structure';
+import type { PreviewLayoutKey } from 'sanity';
+import type { MenuItem, MenuItemGroup, UserComponent } from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
   StructureToolParams,
-  ValidSanityContext,
 } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
+import type {
+  ListItemDefaultOrdering,
+  ListItemId,
+  ListItemRaw,
+  WorkspacesAndRolesListItem,
+} from '@/structure/types/listItemDefinitions.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
-import type { sanitizeUrl } from '@/utils';
 
-// Id
+// List Item Core
 
-export type ListItemId = Record<
-  'values',
-  {
-    uniqueId: string;
-    sanitizedPaths: string[];
-    id: string;
-    slugify: typeof sanitizeUrl;
-  }
->;
-
-// Default Ordering
-
-type ListItemDefaultOrdering = Record<
-  string,
-  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
->;
-
-// Raw
-
-export type ListItemRaw = (
-  S: StructureBuilder,
-  context: ValidSanityContext,
-) => Parameters<ListBuilder['items']>[0][number] | null;
-
-// Core
-
-export interface ListItemCore {
-  title?: string;
-  schemaType?: string;
+export interface ListItemCore<T extends StructureToolParams> {
+  id?: StructureToolGenericParam<T, string, ListItemId>;
+  title?: StructureToolGenericParam<T, string>;
+  schemaType?: StructureToolGenericParam<T, string>;
   icon?: IconComponent | ComponentType | ReactNode | false;
-  showIcons?: boolean;
-  singleton?: boolean;
+  showIcons?: StructureToolGenericParam<T, boolean>;
+  singleton?: StructureToolGenericParam<T, boolean>;
   component?: UserComponent;
-  componentOptions?: Record<string, unknown>;
-  apiVersion?: string;
-  filter?: string;
-  filterParams?: Record<string, unknown>;
-  defaultOrdering?: ListItemDefaultOrdering;
-  defaultLayout?: PreviewLayoutKey;
-  menuItemGroups?: MenuItemGroup[];
-  menuItems?: MenuItem[];
-  hideAddButton?: boolean;
-  templates?: Record<string, unknown>;
+  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>>;
+  apiVersion?: StructureToolGenericParam<T, string>;
+  filter?: StructureToolGenericParam<T, string>;
+  filterParams?: StructureToolGenericParam<T, Record<string, unknown>>;
+  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering>;
+  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey>;
+  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[]>;
+  menuItems?: StructureToolGenericParam<T, MenuItem[]>;
+  hideAddButton?: StructureToolGenericParam<T, boolean>;
+  templates?: StructureToolGenericParam<T, Record<string, unknown>>;
   raw?: ListItemRaw;
-  isDivider?: boolean;
-  isPlural?: boolean;
+  isDivider?: StructureToolGenericParam<T, boolean>;
+  isPlural?: StructureToolGenericParam<T, boolean>;
 }
 
-export type DefaultListItem = 'icon' | 'component' | 'raw';
-
-type DynamicListItemProps<T extends StructureToolParams> = {
-  [K in Exclude<keyof ListItemCore, DefaultListItem>]?: StructureToolGenericParam<
-    T,
-    ListItemCore[K]
-  >;
-};
+// List Item
 
 export type ListItem<T extends StructureToolParams> = SimpleMerge<
   [
-    Pick<ListItemCore, DefaultListItem>,
-    DynamicListItemProps<T>,
+    ListItemCore<T>,
+    WorkspacesAndRolesListItem<T>,
     {
-      id?: StructureToolGenericParam<T, string, ListItemId>;
       children?: StructureToolGenericParam<T, ListItem<T>[]>;
     },
   ]
->;
-
-export interface ListItemExtendedItems<T extends StructureToolParams> {
-  id: string;
-  displayTitle: string;
-  children: ListItemExtended<T>[];
-  showIcon: boolean;
-}
-
-export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
-  [ListItemCore, ListItemWithWorkspacesAndRoles<T>, ListItemExtendedItems<T>]
 >;

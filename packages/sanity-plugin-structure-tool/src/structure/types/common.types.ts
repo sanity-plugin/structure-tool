@@ -1,4 +1,5 @@
 import type { ConfigContext, CurrentUser } from 'sanity';
+import type { StructureBuilder } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
 import type { SimpleMerge } from '@/types/lib.types';
@@ -14,6 +15,12 @@ export type ValidSanityContext = SetNonNullable<ConfigContext, 'currentUser'>;
 
 export type Workspace<T extends Pick<StructureToolParams, 'Workspaces'>> =
   T['Workspaces'] extends readonly string[] ? T['Workspaces'][number] : string;
+
+export interface StructureCommonParams<T extends StructureToolParams> {
+  S: StructureBuilder;
+  workspace: Workspace<T>;
+  context: ValidSanityContext;
+}
 
 export type StructureToolCallbackParams<
   T extends Pick<StructureToolParams, 'Workspaces'>,

@@ -1,7 +1,6 @@
 import { getContextValues } from '@/helpers/getContextValues';
 import { getValidListItem } from '@/helpers/getValidListItem';
-import { getWorkspaceListItem } from '@/structure/getWorkspaceListItem/getWorkspaceListItem';
-import { renderListItem } from '@/structure/renderListItem/renderListItem';
+import { renderListItems } from '@/structure/renderListItems/renderListItems';
 
 import type { StructureResolver } from 'sanity/structure';
 
@@ -11,7 +10,7 @@ import type { StructureToolParams } from '@/structure/types/common.types';
 export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
   (S, context) => {
-    const { title, emptyListTitle, ...restParams } = params;
+    const { title, emptyListTitle, listItems, ...pluginParams } = params;
 
     const contextValues = getContextValues<T>(context);
     const { workspace, context: validContext } = contextValues;
@@ -21,19 +20,16 @@ export const structure =
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
-    const workspaceListItems = getWorkspaceListItem<T>({
-      S,
-      workspace,
-      context: validContext,
-      options: restParams,
-    });
-
     const listItemRenderer = S.list()
       .title(displayTitle)
       .items(
-        workspaceListItems
-          .map((listItem) => renderListItem<T>({ S, workspace, context: validContext, listItem }))
-          .filter((item) => item !== null),
+        renderListItems<T>({
+          S,
+          workspace,
+          context: validContext,
+          listItems,
+          pluginParams,
+        }),
       );
 
     if (listItemRenderer.getItems()?.length === 0) {

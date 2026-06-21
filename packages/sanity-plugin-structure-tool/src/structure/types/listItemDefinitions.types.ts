@@ -1,10 +1,40 @@
+import type { SortOrderingItem } from 'sanity';
+import type { ListBuilder, StructureBuilder } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
 import type {
   StructureToolGenericParam,
   StructureToolParams,
+  ValidSanityContext,
 } from '@/structure/types/common.types';
 import type { SimpleMerge } from '@/types/lib.types';
+import type { sanitizeUrl } from '@/utils';
+
+// Id
+
+export type ListItemId = Record<
+  'values',
+  {
+    uniqueId: string;
+    sanitizedPaths: string[];
+    id: string;
+    slugify: typeof sanitizeUrl;
+  }
+>;
+
+// Default Ordering
+
+export type ListItemDefaultOrdering = Record<
+  string,
+  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
+>;
+
+// Raw
+
+export type ListItemRaw = (
+  S: StructureBuilder,
+  context: ValidSanityContext,
+) => Parameters<ListBuilder['items']>[0][number] | null;
 
 // Workspaces
 
@@ -29,7 +59,9 @@ export type ListItemRoles<T extends SetNonNullable<StructureToolParams, 'Roles' 
     }
   >;
 
-export type ListItemWithWorkspacesAndRoles<T extends StructureToolParams> = SimpleMerge<
+// Workspaces & Roles
+
+export type WorkspacesAndRolesListItem<T extends StructureToolParams> = SimpleMerge<
   [
     T['Workspaces'] extends SetNonNullable<StructureToolParams>['Workspaces']
       ? T['DefaultWorkspaces'] extends SetNonNullable<StructureToolParams>['DefaultWorkspaces']
