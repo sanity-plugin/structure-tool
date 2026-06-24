@@ -1,5 +1,7 @@
 import { constants } from '@/constants';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
+import { hasRolesAccess } from '@/helpers/hasRolesAccess';
+import { hasWorkspacesAccess } from '@/helpers/hasWorkspacesAccess';
 import { getChildren } from '@/structure/listItems/getChildren';
 import { getComponent } from '@/structure/listItems/getComponent';
 import { getDivider } from '@/structure/listItems/getDivider';
@@ -40,6 +42,9 @@ export const renderListItems = <T extends StructureToolParams>(
         listItem,
         context,
       });
+
+      // Check Access
+      if (!(hasWorkspacesAccess(params) && hasRolesAccess(params))) return null;
 
       // Handle Raw
       if (raw) return getRaw(params);
