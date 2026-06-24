@@ -27,6 +27,7 @@ type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
       | 'hideAddButton'
       | 'templates'
       | 'isPlural'
+      | 'isVisible'
     >,
   ]
 >;

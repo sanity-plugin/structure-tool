@@ -2,6 +2,7 @@ import type {
   StructureToolGenericParam,
   StructureToolParams,
 } from '@/structure/types/common.types';
+import type { ListItemCore } from '@/structure/types/listItem.types';
 import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
@@ -19,7 +20,9 @@ export interface DividerHelperTitle<T extends StructureToolParams> {
  *
  * @template T - The structure tool configuration parameters schema.
  */
-type DividerHelperRestParams<T extends StructureToolParams> = WorkspacesAndRolesListItem<T>;
+type DividerHelperRestParams<T extends StructureToolParams> = SimpleMerge<
+  [WorkspacesAndRolesListItem<T>, Pick<ListItemCore<T>, 'isVisible'>]
+>;
 
 /**
  * Required parameter schema for defining visual list item dividers.

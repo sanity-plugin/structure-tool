@@ -54,6 +54,12 @@ export const getDisplayTitle: GetDisplayTitle = (params) => {
 
   const { parentTitle, childTitle } = getTitle(title, context);
 
+  /**
+   * Internal helper to build a display title using custom text, fallback schema type titles, and pluralization.
+   *
+   * @param titleParam - Custom text title configured on the item.
+   * @returns Resolved display title text.
+   */
   const generateDisplayTitle = (titleParam?: string) => {
     const schemaDefaultTitle = S.documentTypeListItem(schemaType).getTitle();
     const schemaTitle = schemaType ? schemaDefaultTitle : '';

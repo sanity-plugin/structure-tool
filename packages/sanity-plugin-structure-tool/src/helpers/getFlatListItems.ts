@@ -21,6 +21,11 @@ export const getFlatListItems = <T extends StructureToolParams>(
 
   const schemaTypes = [] as ListItem<T>[];
 
+  /**
+   * Internal recursive traveler that extracts items containing a schema type.
+   *
+   * @param items - Child items collection.
+   */
   const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
       const schemaType = getValidListItem(item?.schemaType, contextValues);

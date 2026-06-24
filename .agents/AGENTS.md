@@ -42,8 +42,10 @@ When changing structural options or list item definitions:
 ### JSDoc Documentation Guidelines
 
 When creating or modifying typescript source files (e.g. `*.types.ts` files, utility helpers, actions, and rendering logic):
+
 - Write detailed JSDoc comments for all exported types, interfaces, utility functions, type guards, and core resolver helper functions.
 - Ensure JSDocs contain clear `@template`, `@param`, and `@returns` metadata tags to populate IDE IntelliSense properly for the end-user.
+- When the user requests "jsdoc", it means: "Write JSDoc comments for all files, functions, types, and everything existing under the `packages/sanity-plugin-structure-tool` package."
 
 ---
 

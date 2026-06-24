@@ -23,7 +23,10 @@ export interface ComponentHelperTitle<T extends StructureToolParams> {
 type ComponentHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
     WorkspacesAndRolesListItem<T>,
-    Pick<ListItemCore<T>, 'id' | 'icon' | 'componentOptions' | 'menuItemGroups' | 'menuItems'>,
+    Pick<
+      ListItemCore<T>,
+      'id' | 'icon' | 'componentOptions' | 'menuItemGroups' | 'menuItems' | 'isVisible'
+    >,
   ]
 >;
 

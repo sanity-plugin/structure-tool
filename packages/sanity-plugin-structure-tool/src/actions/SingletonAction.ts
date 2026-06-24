@@ -7,6 +7,13 @@ import type { DocumentActionComponent, DocumentActionsResolver } from 'sanity';
  */
 type GetActionName = (action: DocumentActionComponent) => string;
 
+/**
+ * Resolves the string identifier name of a Sanity Studio document action component.
+ * Handles the historical function action properties.
+ *
+ * @param action - The document action component.
+ * @returns The resolved action name string.
+ */
 const getActionName: GetActionName = (action) =>
   // Check for action to be both the type promised by Types while maintaining current function type check for historical purposes
   (typeof action === 'function' ? action.action : '') as string;

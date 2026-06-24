@@ -27,6 +27,7 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
         | 'defaultLayout'
         | 'menuItemGroups'
         | 'menuItems'
+        | 'isVisible'
       >,
       'title' | 'filter'
     >,

@@ -103,6 +103,10 @@ export interface ListItemCore<T extends StructureToolParams> {
    * Optional helper indicating if the title should automatically be pluralized.
    */
   isPlural?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Optional helper or callback indicating if the list item should be visible in the navigation menu.
+   */
+  isVisible?: StructureToolGenericParam<T, boolean>;
 }
 
 /**

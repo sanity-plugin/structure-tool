@@ -31,6 +31,13 @@ export const renderListItems = <T extends StructureToolParams>(
 ): RenderListItemsOutput => {
   const { context, listItems: globalLineItems } = parentParams;
 
+  /**
+   * Internal recursive function that processes each list item, checks permissions,
+   * and delegates rendering to list item mapping renderers.
+   *
+   * @param childParams - Nested child items mapping parameter values.
+   * @returns Array of fully-built structure nodes.
+   */
   const renderItems: RenderItems<T> = (childParams) => {
     const { listItems } = childParams;
 
@@ -46,13 +53,19 @@ export const renderListItems = <T extends StructureToolParams>(
 
       const { children, component, raw } = listItem;
 
-      const { schemaType, singleton, filter, isDivider } = getComputedListItems({
+      const {
+        schemaType,
+        singleton,
+        filter,
+        isDivider,
+        isVisible = true,
+      } = getComputedListItems({
         listItem,
         context,
       });
 
       // Check Access
-      if (!(hasWorkspacesAccess(params) && hasRolesAccess(params))) return null;
+      if (!(hasWorkspacesAccess(params) && hasRolesAccess(params)) || !isVisible) return null;
 
       // Handle Raw
       if (raw) return getRaw(params);
