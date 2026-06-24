@@ -4,6 +4,12 @@ import { getTitle } from '@/helpers/getTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
+/**
+ * Renders a list item that queries and displays documents filtered by a GROQ query.
+ *
+ * @param params - Render context parameters containing mapping and list parameters.
+ * @returns The resolved Sanity Studio list item structure.
+ */
 export const getFilters: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;

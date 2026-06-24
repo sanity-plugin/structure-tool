@@ -18,6 +18,14 @@ import type {
 } from '@/structure/renderListItems/renderListItems.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
+/**
+ * Resolves and renders the primary structure array of list items.
+ * Evaluates role-based and workspace-based access, and matches each item to its corresponding renderer function.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param parentParams - Render context parameters containing structure lists and plugin params.
+ * @returns An array of resolved structure list items.
+ */
 export const renderListItems = <T extends StructureToolParams>(
   parentParams: RenderListItemsParams<T>,
 ): RenderListItemsOutput => {

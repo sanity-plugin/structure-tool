@@ -7,6 +7,14 @@ import type { TemplateResolver } from 'sanity';
 import type { TemplatesParams } from '@/structure/templates/templates.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
+/**
+ * Initial value templates resolver function that hooks into Sanity's schema template resolution protocol.
+ * Generates custom initial value templates dynamically from filter/singleton definitions.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param params - The template resolution parameters containing list items.
+ * @returns A standard Sanity `TemplateResolver` function.
+ */
 export const templates =
   <T extends StructureToolParams>(params: TemplatesParams<T>): TemplateResolver =>
   (prev, context) => {

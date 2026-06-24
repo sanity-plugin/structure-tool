@@ -4,6 +4,12 @@ import { getDisplayTitle } from '@/helpers/getDisplayTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
+/**
+ * Renders a list item that displays lists of documents for a specific Sanity schema document type.
+ *
+ * @param params - Render context parameters containing mapping and list parameters.
+ * @returns The resolved Sanity Studio list item structure.
+ */
 export const getListing: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;

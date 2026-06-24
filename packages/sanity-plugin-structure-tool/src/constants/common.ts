@@ -1,3 +1,7 @@
+/**
+ * Dictionary of supported Sanity Studio document action names.
+ * These actions are typically evaluated for role and workspace permission filters.
+ */
 export const sanityActions = {
   DELETE: 'delete',
   DISCARD_CHANGES: 'discardChanges',

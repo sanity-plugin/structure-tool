@@ -7,6 +7,14 @@ import type { StructureResolver } from 'sanity/structure';
 import type { StructureParams } from '@/structure/structure/structure.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
+/**
+ * Root structure resolver function that hooks into Sanity's `StructureResolver` protocol.
+ * Generates the root menu listing from the declarative plugins configurations.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param params - The root structural configuration options.
+ * @returns A standard Sanity `StructureResolver` function.
+ */
 export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
   (S, context) => {

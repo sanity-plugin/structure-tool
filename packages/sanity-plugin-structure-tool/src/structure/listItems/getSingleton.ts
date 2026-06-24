@@ -5,6 +5,12 @@ import { getDisplayTitle } from '@/helpers/getDisplayTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
+/**
+ * Renders a list item that opens directly into a singleton document editor pane rather than a list of documents.
+ *
+ * @param params - Render context parameters containing mapping and list parameters.
+ * @returns The resolved Sanity Studio list item structure.
+ */
 export const getSingleton: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;

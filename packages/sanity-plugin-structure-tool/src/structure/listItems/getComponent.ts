@@ -4,6 +4,12 @@ import { getTitle } from '@/helpers/getTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
+/**
+ * Renders a list item that displays a custom React component view.
+ *
+ * @param params - Render context parameters containing mapping and list parameters.
+ * @returns The resolved Sanity Studio list item structure.
+ */
 export const getComponent: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;

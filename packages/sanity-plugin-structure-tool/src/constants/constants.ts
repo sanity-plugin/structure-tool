@@ -1,3 +1,6 @@
+/**
+ * Package-wide internal constants for ID generation and singleton keys.
+ */
 export const constants = {
   SINGLETON_KEY: 'singleton',
   URL_PATH_SEPARATOR: '.',

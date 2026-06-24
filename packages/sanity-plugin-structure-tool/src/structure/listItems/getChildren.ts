@@ -8,11 +8,21 @@ import type { ListItemKeyParams } from '@/structure/listItems/listItems.types';
 import type { RenderItems } from '@/structure/renderListItems/renderListItems.types';
 import type { ListItemReturn, StructureToolParams } from '@/structure/types/common.types';
 
+/**
+ * Helper function type that renders a nested child list/pane menu structure.
+ */
 type GetChildren = <T extends StructureToolParams>(
   params: ListItemKeyParams<T>,
   renderItems: RenderItems<T>,
 ) => ListItemReturn;
 
+/**
+ * Renders a nested folder list item structure by mapping its children array recursively through the render function.
+ *
+ * @param params - Render context parameters containing mapping and list parameters.
+ * @param renderItems - Resolver function for mapping nested arrays of child list items.
+ * @returns The resolved Sanity Studio list item structure.
+ */
 export const getChildren: GetChildren = (params, renderItems) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
