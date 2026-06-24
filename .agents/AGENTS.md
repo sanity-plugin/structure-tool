@@ -35,6 +35,7 @@ When working with list item definitions or documenting them:
 ### Documentation and Type Synchronization
 
 When changing structural options or list item definitions:
+
 - Reference the documentation under `docs/` to ensure consistency.
 - Ensure that any modifications to options, properties, or definitions are simultaneously updated in the corresponding TypeScript definition files (e.g. `types.ts`, `listItem.types.ts`, etc.) so that types and docs remain in sync.
 
