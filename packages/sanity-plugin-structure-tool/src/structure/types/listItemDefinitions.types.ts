@@ -1,5 +1,5 @@
 import type { SortOrderingItem } from 'sanity';
-import type { StructureBuilder } from 'sanity/structure';
+import type { ChildResolverOptions, StructureBuilder } from 'sanity/structure';
 import type { SetNonNullable } from 'type-fest';
 
 import type {
@@ -8,6 +8,7 @@ import type {
   StructureToolParams,
   ValidSanityContext,
 } from '@/structure/types/common.types';
+import type { ListItem } from '@/types';
 import type { SimpleMerge } from '@/types/lib.types';
 import type { sanitizeUrl } from '@/utils';
 
@@ -60,6 +61,25 @@ export type ListItemDefaultOrdering = Record<
   string,
   SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
 >;
+
+/**
+ * Configuration for defining nested children of a list item.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+export interface ListItemChildren<T extends StructureToolParams> {
+  /**
+   * Nested child list items. Can be an array or a dynamic callback function returning list items.
+   */
+  children?: StructureToolGenericParam<
+    T,
+    ListItem<T>[],
+    {
+      // FIXME
+      childOptions?: ChildResolverOptions;
+    }
+  >;
+}
 
 /**
  * A callback function to construct a list item or divider imperatively using the native Sanity `StructureBuilder`.

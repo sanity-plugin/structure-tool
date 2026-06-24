@@ -17,8 +17,7 @@ export const getFlatListItems = <T extends StructureToolParams>(
   const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
       const schemaType = getValidListItem(item?.schemaType, contextValues);
-      // FIXME
-      const children = getValidListItem(item?.children, { ...contextValues, childOptions: {} });
+      const children = getValidListItem(item?.children, contextValues);
 
       if (schemaType) {
         schemaTypes.push(item);

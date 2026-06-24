@@ -1,10 +1,10 @@
-import { userRoles, workspaceTypes } from '@/constants/common';
-import { defineListItems } from '@/structure';
 import { AddUserIcon, BookIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
 import { IframeComponent } from '@/components/Components';
+import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
+import { defineListItems } from '@/structure';
 
 const listItems = defineListItems(({ helpers }) => [
   helpers.divider('Examples'),
