@@ -1,10 +1,10 @@
+import { userRoles, workspaceTypes } from '@/constants/common';
+import { defineListItems } from '@/structure';
 import { AddUserIcon, BookIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
 import { IframeComponent } from '@/components/Components';
-import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
-import { defineListItems } from '@/structure';
 
 const listItems = defineListItems(({ helpers }) => [
   helpers.divider('Examples'),
@@ -180,6 +180,44 @@ const listItems = defineListItems(({ helpers }) => [
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Media Layout',
         defaultLayout: 'media',
+      }),
+    ],
+  },
+  {
+    title: 'Menu Items',
+    children: [
+      helpers.divider('Grouped Menu Actions (menuItemGroups)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Grouped Actions',
+        menuItemGroups: [
+          {
+            id: 'export-group',
+            title: 'Export Options',
+          },
+        ],
+        menuItems: [
+          {
+            title: 'Export to CSV',
+            action: 'export-csv',
+            group: 'export-group',
+          },
+          {
+            title: 'Export to JSON',
+            action: 'export-json',
+            group: 'export-group',
+          },
+        ],
+      }),
+      helpers.divider('Menu Action (menuItems)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Menu Action',
+        menuItems: [
+          {
+            title: 'Export to CSV',
+            id: 'export-csv',
+            action: 'export-csv',
+          },
+        ],
       }),
     ],
   },
