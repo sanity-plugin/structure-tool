@@ -65,3 +65,4 @@ Click on any property name below to view its complete type definition, details, 
 | [`raw`](../examples/raw)                            | Yes                    | The "Escape Hatch" to use the native Sanity Structure Builder API.   |
 | [`isDivider`](../examples/is-divider)               | Yes (Default: `false`) | Renders as a visual separator in the desk list.                      |
 | [`isPlural`](../examples/is-plural)                 | Yes (Default: `true`)  | Controls automatic pluralization of the auto-generated title.        |
+| [`isVisible`](../examples/is-visible)               | Yes (Default: `true`)  | Controls the visibility of the list item in the navigation menu.     |

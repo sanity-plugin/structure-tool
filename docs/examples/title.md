@@ -1,6 +1,6 @@
 # `title` {#title}
 
-- **Type**: `string | ((params: CallbackParams) => string)`
+- **Type**: `string | TitleObject | ((params: CallbackParams) => string | TitleObject)`
 - **Optional**: Yes (Required if `children` is present)
 
 The `title` property sets the display name for the list item in the Sanity desk menu.
@@ -19,6 +19,33 @@ The `title` property sets the display name for the list item in the Sanity desk 
 ```ts [Helpers]
 helpers.listing('author', {
   title: 'My Custom Title',
+});
+```
+
+:::
+
+## Parent & Child Titles {#parent-child-titles}
+
+You can specify a different title for when an item is listed in the parent list versus when it is opened as a child pane. This is done by passing a `TitleObject` containing `parent` and/or `child` keys.
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: 'author',
+  title: {
+    parent: 'Contributors',
+    child: 'Authors',
+  },
+}
+```
+
+```ts [Helpers]
+helpers.listing('author', {
+  title: {
+    parent: 'Contributors',
+    child: 'Authors',
+  },
 });
 ```
 

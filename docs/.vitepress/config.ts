@@ -210,6 +210,10 @@ export default defineConfig({
                 text: 'isPlural',
                 link: '/examples/is-plural',
               },
+              {
+                text: 'isVisible',
+                link: '/examples/is-visible',
+              },
             ],
           },
         ],
