@@ -13,17 +13,18 @@ export const getSingleton: ListItemKey = (params) => {
 
   const { schemaType = '', templates } = getComputedListItems({ listItem, context });
 
-  const displayTitle = getDisplayTitle({ ...listItemsParams, listItem });
-  const { id } = generateId(displayTitle, params);
+  const { parentTitle, childTitle } = getDisplayTitle({ ...listItemsParams, listItem });
+  const { id } = generateId(parentTitle, params);
 
   return S.listItem()
-    .title(displayTitle)
+    .title(parentTitle)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .schemaType(schemaType)
     .child(() => {
       let schemaBuilder = S.editor()
+        .title(childTitle)
         .id([schemaType, constants.SINGLETON_KEY].join('-'))
         .schemaType(schemaType);
 

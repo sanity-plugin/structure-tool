@@ -37,7 +37,7 @@ export const componentHelper = <T extends StructureToolParams>(
   component?: NonNullable<ListItemCore<T>['component']>,
   params?: ComponentHelperRestParams<T>,
 ): ComponentHelperOutput<T> => {
-  if (typeof titleOrParams === 'object') {
+  if (typeof titleOrParams === 'object' && 'component' in titleOrParams) {
     return titleOrParams;
   }
 

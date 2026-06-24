@@ -18,24 +18,24 @@ export const getListing: ListItemKey = (params) => {
     filterParams,
     defaultOrdering,
     defaultLayout,
-    menuItemGroups = [],
+    menuItemGroups,
     menuItems,
     hideAddButton,
     templates,
   } = getComputedListItems({ listItem, context });
 
-  const displayTitle = getDisplayTitle({ ...listItemsParams, listItem });
-  const { id } = generateId(displayTitle, params);
+  const { parentTitle, childTitle } = getDisplayTitle({ ...listItemsParams, listItem });
+  const { id } = generateId(parentTitle, params);
 
   return S.listItem()
-    .title(displayTitle)
+    .title(parentTitle)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .schemaType(schemaType)
     .child(() => {
       let schemaBuilder = S.documentTypeList(schemaType)
-        .title(displayTitle)
+        .title(childTitle)
         .id(id)
         .filter(['_type == $schemaType', ...(filter ? [filter] : [])].join(' && '))
         .params({
@@ -43,7 +43,7 @@ export const getListing: ListItemKey = (params) => {
           ...filterParams,
         })
         .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups)
+        .menuItemGroups(menuItemGroups ?? [])
         .menuItems(menuItems);
 
       if (apiVersion) {

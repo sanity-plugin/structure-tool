@@ -1,6 +1,7 @@
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
 import { getContextValues } from '@/helpers/getContextValues';
+import { getTitle } from '@/helpers/getTitle';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { ListItemKeyParams } from '@/structure/listItems/listItems.types';
@@ -20,17 +21,16 @@ export const getChildren: GetChildren = (params, renderItems) => {
 
   const contextValues = getContextValues(context);
 
-  const {
-    title = '',
-    showIcons,
-    menuItemGroups = [],
-    menuItems,
-  } = getComputedListItems({ listItem, context });
+  const { title, showIcons, menuItemGroups, menuItems } = getComputedListItems({
+    listItem,
+    context,
+  });
 
-  const { uniqueId, id } = generateId(title, params);
+  const { parentTitle, childTitle } = getTitle(title, context);
+  const { uniqueId, id } = generateId(parentTitle, params);
 
   return S.listItem()
-    .title(title)
+    .title(parentTitle)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
@@ -38,9 +38,9 @@ export const getChildren: GetChildren = (params, renderItems) => {
       const children = getValidListItem(listItemChildren, { ...contextValues, childOptions }) ?? [];
 
       return S.list()
-        .title(title)
+        .title(childTitle)
         .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups)
+        .menuItemGroups(menuItemGroups ?? [])
         .menuItems(menuItems)
         .items(
           renderItems({

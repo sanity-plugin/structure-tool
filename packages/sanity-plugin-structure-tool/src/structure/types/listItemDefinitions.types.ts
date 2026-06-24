@@ -37,6 +37,22 @@ export type ListItemId = Record<
 >;
 
 /**
+ * Represents the parent and child display titles configuration for a list item.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+export interface ListItemTitle<T extends StructureToolParams> {
+  /**
+   * The display title when this item is rendered as a parent list/pane.
+   */
+  parent?: StructureToolGenericParam<T, string>;
+  /**
+   * The display title when this item is rendered as a child of another list.
+   */
+  child?: StructureToolGenericParam<T, string>;
+}
+
+/**
  * Defines default ordering rules for a list item pane.
  * Maps field paths to direction ('asc' | 'desc') or sorting items.
  */

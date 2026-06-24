@@ -37,7 +37,7 @@ export const childrenHelper = <T extends StructureToolParams>(
   children?: ListItemCore<T>[],
   params?: ChildrenHelperRestParams<T>,
 ): ChildrenHelperOutput<T> => {
-  if (typeof titleOrParams === 'object') {
+  if (typeof titleOrParams === 'object' && 'children' in titleOrParams) {
     return titleOrParams;
   }
 

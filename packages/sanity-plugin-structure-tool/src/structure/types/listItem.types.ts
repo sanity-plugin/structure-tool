@@ -15,6 +15,7 @@ import type {
   ListItemDefaultOrdering,
   ListItemId,
   ListItemRaw,
+  ListItemTitle,
   WorkspacesAndRolesListItem,
 } from '@/structure/types/listItemDefinitions.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
@@ -31,9 +32,9 @@ export interface ListItemCore<T extends StructureToolParams> {
    */
   id?: StructureToolGenericParam<T, string, ListItemId>;
   /**
-   * The display title of the item. Can be a static string or a dynamic callback function.
+   * The display title of the item. Can be a static string, a dynamic callback function, or a parent/child titles configuration object.
    */
-  title?: StructureToolGenericParam<T, string>;
+  title?: StructureToolGenericParam<T, string | ListItemTitle<T>>;
   /**
    * The schema document type associated with this list item.
    */

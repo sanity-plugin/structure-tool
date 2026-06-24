@@ -17,8 +17,30 @@ const listItems = defineListItems(({ helpers }) => [
       helpers.listing(schemaNames.AUTHOR, {
         isPlural: false,
       }),
+      helpers.divider('Different title for Parent/Child'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: {
+          parent: 'Parent Title',
+          child: 'Child Title',
+        },
+      }),
       helpers.divider('Singleton View'),
       helpers.singleton(schemaNames.SETTING),
+      helpers.divider('Custom Id (id: custom-static-id)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Custom Id',
+        id: 'custom-static-id',
+      }),
+      helpers.divider('API Version (2025-02-19)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors',
+        apiVersion: '2025-02-19',
+      }),
+    ],
+  },
+  {
+    title: 'Icons',
+    children: [
       helpers.divider('Custom Title + Icon'),
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Contributors',
@@ -34,21 +56,10 @@ const listItems = defineListItems(({ helpers }) => [
         title: 'Authors (No Icons)',
         showIcons: false,
       }),
-      helpers.divider('Custom Id (id: custom-static-id)'),
-      helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Custom Id',
-        id: 'custom-static-id',
-      }),
-      helpers.divider('API Version (2025-02-19)'),
-      helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors',
-        apiVersion: '2025-02-19',
-      }),
     ],
   },
   {
     title: 'Drawer',
-    icon: ComponentIcon,
     children: [
       helpers.divider('Level 1 Depth'),
       helpers.listing(schemaNames.AUTHOR),
@@ -84,6 +95,18 @@ const listItems = defineListItems(({ helpers }) => [
     children: [
       helpers.divider('Documentation'),
       helpers.component('Documentation', IframeComponent, {
+        icon: BookIcon,
+        componentOptions: {
+          url: 'https://sanity-structure-tool.nishargshah.dev',
+        },
+      }),
+      helpers.divider('Documentation Without Child Title'),
+      helpers.component({
+        title: {
+          parent: 'Documentation',
+          child: '',
+        },
+        component: IframeComponent,
         icon: BookIcon,
         componentOptions: {
           url: 'https://sanity-structure-tool.nishargshah.dev',

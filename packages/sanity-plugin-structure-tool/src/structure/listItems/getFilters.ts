@@ -1,5 +1,6 @@
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
+import { getTitle } from '@/helpers/getTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -10,29 +11,30 @@ export const getFilters: ListItemKey = (params) => {
   const { icon } = listItem;
 
   const {
-    title = '',
+    title,
     showIcons,
     apiVersion,
     filter,
     filterParams,
     defaultOrdering,
     defaultLayout,
-    menuItemGroups = [],
+    menuItemGroups,
     menuItems,
   } = getComputedListItems({ listItem, context });
 
-  const { id } = generateId(title, params);
+  const { parentTitle, childTitle } = getTitle(title, context);
+  const { id } = generateId(parentTitle, params);
 
   return S.listItem()
-    .title(title)
+    .title(parentTitle)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .child(() => {
       let schemaBuilder = S.documentList()
-        .title(title)
+        .title(childTitle)
         .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups)
+        .menuItemGroups(menuItemGroups ?? [])
         .menuItems(menuItems);
 
       if (filter) {

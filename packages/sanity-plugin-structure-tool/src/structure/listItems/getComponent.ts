@@ -1,5 +1,6 @@
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
+import { getTitle } from '@/helpers/getTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -9,17 +10,16 @@ export const getComponent: ListItemKey = (params) => {
   const { listItem } = mappingParams;
   const { icon, component } = listItem;
 
-  const {
-    title = '',
-    componentOptions,
-    menuItemGroups = [],
-    menuItems,
-  } = getComputedListItems({ listItem, context });
+  const { title, componentOptions, menuItemGroups, menuItems } = getComputedListItems({
+    listItem,
+    context,
+  });
 
-  const { id } = generateId(title, params);
+  const { parentTitle, childTitle } = getTitle(title, context);
+  const { id } = generateId(parentTitle, params);
 
   return S.listItem()
-    .title(title)
+    .title(parentTitle)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
@@ -27,7 +27,11 @@ export const getComponent: ListItemKey = (params) => {
       let schemaBuilder = S.component(component)
         .id(id)
         .options({ childOption, ...componentOptions })
-        .menuItemGroups(menuItemGroups);
+        .menuItemGroups(menuItemGroups ?? []);
+
+      if (childTitle) {
+        schemaBuilder = schemaBuilder.title(childTitle);
+      }
 
       if (menuItems) {
         schemaBuilder = schemaBuilder.menuItems(menuItems);
