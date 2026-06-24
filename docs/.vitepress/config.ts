@@ -6,6 +6,8 @@ import { defineConfig } from 'vitepress';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 import llmstxt from 'vitepress-plugin-llms';
 
+import type { Plugin } from 'vitepress';
+
 const projectRoot = fileURLToPath(new URL('../..', import.meta.url));
 const { version } = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
 
@@ -28,7 +30,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [groupIconVitePlugin(), llmstxt({ title, description, details: '' })],
+    plugins: [groupIconVitePlugin(), llmstxt() as unknown as Plugin],
   },
   sitemap: {
     hostname: siteUrl,
