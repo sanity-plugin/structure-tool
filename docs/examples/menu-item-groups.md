@@ -1,6 +1,6 @@
 # `menuItemGroups` {#menu-item-groups}
 
-- **Type**: `MenuItemGroup[] | ((params: CallbackParams) => MenuItemGroup[])`
+- **Type**: `MenuItemGroup[] | ((params: CallbackParams & { prev: MenuItemGroup[] }) => MenuItemGroup[])`
 - **Optional**: Yes
 
 The `menuItemGroups` property allows you to group multiple custom menu items under collapsible sections or specific categories in the pane header menu.
@@ -61,6 +61,41 @@ helpers.listing('article', {
       icon: TrashIcon,
       action: 'purge',
       group: 'actions-group',
+    },
+  ],
+});
+```
+
+:::
+
+## Working with Existing Groups (`prev`) {#working-with-prev}
+
+When using a callback function, the callback parameters object includes a `prev` property containing the default menu item groups from Sanity Studio. You can use this to append, prepend, or filter existing groups.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Articles',
+  schemaType: 'article',
+  menuItemGroups: ({ prev }) => [
+    ...prev,
+    {
+      id: 'custom-group',
+      title: 'Custom Actions',
+    },
+  ],
+}
+```
+
+```ts [Helpers]
+helpers.listing('article', {
+  title: 'Articles',
+  menuItemGroups: ({ prev }) => [
+    ...prev,
+    {
+      id: 'custom-group',
+      title: 'Custom Actions',
     },
   ],
 });

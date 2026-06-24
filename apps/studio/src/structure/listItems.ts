@@ -242,6 +242,24 @@ const listItems = defineListItems(({ helpers }) => [
           },
         ],
       }),
+      helpers.divider('Custom Action with Existing'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Menu Action',
+        menuItemGroups: [
+          {
+            id: 'export-group',
+            title: 'Export Options',
+          },
+        ],
+        menuItems: ({ prev }) => [
+          ...prev,
+          {
+            title: 'Export to CSV',
+            id: 'export-csv',
+            action: 'export-csv',
+          },
+        ],
+      }),
     ],
   },
   {

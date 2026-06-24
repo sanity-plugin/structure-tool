@@ -14,7 +14,7 @@ import type { ListItemCore } from '@/structure/types/listItem.types';
  * Keys of core list item fields that are omitted during dynamic evaluation
  * in getComputedListItems since they are processed independently.
  */
-type OmittedListItem = 'id' | 'icon' | 'component' | 'raw';
+type OmittedListItem = 'id' | 'icon' | 'component' | 'menuItemGroups' | 'menuItems' | 'raw';
 
 /**
  * Parameters for the getComputedListItems helper function.
@@ -49,7 +49,14 @@ export type GetComputedListItems = <T extends StructureToolParams>(
 export const getComputedListItems: GetComputedListItems = ({ listItem, context }) => {
   const contextValues = getContextValues(context);
 
-  const notAllowedListItems = new Set(['id', 'icon', 'component', 'raw']);
+  const notAllowedListItems = new Set([
+    'id',
+    'icon',
+    'component',
+    'menuItemGroups',
+    'menuItems',
+    'raw',
+  ]);
 
   const allowedListItems = (Object.entries(listItem) as Entries<typeof listItem>).reduce<
     Entries<typeof listItem>

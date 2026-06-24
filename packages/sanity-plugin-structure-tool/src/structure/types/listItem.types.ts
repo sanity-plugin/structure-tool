@@ -78,11 +78,11 @@ export interface ListItemCore<T extends StructureToolParams> {
   /**
    * Groupings of menu actions.
    */
-  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[]>;
+  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[], Record<'prev', MenuItemGroup[]>>;
   /**
    * Action items shown in the pane header menu.
    */
-  menuItems?: StructureToolGenericParam<T, MenuItem[]>;
+  menuItems?: StructureToolGenericParam<T, MenuItem[], Record<'prev', MenuItem[]>>;
   /**
    * If true, hides the "Add document" action in the pane header.
    */

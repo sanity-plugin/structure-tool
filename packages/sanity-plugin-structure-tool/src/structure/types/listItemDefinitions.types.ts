@@ -54,15 +54,6 @@ export interface ListItemTitle<T extends StructureToolParams> {
 }
 
 /**
- * Defines default ordering rules for a list item pane.
- * Maps field paths to direction ('asc' | 'desc') or sorting items.
- */
-export type ListItemDefaultOrdering = Record<
-  string,
-  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
->;
-
-/**
  * Configuration for defining nested children of a list item.
  *
  * @template T - The structure tool configuration parameters schema.
@@ -80,6 +71,15 @@ export interface ListItemChildren<T extends StructureToolParams> {
     }
   >;
 }
+
+/**
+ * Defines default ordering rules for a list item pane.
+ * Maps field paths to direction ('asc' | 'desc') or sorting items.
+ */
+export type ListItemDefaultOrdering = Record<
+  string,
+  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
+>;
 
 /**
  * A callback function to construct a list item or divider imperatively using the native Sanity `StructureBuilder`.
