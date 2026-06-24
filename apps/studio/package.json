@@ -19,12 +19,12 @@
   "dependencies": {
     "@sanity/assist": "^6.1.3",
     "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^6.1.0",
+    "@sanity/vision": "^6.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sanity": "^6.1.0",
+    "sanity": "^6.2.0",
     "sanity-plugin-structure-tool": "workspace:*",
-    "styled-components": "^6.4.2"
+    "styled-components": "^6.4.3"
   },
   "devDependencies": {
     "@structure-tool/typescript-config": "workspace:*",

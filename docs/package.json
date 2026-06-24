@@ -33,7 +33,7 @@
     "@structure-tool/typescript-config": "workspace:*",
     "vitepress": "^2.0.0-alpha.17",
     "vitepress-plugin-group-icons": "^1.7.5",
-    "vitepress-plugin-llms": "^1.13.1"
+    "vitepress-plugin-llms": "^1.13.2"
   },
   "engines": {
     "node": "^24"
