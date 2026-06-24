@@ -42,9 +42,7 @@ export const getListing: ListItemKey = (params) => {
           schemaType,
           ...filterParams,
         })
-        .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups ?? [])
-        .menuItems(menuItems);
+        .showIcons(showIcons);
 
       if (apiVersion) {
         schemaBuilder = schemaBuilder.apiVersion(apiVersion);
@@ -61,6 +59,14 @@ export const getListing: ListItemKey = (params) => {
 
       if (defaultLayout) {
         schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+      }
+
+      if (menuItemGroups) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      }
+
+      if (menuItems) {
+        schemaBuilder = schemaBuilder.menuItems(menuItems);
       }
 
       if (hideAddButton) {

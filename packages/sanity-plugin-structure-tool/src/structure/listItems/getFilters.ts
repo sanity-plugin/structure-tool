@@ -31,11 +31,7 @@ export const getFilters: ListItemKey = (params) => {
     .icon(icon)
     .showIcon(icon !== false)
     .child(() => {
-      let schemaBuilder = S.documentList()
-        .title(childTitle)
-        .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups ?? [])
-        .menuItems(menuItems);
+      let schemaBuilder = S.documentList().title(childTitle).showIcons(showIcons);
 
       if (filter) {
         // eslint-disable-next-line unicorn/no-array-callback-reference
@@ -57,6 +53,14 @@ export const getFilters: ListItemKey = (params) => {
 
       if (defaultLayout) {
         schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+      }
+
+      if (menuItemGroups) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      }
+
+      if (menuItems) {
+        schemaBuilder = schemaBuilder.menuItems(menuItems);
       }
 
       return schemaBuilder.initialValueTemplates([]);

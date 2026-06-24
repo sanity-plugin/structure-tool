@@ -26,11 +26,14 @@ export const getComponent: ListItemKey = (params) => {
     .child((_, childOption) => {
       let schemaBuilder = S.component(component)
         .id(id)
-        .options({ childOption, ...componentOptions })
-        .menuItemGroups(menuItemGroups ?? []);
+        .options({ childOption, ...componentOptions });
 
       if (childTitle) {
         schemaBuilder = schemaBuilder.title(childTitle);
+      }
+
+      if (menuItemGroups) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
       }
 
       if (menuItems) {

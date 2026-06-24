@@ -37,16 +37,24 @@ export const getChildren: GetChildren = (params, renderItems) => {
     .child((_, childOptions) => {
       const children = getValidListItem(listItemChildren, { ...contextValues, childOptions }) ?? [];
 
-      return S.list()
+      let schemaBuilder = S.list()
         .title(childTitle)
         .showIcons(showIcons)
-        .menuItemGroups(menuItemGroups ?? [])
-        .menuItems(menuItems)
         .items(
           renderItems({
             id: uniqueId,
             listItems: children,
           }).filter((item) => item !== null),
         );
+
+      if (menuItemGroups) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      }
+
+      if (menuItems) {
+        schemaBuilder = schemaBuilder.menuItems(menuItems);
+      }
+
+      return schemaBuilder;
     });
 };
