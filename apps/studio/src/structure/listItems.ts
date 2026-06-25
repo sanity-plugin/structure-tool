@@ -17,8 +17,30 @@ const listItems = defineListItems(({ helpers }) => [
       helpers.listing(schemaNames.AUTHOR, {
         isPlural: false,
       }),
+      helpers.divider('Different title for Parent/Child'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: {
+          parent: 'Parent Title',
+          child: 'Child Title',
+        },
+      }),
       helpers.divider('Singleton View'),
       helpers.singleton(schemaNames.SETTING),
+      helpers.divider('Custom Id (id: custom-static-id)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Custom Id',
+        id: 'custom-static-id',
+      }),
+      helpers.divider('API Version (2025-02-19)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors',
+        apiVersion: '2025-02-19',
+      }),
+    ],
+  },
+  {
+    title: 'Icons',
+    children: [
       helpers.divider('Custom Title + Icon'),
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Contributors',
@@ -34,21 +56,10 @@ const listItems = defineListItems(({ helpers }) => [
         title: 'Authors (No Icons)',
         showIcons: false,
       }),
-      helpers.divider('Custom Id (id: custom-static-id)'),
-      helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Custom Id',
-        id: 'custom-static-id',
-      }),
-      helpers.divider('API Version (2025-02-19)'),
-      helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors',
-        apiVersion: '2025-02-19',
-      }),
     ],
   },
   {
     title: 'Drawer',
-    icon: ComponentIcon,
     children: [
       helpers.divider('Level 1 Depth'),
       helpers.listing(schemaNames.AUTHOR),
@@ -84,6 +95,18 @@ const listItems = defineListItems(({ helpers }) => [
     children: [
       helpers.divider('Documentation'),
       helpers.component('Documentation', IframeComponent, {
+        icon: BookIcon,
+        componentOptions: {
+          url: 'https://sanity-structure-tool.nishargshah.dev',
+        },
+      }),
+      helpers.divider('Documentation Without Child Title'),
+      helpers.component({
+        title: {
+          parent: 'Documentation',
+          child: '',
+        },
+        component: IframeComponent,
         icon: BookIcon,
         componentOptions: {
           url: 'https://sanity-structure-tool.nishargshah.dev',
@@ -180,6 +203,62 @@ const listItems = defineListItems(({ helpers }) => [
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Media Layout',
         defaultLayout: 'media',
+      }),
+    ],
+  },
+  {
+    title: 'Menu Items',
+    children: [
+      helpers.divider('Grouped Menu Actions (menuItemGroups)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Grouped Actions',
+        menuItemGroups: [
+          {
+            id: 'export-group',
+            title: 'Export Options',
+          },
+        ],
+        menuItems: [
+          {
+            title: 'Export to CSV',
+            action: 'export-csv',
+            group: 'export-group',
+          },
+          {
+            title: 'Export to JSON',
+            action: 'export-json',
+            group: 'export-group',
+          },
+        ],
+      }),
+      helpers.divider('Menu Action (menuItems)'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Menu Action',
+        menuItems: [
+          {
+            title: 'Export to CSV',
+            id: 'export-csv',
+            action: 'export-csv',
+          },
+        ],
+      }),
+      helpers.divider('Custom Action with Existing'),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'Authors with Menu Action',
+        menuItemGroups: [
+          {
+            id: 'export-group',
+            title: 'Export Options',
+          },
+        ],
+        menuItems: ({ prev }) => [
+          ...prev,
+          {
+            title: 'Export to CSV',
+            id: 'export-csv',
+            action: 'export-csv',
+          },
+        ],
       }),
     ],
   },

@@ -6,6 +6,8 @@ import { defineConfig } from 'vitepress';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 import llmstxt from 'vitepress-plugin-llms';
 
+import type { Plugin } from 'vitepress';
+
 const projectRoot = fileURLToPath(new URL('../..', import.meta.url));
 const { version } = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
 
@@ -28,7 +30,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [groupIconVitePlugin(), llmstxt({ title, description, details: '' })],
+    plugins: [groupIconVitePlugin(), llmstxt() as unknown as Plugin],
   },
   sitemap: {
     hostname: siteUrl,
@@ -173,6 +175,14 @@ export default defineConfig({
                 link: '/examples/default-layout',
               },
               {
+                text: 'menuItemGroups',
+                link: '/examples/menu-item-groups',
+              },
+              {
+                text: 'menuItems',
+                link: '/examples/menu-items',
+              },
+              {
                 text: 'workspaces',
                 link: '/examples/workspaces',
               },
@@ -199,6 +209,10 @@ export default defineConfig({
               {
                 text: 'isPlural',
                 link: '/examples/is-plural',
+              },
+              {
+                text: 'isVisible',
+                link: '/examples/is-visible',
               },
             ],
           },

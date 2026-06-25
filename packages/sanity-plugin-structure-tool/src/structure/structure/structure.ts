@@ -1,47 +1,49 @@
 import { getContextValues } from '@/helpers/getContextValues';
-import { getWorkspaceListItem } from '@/structure/getWorkspaceListItem/getWorkspaceListItem';
-import { renderListItem } from '@/structure/renderListItem/renderListItem';
+import { getValidListItem } from '@/helpers/getValidListItem';
+import { renderListItems } from '@/structure/renderListItems/renderListItems';
 
 import type { StructureResolver } from 'sanity/structure';
 
 import type { StructureParams } from '@/structure/structure/structure.types';
 import type { StructureToolParams } from '@/structure/types/common.types';
 
+/**
+ * Root structure resolver function that hooks into Sanity's `StructureResolver` protocol.
+ * Generates the root menu listing from the declarative plugins configurations.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param params - The root structural configuration options.
+ * @returns A standard Sanity `StructureResolver` function.
+ */
 export const structure =
   <T extends StructureToolParams>(params: StructureParams<T>): StructureResolver =>
   (S, context) => {
-    const { title, emptyListTitle, ...restParams } = params;
-    const { workspace, currentUser, context: validContext } = getContextValues<T>(context);
+    const { title, emptyListTitle, listItems, ...pluginParams } = params;
 
-    const displayTitle =
-      typeof title === 'function'
-        ? title({ workspace, currentUser, context: validContext })
-        : title;
+    const contextValues = getContextValues<T>(context);
+    const { workspace, context: validContext } = contextValues;
 
-    const displayEmptyListTitle =
-      typeof emptyListTitle === 'function'
-        ? emptyListTitle({ workspace, currentUser, context: validContext })
-        : emptyListTitle;
+    const displayTitle = getValidListItem(title, contextValues);
+    const displayEmptyListTitle = getValidListItem(emptyListTitle, contextValues);
 
     if (!workspace) return S.list().title(displayTitle).items([]);
 
-    const workspaceListItems = getWorkspaceListItem<T>({
-      S,
-      workspace,
-      context: validContext,
-      id: '1',
-      options: restParams,
-    });
+    // TODO: PROVIDE IT IN GLOBAL PLUGIN PARAMS
+    const listItemRenderer = S.list()
+      .title(displayTitle)
+      .items(
+        renderListItems<T>({
+          S,
+          workspace,
+          context: validContext,
+          listItems,
+          pluginParams,
+        }),
+      );
 
-    if (!workspaceListItems || workspaceListItems.length === 0) {
+    if (listItemRenderer.getItems()?.length === 0) {
       return S.list().title(displayEmptyListTitle ?? `${displayTitle} Not Configured`);
     }
 
-    return S.list()
-      .title(displayTitle)
-      .items(
-        workspaceListItems
-          .map((listItem) => renderListItem<T>({ S, workspace, context: validContext, listItem }))
-          .filter((item) => item !== null),
-      );
+    return listItemRenderer;
   };

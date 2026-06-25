@@ -1,91 +1,120 @@
 import type { ComponentType, ReactNode } from 'react';
-import type { PreviewLayoutKey, SortOrderingItem } from 'sanity';
-import type { ListBuilder, StructureBuilder, UserComponent } from 'sanity/structure';
+import type { PreviewLayoutKey } from 'sanity';
+import type { MenuItem, MenuItemGroup, UserComponent } from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
   StructureToolParams,
-  ValidSanityContext,
 } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
+import type {
+  ListItemChildren,
+  ListItemDefaultOrdering,
+  ListItemId,
+  ListItemRaw,
+  ListItemTitle,
+  WorkspacesAndRolesListItem,
+} from '@/structure/types/listItemDefinitions.types';
 import type { IconComponent, SimpleMerge } from '@/types/lib.types';
-import type { sanitizeUrl } from '@/utils';
 
-// Id
-
-export type ListItemId = Record<
-  'values',
-  {
-    uniqueId: string;
-    sanitizedPaths: string[];
-    id: string;
-    slugify: typeof sanitizeUrl;
-  }
->;
-
-// Default Ordering
-
-type ListItemDefaultOrdering = Record<
-  string,
-  SortOrderingItem['direction'] | Omit<SortOrderingItem, 'field'>
->;
-
-// Raw
-
-export type ListItemRaw = (
-  S: StructureBuilder,
-  context: ValidSanityContext,
-) => Parameters<ListBuilder['items']>[0][number] | null;
-
-// Core
-
-export interface ListItemCore {
-  title?: string;
-  schemaType?: string;
+/**
+ * Core configuration properties for a structural list item in Sanity Studio.
+ * Defines presentation, query filtering, and behavior rules.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+export interface ListItemCore<T extends StructureToolParams> {
+  /**
+   * The unique identifier for this list item. Can be a static string or a dynamic callback function.
+   */
+  id?: StructureToolGenericParam<T, string, ListItemId>;
+  /**
+   * The display title of the item. Can be a static string, a dynamic callback function, or a parent/child titles configuration object.
+   */
+  title?: StructureToolGenericParam<T, string | ListItemTitle<T>>;
+  /**
+   * The schema document type associated with this list item.
+   */
+  schemaType?: StructureToolGenericParam<T, string>;
+  /**
+   * An optional icon component to render alongside the item. Set to false to hide.
+   */
   icon?: IconComponent | ComponentType | ReactNode | false;
-  showIcons?: boolean;
-  singleton?: boolean;
+  /**
+   * Controls whether child document icons are displayed in the list view.
+   */
+  showIcons?: StructureToolGenericParam<T, boolean>;
+  /**
+   * If true, treats the item as a single document instance rather than a list of documents.
+   */
+  singleton?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Custom React component to render instead of the standard document list.
+   */
   component?: UserComponent;
-  componentOptions?: Record<string, unknown>;
-  apiVersion?: string;
-  filter?: string;
-  filterParams?: Record<string, unknown>;
-  defaultOrdering?: ListItemDefaultOrdering;
-  defaultLayout?: PreviewLayoutKey;
-  hideAddButton?: boolean;
-  templates?: Record<string, unknown>;
+  /**
+   * Options to pass to the custom React component.
+   */
+  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>>;
+  /**
+   * The Sanity API version used for queries in this list.
+   */
+  apiVersion?: StructureToolGenericParam<T, string>;
+  /**
+   * GROQ filter to apply to the document list.
+   */
+  filter?: StructureToolGenericParam<T, string>;
+  /**
+   * Parameters passed to the GROQ filter.
+   */
+  filterParams?: StructureToolGenericParam<T, Record<string, unknown>>;
+  /**
+   * The default sort ordering of items in the list.
+   */
+  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering>;
+  /**
+   * Default layout style for document previews (e.g. card, detail, media, default).
+   */
+  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey>;
+  /**
+   * Groupings of menu actions.
+   */
+  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[], Record<'prev', MenuItemGroup[]>>;
+  /**
+   * Action items shown in the pane header menu.
+   */
+  menuItems?: StructureToolGenericParam<T, MenuItem[], Record<'prev', MenuItem[]>>;
+  /**
+   * If true, hides the "Add document" action in the pane header.
+   */
+  hideAddButton?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Initial value template options and overrides.
+   */
+  templates?: StructureToolGenericParam<T, Record<string, unknown>>;
+  /**
+   * A raw renderer function to bypass the declarative builder and construct the list item imperatively.
+   */
   raw?: ListItemRaw;
-  isDivider?: boolean;
-  isPlural?: boolean;
+  /**
+   * If true, this item renders as a visual separator line in the menu.
+   */
+  isDivider?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Optional helper indicating if the title should automatically be pluralized.
+   */
+  isPlural?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Optional helper or callback indicating if the list item should be visible in the navigation menu.
+   */
+  isVisible?: StructureToolGenericParam<T, boolean>;
 }
 
-export type DefaultListItem = 'icon' | 'component' | 'raw';
-
-type DynamicListItemProps<T extends StructureToolParams> = {
-  [K in Exclude<keyof ListItemCore, DefaultListItem>]?: StructureToolGenericParam<
-    T,
-    ListItemCore[K]
-  >;
-};
-
+/**
+ * Represents a complete structure list item.
+ * Combines core properties, role/workspace filters, and nested child structure.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
 export type ListItem<T extends StructureToolParams> = SimpleMerge<
-  [
-    Pick<ListItemCore, DefaultListItem>,
-    DynamicListItemProps<T>,
-    {
-      id?: StructureToolGenericParam<T, string, ListItemId>;
-      children?: StructureToolGenericParam<T, ListItem<T>[]>;
-    },
-  ]
->;
-
-export interface ListItemExtendedItems<T extends StructureToolParams> {
-  id: string;
-  displayTitle: string;
-  children: ListItemExtended<T>[];
-  showIcon: boolean;
-}
-
-export type ListItemExtended<T extends StructureToolParams> = SimpleMerge<
-  [ListItemCore, ListItemWithWorkspacesAndRoles<T>, ListItemExtendedItems<T>]
+  [ListItemCore<T>, WorkspacesAndRolesListItem<T>, ListItemChildren<T>]
 >;

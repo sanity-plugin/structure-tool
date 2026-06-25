@@ -1,53 +1,87 @@
-import type { RequireOneOrNone } from 'type-fest';
-
 import type { StructureToolParams } from '@/structure/types/common.types';
-import type { ListItemWithWorkspacesAndRoles } from '@/structure/types/listItemCore.types';
-import type { ListItem } from '@/types';
+import type { ListItemCore } from '@/structure/types/listItem.types';
+import type { WorkspacesAndRolesListItem } from '@/structure/types/listItemDefinitions.types';
 import type { SimpleMerge } from '@/types/lib.types';
 
-type ListingHelperCoreParams<T extends StructureToolParams> = SimpleMerge<
+/**
+ * Optional structural, role-based, or visual parameter configuration for document listing list items.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListItemWithWorkspacesAndRoles<T>,
-    RequireOneOrNone<Pick<ListItem<T>, 'hideAddButton' | 'templates'>>,
+    WorkspacesAndRolesListItem<T>,
     Pick<
-      ListItem<T>,
+      ListItemCore<T>,
       | 'id'
       | 'title'
       | 'icon'
+      | 'showIcons'
       | 'apiVersion'
       | 'filter'
       | 'filterParams'
       | 'defaultOrdering'
       | 'defaultLayout'
+      | 'menuItemGroups'
+      | 'menuItems'
+      | 'hideAddButton'
+      | 'templates'
       | 'isPlural'
-      | 'showIcons'
+      | 'isVisible'
     >,
   ]
 >;
 
-type ListingHelperParams<T extends StructureToolParams> = SimpleMerge<
+/**
+ * Required parameters for document listing list items (must include schemaType).
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+type ListingHelperOnlyParams<T extends StructureToolParams> = SimpleMerge<
   [
-    ListingHelperCoreParams<T>,
+    ListingHelperRestParams<T>,
     {
-      schemaType: NonNullable<ListItem<T>['schemaType']>;
+      schemaType: NonNullable<ListItemCore<T>['schemaType']>;
     },
   ]
 >;
 
-type ListingHelperOutput<T extends StructureToolParams> = ListingHelperParams<T>;
+/**
+ * Resolved output schema for document listing list item configurations.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+type ListingHelperOutput<T extends StructureToolParams> = ListingHelperOnlyParams<T>;
 
+/**
+ * Helper function interface for defining a standard Sanity list item listing a document type.
+ * Supports call signatures either with a single configuration parameters object containing `schemaType`,
+ * or with positional arguments (schemaType string, and optional parameters).
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
 export interface ListingHelper<T extends StructureToolParams> {
-  (params: ListingHelperParams<T>): ListingHelperOutput<T>;
+  (params: ListingHelperOnlyParams<T>): ListingHelperOutput<T>;
 
   (
-    schemaType: NonNullable<ListItem<T>['schemaType']>,
-    params?: ListingHelperCoreParams<T>,
+    schemaType: NonNullable<ListItemCore<T>['schemaType']>,
+    params?: ListingHelperRestParams<T>,
   ): ListingHelperOutput<T>;
 }
 
+/**
+ * Helper function to define a standard Sanity list item listing a document type.
+ * Supports call signatures either with a single configuration parameters object containing `schemaType`,
+ * or with positional arguments (schemaType string, and optional parameters).
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param schemaTypeOrParams - The schema type name string or the complete listing configuration parameters object.
+ * @param params - Optional additional configurations for the list item.
+ * @returns The resolved listing list item configuration object.
+ */
 export const listingHelper = <T extends StructureToolParams>(
-  schemaTypeOrParams: ListingHelperParams<T> | NonNullable<ListItem<T>['schemaType']>,
-  params?: ListingHelperCoreParams<T>,
+  schemaTypeOrParams: ListingHelperOnlyParams<T> | NonNullable<ListItemCore<T>['schemaType']>,
+  params?: ListingHelperRestParams<T>,
 ): ListingHelperOutput<T> => {
   if (typeof schemaTypeOrParams === 'object') {
     return schemaTypeOrParams;

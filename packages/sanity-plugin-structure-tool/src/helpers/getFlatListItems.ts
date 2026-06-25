@@ -6,14 +6,26 @@ import type { ConfigContext } from 'sanity';
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
-export const getAllListItems = <T extends StructureToolParams>(
-  context: ConfigContext,
+/**
+ * Recursively traverses a list of nested configuration items and extracts a flat array of list items that have a configured schema type.
+ *
+ * @param listItems - The array of list items to flatten.
+ * @param context - The Sanity Studio configuration context.
+ * @returns A flat array of resolved list items.
+ */
+export const getFlatListItems = <T extends StructureToolParams>(
   listItems: ListItem<T>[],
+  context: ConfigContext,
 ): ListItem<T>[] => {
   const contextValues = getContextValues(context);
 
   const schemaTypes = [] as ListItem<T>[];
 
+  /**
+   * Internal recursive traveler that extracts items containing a schema type.
+   *
+   * @param items - Child items collection.
+   */
   const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
       const schemaType = getValidListItem(item?.schemaType, contextValues);

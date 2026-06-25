@@ -5,13 +5,15 @@ packages:
   - packages/*
 
 catalog:
-  tsdown: ^0.22.2
+  tsdown: ^0.22.3
   type-fest: ^5.7.0
 
 allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: false
+
+minimumReleaseAge: 0
 
 minimumReleaseAgeExclude:
   - '@sanity/assist@6.1.3'

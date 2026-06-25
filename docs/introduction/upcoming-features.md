@@ -6,44 +6,7 @@ Here is a glimpse of what's coming in future releases:
 
 ## Planned Features {#planned-features}
 
-### 1. Menu Items (`menuItems`) {#menu-items}
-
-Support for defining custom menu actions and icons at the top of document lists.
-
-::: code-group
-
-```ts [JSON]
-import { DownloadIcon } from '@sanity/icons';
-
-{
-  schemaType: 'product',
-  menuItems: [
-    {
-      title: 'Export to CSV',
-      icon: DownloadIcon,
-      action: 'export-csv',
-    },
-  ],
-}
-```
-
-```ts [Helpers]
-import { DownloadIcon } from '@sanity/icons';
-
-helpers.listing('product', {
-  menuItems: [
-    {
-      title: 'Export to CSV',
-      icon: DownloadIcon,
-      action: 'export-csv',
-    },
-  ],
-});
-```
-
-:::
-
-### 2. View Customization (`views`) {#view-customization}
+### 1. View Customization (`views`) {#view-customization}
 
 Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
 
@@ -84,13 +47,6 @@ helpers.singleton('post', {
 ```
 
 :::
-
-### 3. TypeScript & Validation {#typescript-validation}
-
-We are working on providing a robust, type-safe experience and built-in validation for your JSON structures.
-
-- **Strict Typing**: Better autocompletion and type checking for all `ListItem` properties.
-- **Runtime Validation**: Catch configuration errors instantly with schema-based validation (e.g., ensuring a `title` is provided when `children` are present).
 
 ---
 

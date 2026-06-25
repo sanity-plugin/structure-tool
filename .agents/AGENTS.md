@@ -32,6 +32,21 @@ When working with list item definitions or documenting them:
 - This callback avoids the need to import `helpers` globally or contextually in every single file.
 - When writing documentation (such as `.md` files in `docs/`), always present both the plain JSON-like object format and the helper-based format (using both the direct import and callback signatures) to ensure completeness.
 
+### Documentation and Type Synchronization
+
+When changing structural options or list item definitions:
+
+- Reference the documentation under `docs/` to ensure consistency.
+- Ensure that any modifications to options, properties, or definitions are simultaneously updated in the corresponding TypeScript definition files (e.g. `types.ts`, `listItem.types.ts`, etc.) so that types and docs remain in sync.
+
+### JSDoc Documentation Guidelines
+
+When creating or modifying typescript source files (e.g. `*.types.ts` files, utility helpers, actions, and rendering logic):
+
+- Write detailed JSDoc comments for all exported types, interfaces, utility functions, type guards, and core resolver helper functions.
+- Ensure JSDocs contain clear `@template`, `@param`, and `@returns` metadata tags to populate IDE IntelliSense properly for the end-user.
+- When the user requests "jsdoc", it means: "Write JSDoc comments for all files, functions, types, and everything existing under the `packages/sanity-plugin-structure-tool` package."
+
 ---
 
 ## Agent Tool Constraints

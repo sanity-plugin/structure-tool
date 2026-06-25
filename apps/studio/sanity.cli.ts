@@ -1,6 +1,4 @@
 import { defineCliConfig } from 'sanity/cli';
-// eslint-disable-next-line import-x/no-extraneous-dependencies
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { envs } from '@/config';
 
@@ -14,7 +12,9 @@ export default defineCliConfig({
     autoUpdates: false,
   },
   vite: {
-    plugins: [tsconfigPaths()],
+    resolve: {
+      tsconfigPaths: true,
+    },
   },
   reactCompiler: {
     target: '19',

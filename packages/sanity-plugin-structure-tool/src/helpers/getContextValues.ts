@@ -6,6 +6,12 @@ import type {
   Workspace,
 } from '@/structure/types/common.types';
 
+/**
+ * Resolves context properties such as the active workspace name, user information, and context object into a unified state payload.
+ *
+ * @param context - The Sanity Studio configuration context.
+ * @returns An object containing the current workspace, current user, and non-null context.
+ */
 export const getContextValues = <T extends StructureToolParams>(
   context: ConfigContext,
 ): StructureToolCallbackParams<T> => {

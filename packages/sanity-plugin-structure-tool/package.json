@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-structure-tool",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A JSON based powerful structure tool for Sanity Studio",
   "keywords": [
     "structure",
@@ -56,7 +56,7 @@
   "peerDependencies": {
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
-    "sanity": "^5.0.0"
+    "sanity": "^5.0.0 || ^6.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
@@ -73,7 +73,6 @@
     "node": ">=18"
   },
   "inlinedDependencies": {
-    "tagged-tag": "1.0.0",
     "type-fest": "5.7.0"
   }
 }
