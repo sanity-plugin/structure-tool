@@ -74,7 +74,9 @@ export const renderListItems = <T extends StructureToolParams>(
       if (isDivider) return getDivider(params);
 
       // Handle folders (items with children)
-      if (children && children.length > 0) return getChildren(params, renderItems);
+      if (typeof children === 'function' || (Array.isArray(children) && children.length > 0)) {
+        return getChildren(params, renderItems);
+      }
 
       // Handle Component
       if (component) return getComponent(params);

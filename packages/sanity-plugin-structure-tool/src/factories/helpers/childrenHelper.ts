@@ -67,7 +67,7 @@ export interface ChildrenHelper<T extends StructureToolParams> {
 
   (
     title: NonNullable<ChildrenHelperTitle<T>['title']>,
-    children: ListItemCore<T>[],
+    children: NonNullable<ListItemChildren<T>['children']>,
     params?: ChildrenHelperRestParams<T>,
   ): ChildrenHelperOutput<T>;
 }
@@ -85,7 +85,7 @@ export interface ChildrenHelper<T extends StructureToolParams> {
  */
 export const childrenHelper = <T extends StructureToolParams>(
   titleOrParams: ChildrenHelperOnlyParams<T> | NonNullable<ChildrenHelperTitle<T>['title']>,
-  children?: ListItemCore<T>[],
+  children?: NonNullable<ListItemChildren<T>['children']>,
   params?: ChildrenHelperRestParams<T>,
 ): ChildrenHelperOutput<T> => {
   if (typeof titleOrParams === 'object' && 'children' in titleOrParams) {

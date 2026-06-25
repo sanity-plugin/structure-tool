@@ -61,8 +61,7 @@ export const getDisplayTitle: GetDisplayTitle = (params) => {
    * @returns Resolved display title text.
    */
   const generateDisplayTitle = (titleParam?: string) => {
-    const schemaDefaultTitle = S.documentTypeListItem(schemaType).getTitle();
-    const schemaTitle = schemaType ? schemaDefaultTitle : '';
+    const schemaTitle = schemaType ? S.documentTypeListItem(schemaType).getTitle() : '';
     const isItPlural = titleParam ? false : (isPlural ?? !singleton);
 
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
