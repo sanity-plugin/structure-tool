@@ -1,3 +1,19 @@
+## 0.4.0 (2026-06-25)
+
+### 🚀 Features
+
+- **sanity-plugin-structure-tool:**
+  - Added support for custom actions via `menuItems` and collapsible sections via `menuItemGroups` in pane header menus.
+  - Added dynamic callback support to `menuItems` and `menuItemGroups` with access to a `prev` parameter containing default items from Sanity Studio.
+  - Added `isVisible` configuration option (boolean or callback) to dynamically hide/show list items.
+  - Added support for separate `parent` and `child` display titles in the `title` option (using `title: { parent: ..., child: ... }`).
+  - Added workspace and role filter evaluation to control visibility of list items per workspace/user role.
+  - Completed JSDoc documentation comprehensively for all exported and internal functions, interfaces, and types.
+- **docs:**
+  - Added examples and documentation for `menuItems`, `menuItemGroups`, `isVisible`, and the parent/child pane title configuration format.
+- **studio:**
+  - Added example configurations for custom action menus, groups, parent/child titles, and visibility toggles in the reference studio.
+
 ## 0.3.0 (2026-06-20)
 
 ### 🚀 Features
