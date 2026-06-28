@@ -63,36 +63,39 @@ export type GetComputedListItems = <T extends StructureToolParams>(
       /**
        * Static configuration references or components evaluated directly.
        */
-      [K in Extract<
-        keyof GetComputedListItemsParams<T>['listItem'],
-        'component' | 'icon' | 'raw'
-      >]: ListItemCore<T>[K];
+      [
+        K in Extract<keyof GetComputedListItemsParams<T>['listItem'], 'component' | 'icon' | 'raw'>
+      ]: ListItemCore<T>[K];
     },
     {
       /**
        * Basic list item parameters resolved at root level without extra context options.
        */
-      [K in Extract<
-        keyof GetComputedListItemsParams<T>['listItem'],
-        'isDivider' | 'isPlural' | 'singleton'
-      >]: () => GetListItemOriginalType<ListItemCore<T>[K]>;
+      [
+        K in Extract<
+          keyof GetComputedListItemsParams<T>['listItem'],
+          'isDivider' | 'isPlural' | 'singleton'
+        >
+      ]: () => GetListItemOriginalType<ListItemCore<T>[K]>;
     },
     {
       /**
        * Custom/dynamic options resolved recursively down the structure path using active childOptions context.
        */
-      [K in Extract<
-        keyof GetComputedListItemsParams<T>['listItem'],
-        | 'apiVersion'
-        | 'componentOptions'
-        | 'defaultLayout'
-        | 'filter'
-        | 'filterParams'
-        | 'hideAddButton'
-        | 'showIcons'
-        | 'templates'
-        | 'views'
-      >]: (
+      [
+        K in Extract<
+          keyof GetComputedListItemsParams<T>['listItem'],
+          | 'apiVersion'
+          | 'componentOptions'
+          | 'defaultLayout'
+          | 'filter'
+          | 'filterParams'
+          | 'hideAddButton'
+          | 'showIcons'
+          | 'templates'
+          | 'views'
+        >
+      ]: (
         params: Pick<ListItemCallbackParams, 'childOptions'>,
       ) => GetListItemOriginalType<ListItemCore<T>[K]>;
     },

@@ -115,16 +115,20 @@ helpers.singleton('settings', {
       icon: CogIcon,
     },
     // Only show Documentation view on the staging workspace
-    ...(workspace === 'staging' ? [{
-      title: 'Documentation',
-      type: 'component',
-      id: 'documentation',
-      icon: BookIcon,
-      component: DocumentationComponent,
-      options: {
-        url: 'https://example.com/docs',
-      },
-    }] : []),
+    ...(workspace === 'staging'
+      ? [
+          {
+            title: 'Documentation',
+            type: 'component',
+            id: 'documentation',
+            icon: BookIcon,
+            component: DocumentationComponent,
+            options: {
+              url: 'https://example.com/docs',
+            },
+          },
+        ]
+      : []),
   ],
 });
 ```

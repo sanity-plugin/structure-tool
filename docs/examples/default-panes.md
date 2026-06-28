@@ -103,7 +103,7 @@ import { DocumentationComponent } from './components/Documentation';
     },
   ],
   // Dynamically open all views side-by-side or just the form
-  defaultPanes: ({ views, workspace }) => 
+  defaultPanes: ({ views, workspace }) =>
     workspace === 'staging' ? views : ['setting-form'],
 }
 ```
@@ -132,8 +132,7 @@ helpers.singleton('settings', {
     },
   ],
   // Dynamically open all views side-by-side or just the form
-  defaultPanes: ({ views, workspace }) => 
-    workspace === 'staging' ? views : ['setting-form'],
+  defaultPanes: ({ views, workspace }) => (workspace === 'staging' ? views : ['setting-form']),
 });
 ```
 
