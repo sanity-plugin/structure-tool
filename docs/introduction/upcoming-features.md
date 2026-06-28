@@ -48,6 +48,33 @@ helpers.singleton('post', {
 
 :::
 
+### 2. Internationalization (`i18n`) {#i18n}
+
+Support for internationalizing display titles, menu labels, and structural descriptors using Sanity Studio's native i18n translation system. This will support passing custom translation namespace keys that dynamically adapt to the user's active studio locale.
+
+::: code-group
+
+```ts [JSON]
+{
+  schemaType: 'post',
+  i18n: {
+    key: 'structure.posts.title',
+    default: 'Manage Posts',
+  },
+}
+```
+
+```ts [Helpers]
+helpers.listing('post', {
+  title: {
+    key: 'structure.posts.title',
+    default: 'Manage Posts',
+  },
+});
+```
+
+:::
+
 ---
 
 ::: info Have a Suggestion?
