@@ -50,7 +50,17 @@ export interface ListItemTitle<T extends StructureToolParams> {
   /**
    * The display title when this item is rendered as a child of another list.
    */
-  child?: StructureToolGenericParam<T, string>;
+  child?: StructureToolGenericParam<T, string, ListItemChildOptions>;
+}
+
+/**
+ * Extra context parameters representing the options passed by the Sanity child pane resolver.
+ */
+export interface ListItemChildOptions {
+  /**
+   * The options provided by the Sanity Studio child resolver context.
+   */
+  childOptions: ChildResolverOptions;
 }
 
 /**
@@ -62,14 +72,7 @@ export interface ListItemChildren<T extends StructureToolParams> {
   /**
    * Nested child list items. Can be an array or a dynamic callback function returning list items.
    */
-  children?: StructureToolGenericParam<
-    T,
-    ListItem<T>[],
-    {
-      // FIXME
-      childOptions?: ChildResolverOptions;
-    }
-  >;
+  children?: StructureToolGenericParam<T, ListItem<T>[], ListItemChildOptions>;
 }
 
 /**

@@ -51,15 +51,9 @@ export const renderListItems = <T extends StructureToolParams>(
         },
       } satisfies ListItemKeyParams<T>;
 
-      const { children, component, raw } = listItem;
+      const { children, filter } = listItem;
 
-      const {
-        schemaType,
-        singleton,
-        filter,
-        isDivider,
-        isVisible = true,
-      } = getComputedListItems({
+      const { schemaType, singleton, component, raw, isDivider, isVisible } = getComputedListItems({
         listItem,
         context,
       });
@@ -71,7 +65,7 @@ export const renderListItems = <T extends StructureToolParams>(
       if (raw) return getRaw(params);
 
       // Handle Divider
-      if (isDivider) return getDivider(params);
+      if (isDivider()) return getDivider(params);
 
       // Handle folders (items with children)
       if (typeof children === 'function' || (Array.isArray(children) && children.length > 0)) {
@@ -82,13 +76,18 @@ export const renderListItems = <T extends StructureToolParams>(
       if (component) return getComponent(params);
 
       // Handle Filters
-      if (!schemaType && filter) return getFilters(params);
+      if (
+        !schemaType() &&
+        (typeof filter === 'function' || (typeof filter === 'string' && filter.length > 0))
+      ) {
+        return getFilters(params);
+      }
 
       // Handle Singleton
-      if (singleton && schemaType) return getSingleton(params);
+      if (singleton() && schemaType()) return getSingleton(params);
 
       // Handle Listing
-      if (schemaType) return getListing(params);
+      if (schemaType()) return getListing(params);
 
       return null;
     });

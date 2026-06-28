@@ -7,6 +7,7 @@ import type {
   StructureToolParams,
 } from '@/structure/types/common.types';
 import type {
+  ListItemChildOptions,
   ListItemChildren,
   ListItemDefaultOrdering,
   ListItemId,
@@ -42,7 +43,7 @@ export interface ListItemCore<T extends StructureToolParams> {
   /**
    * Controls whether child document icons are displayed in the list view.
    */
-  showIcons?: StructureToolGenericParam<T, boolean>;
+  showIcons?: StructureToolGenericParam<T, boolean, ListItemChildOptions>;
   /**
    * If true, treats the item as a single document instance rather than a list of documents.
    */
@@ -54,43 +55,51 @@ export interface ListItemCore<T extends StructureToolParams> {
   /**
    * Options to pass to the custom React component.
    */
-  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>>;
+  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
    * The Sanity API version used for queries in this list.
    */
-  apiVersion?: StructureToolGenericParam<T, string>;
+  apiVersion?: StructureToolGenericParam<T, string, ListItemChildOptions>;
   /**
    * GROQ filter to apply to the document list.
    */
-  filter?: StructureToolGenericParam<T, string>;
+  filter?: StructureToolGenericParam<T, string, ListItemChildOptions>;
   /**
    * Parameters passed to the GROQ filter.
    */
-  filterParams?: StructureToolGenericParam<T, Record<string, unknown>>;
+  filterParams?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
    * The default sort ordering of items in the list.
    */
-  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering>;
+  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering, ListItemChildOptions>;
   /**
    * Default layout style for document previews (e.g. card, detail, media, default).
    */
-  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey>;
+  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey, ListItemChildOptions>;
   /**
    * Groupings of menu actions.
    */
-  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[], Record<'prev', MenuItemGroup[]>>;
+  menuItemGroups?: StructureToolGenericParam<
+    T,
+    MenuItemGroup[],
+    SimpleMerge<[Record<'prev', MenuItemGroup[]>, ListItemChildOptions]>
+  >;
   /**
    * Action items shown in the pane header menu.
    */
-  menuItems?: StructureToolGenericParam<T, MenuItem[], Record<'prev', MenuItem[]>>;
+  menuItems?: StructureToolGenericParam<
+    T,
+    MenuItem[],
+    SimpleMerge<[Record<'prev', MenuItem[]>, ListItemChildOptions]>
+  >;
   /**
    * If true, hides the "Add document" action in the pane header.
    */
-  hideAddButton?: StructureToolGenericParam<T, boolean>;
+  hideAddButton?: StructureToolGenericParam<T, boolean, ListItemChildOptions>;
   /**
    * Initial value template options and overrides.
    */
-  templates?: StructureToolGenericParam<T, Record<string, unknown>>;
+  templates?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
    * A raw renderer function to bypass the declarative builder and construct the list item imperatively.
    */

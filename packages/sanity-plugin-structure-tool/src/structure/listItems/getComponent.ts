@@ -2,9 +2,6 @@ import { MenuItemBuilder, MenuItemGroupBuilder } from 'sanity/structure';
 
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
-import { getContextValues } from '@/helpers/getContextValues';
-import { getTitle } from '@/helpers/getTitle';
-import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -18,59 +15,53 @@ export const getComponent: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const {
-    icon,
-    component,
-    menuItems: listItemMenuItems,
-    menuItemGroups: listItemMenuItemGroups,
-  } = listItem;
 
-  const contextValues = getContextValues(context);
+  const { parentTitle, childTitle, icon, component, componentOptions, menuItemGroups, menuItems } =
+    getComputedListItems({
+      listItem,
+      context,
+    });
 
-  const { title, componentOptions } = getComputedListItems({
-    listItem,
-    context,
-  });
+  const parentTitleValue = parentTitle();
 
-  const { parentTitle, childTitle } = getTitle(title, context);
-  const { id } = generateId(parentTitle, params);
+  const { id } = generateId(parentTitleValue, params);
 
   return S.listItem()
-    .title(parentTitle)
+    .title(parentTitleValue)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
-    .child((_, childOption) => {
+    .child((_, childOptions) => {
+      const title = childTitle({ childOptions });
+
       let schemaBuilder = S.component(component)
         .id(id)
-        .options({ childOption, ...componentOptions });
+        .options({ childOptions, ...componentOptions({ childOptions }) });
 
-      if (childTitle) {
-        schemaBuilder = schemaBuilder.title(childTitle);
+      if (title) {
+        schemaBuilder = schemaBuilder.title(title);
       }
 
-      const menuItemGroups = (() => {
-        const prev = (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
+      const menuItemGroupsValue = menuItemGroups({
+        childOptions,
+        prevMenuItemGroups: (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
           item instanceof MenuItemGroupBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItemGroups, { ...contextValues, prev });
-      })();
-
-      if (menuItemGroups) {
-        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      if (menuItemGroupsValue) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroupsValue);
       }
 
-      const menuItems = (() => {
-        const prev = (schemaBuilder.getMenuItems() ?? []).map((item) =>
+      const menuItemsValue = menuItems({
+        childOptions,
+        prevMenuItems: (schemaBuilder.getMenuItems() ?? []).map((item) =>
           item instanceof MenuItemBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItems, { ...contextValues, prev });
-      })();
-
-      if (menuItems) {
-        schemaBuilder = schemaBuilder.menuItems(menuItems);
+      if (menuItemsValue) {
+        schemaBuilder = schemaBuilder.menuItems(menuItemsValue);
       }
 
       return schemaBuilder;
