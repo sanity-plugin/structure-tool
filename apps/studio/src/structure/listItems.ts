@@ -1,7 +1,7 @@
-import { AddUserIcon, BookIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
+import { AddUserIcon, BookIcon, CogIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
-import { IframeComponent } from '@/components/Components';
+import { IframeComponent, IframeViewComponent } from '@/components/Components';
 import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
@@ -24,8 +24,6 @@ const listItems = defineListItems(({ helpers }) => [
           child: 'Child Title',
         },
       }),
-      helpers.divider('Singleton View'),
-      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Custom Id (id: custom-static-id)'),
       helpers.listing(schemaNames.AUTHOR, {
         id: 'custom-static-id',
@@ -34,6 +32,58 @@ const listItems = defineListItems(({ helpers }) => [
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Authors',
         apiVersion: '2025-02-19',
+      }),
+    ],
+  },
+  {
+    title: 'Singleton',
+    children: [
+      helpers.divider('Singleton View'),
+      helpers.singleton(schemaNames.SETTING),
+      helpers.divider('Views (See Tabs)'),
+      helpers.singleton(schemaNames.SETTING, {
+        title: 'Setting + Documentation',
+        views: [
+          {
+            title: 'Setting Form',
+            type: 'form',
+            id: 'setting-form',
+            icon: CogIcon,
+          },
+          {
+            title: 'Documentation',
+            type: 'component',
+            id: 'documentation',
+            icon: BookIcon,
+            component: IframeViewComponent,
+            options: {
+              url: 'https://sanity-structure-tool.nishargshah.dev',
+            },
+          },
+        ],
+      }),
+      helpers.divider('Views (Tabs + Multiple Panes)'),
+      helpers.singleton(schemaNames.SETTING, {
+        title: 'Setting + Documentation',
+        views: [
+          {
+            title: 'Setting Form',
+            type: 'form',
+            id: 'setting-form',
+            icon: CogIcon,
+          },
+          {
+            title: 'Documentation',
+            type: 'component',
+            id: 'documentation',
+            icon: BookIcon,
+            component: IframeViewComponent,
+            options: {
+              url: 'https://sanity-structure-tool.nishargshah.dev',
+            },
+          },
+        ],
+        defaultPanes: ({ views }) => views,
       }),
     ],
   },
