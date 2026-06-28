@@ -43,7 +43,7 @@ export const getTemplateListItems = <T extends StructureToolParams>(
    */
   const getListItems = (items: ListItem<T>[]): void => {
     for (const item of items) {
-      const { schemaType, templates, children } = getComputedListItems({
+      const { children, schemaType, templates } = getComputedListItems({
         listItem: item,
         context,
       });

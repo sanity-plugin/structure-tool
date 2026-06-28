@@ -47,6 +47,16 @@ When creating or modifying typescript source files (e.g. `*.types.ts` files, uti
 - Ensure JSDocs contain clear `@template`, `@param`, and `@returns` metadata tags to populate IDE IntelliSense properly for the end-user.
 - When the user requests "jsdoc", it means: "Write JSDoc comments for all files, functions, types, and everything existing under the `packages/sanity-plugin-structure-tool` package."
 
+### Alphabetical Sorting Convention
+
+When modifying, adding, or documenting properties on `ListItemCore` or helper methods (e.g. `listing`, `singleton`, etc.):
+
+- Always sort the property declarations in `ListItemCore` interface and types alphabetically.
+- Always sort the destructuring declarations of `getComputedListItems` and `listItem` alphabetically.
+- Always sort the returned object keys of `getComputedListItems` alphabetically.
+- Always sort the sidebar entries and property reference lists in the VitePress documentation (`docs/.vitepress/config.ts`, `docs/guide/list-items.md`, etc.) alphabetically.
+- Always sort helper declarations (`Helpers` interface, `helpers` export mapping, and documentation sections in `docs/guide/helpers.md`) alphabetically.
+
 ---
 
 ## Agent Tool Constraints

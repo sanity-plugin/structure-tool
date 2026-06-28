@@ -23,33 +23,33 @@ import type { StructureToolParams } from '@/structure/types/common.types';
  */
 export interface Helpers<T extends StructureToolParams> {
   /**
-   * Helper to define a standard Sanity list item listing document type.
+   * Helper to define a list item that has child items.
    */
-  listing: ListingHelper<T>;
-  /**
-   * Helper to define a generic GROQ-filtered document list item.
-   */
-  filters: FiltersHelper<T>;
-  /**
-   * Helper to define a singleton document list item.
-   */
-  singleton: SingletonHelper<T>;
-  /**
-   * Helper to define a visual divider list item.
-   */
-  divider: DividerHelper<T>;
-  /**
-   * Helper to define an imperatively rendered list item using the native Sanity Structure Builder.
-   */
-  raw: RawHelper<T>;
+  children: ChildrenHelper<T>;
   /**
    * Helper to define a list item that renders a custom React component.
    */
   component: ComponentHelper<T>;
   /**
-   * Helper to define a list item that has child items.
+   * Helper to define a visual divider list item.
    */
-  children: ChildrenHelper<T>;
+  divider: DividerHelper<T>;
+  /**
+   * Helper to define a generic GROQ-filtered document list item.
+   */
+  filters: FiltersHelper<T>;
+  /**
+   * Helper to define a standard Sanity list item listing document type.
+   */
+  listing: ListingHelper<T>;
+  /**
+   * Helper to define an imperatively rendered list item using the native Sanity Structure Builder.
+   */
+  raw: RawHelper<T>;
+  /**
+   * Helper to define a singleton document list item.
+   */
+  singleton: SingletonHelper<T>;
 }
 
 /**
@@ -57,11 +57,11 @@ export interface Helpers<T extends StructureToolParams> {
  * Maps individual helper implementations to their semantic fields.
  */
 export const helpers = {
-  listing: listingHelper,
-  filters: filtersHelper,
-  singleton: singletonHelper,
-  divider: dividerHelper,
-  raw: rawHelper,
-  component: componentHelper,
   children: childrenHelper,
+  component: componentHelper,
+  divider: dividerHelper,
+  filters: filtersHelper,
+  listing: listingHelper,
+  raw: rawHelper,
+  singleton: singletonHelper,
 } satisfies Helpers<StructureToolParams>;

@@ -16,7 +16,7 @@ export const getComponent: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { parentTitle, childTitle, icon, component, componentOptions, menuItemGroups, menuItems } =
+  const { childTitle, component, componentOptions, icon, menuItemGroups, menuItems, parentTitle } =
     getComputedListItems({
       listItem,
       context,

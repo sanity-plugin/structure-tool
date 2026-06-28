@@ -25,7 +25,7 @@ type ComponentHelperRestParams<T extends StructureToolParams> = SimpleMerge<
     WorkspacesAndRolesListItem<T>,
     Pick<
       ListItemCore<T>,
-      'id' | 'icon' | 'componentOptions' | 'menuItemGroups' | 'menuItems' | 'isVisible'
+      'componentOptions' | 'icon' | 'id' | 'isVisible' | 'menuItemGroups' | 'menuItems'
     >,
   ]
 >;

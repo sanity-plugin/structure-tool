@@ -16,18 +16,18 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
     SetRequired<
       Pick<
         ListItemCore<T>,
-        | 'id'
-        | 'title'
-        | 'icon'
-        | 'showIcons'
         | 'apiVersion'
+        | 'defaultLayout'
+        | 'defaultOrdering'
         | 'filter'
         | 'filterParams'
-        | 'defaultOrdering'
-        | 'defaultLayout'
+        | 'icon'
+        | 'id'
+        | 'isVisible'
         | 'menuItemGroups'
         | 'menuItems'
-        | 'isVisible'
+        | 'showIcons'
+        | 'title'
       >,
       'title' | 'filter'
     >,

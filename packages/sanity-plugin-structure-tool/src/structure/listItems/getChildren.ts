@@ -26,7 +26,7 @@ export const getChildren: GetChildren = (params, renderItems) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { parentTitle, childTitle, icon, showIcons, children, menuItemGroups, menuItems } =
+  const { childTitle, children, icon, menuItemGroups, menuItems, parentTitle, showIcons } =
     getComputedListItems({ listItem, context });
 
   const parentTitleValue = parentTitle();

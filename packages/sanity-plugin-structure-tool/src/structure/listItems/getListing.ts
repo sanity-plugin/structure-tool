@@ -18,19 +18,19 @@ export const getListing: ListItemKey = (params) => {
   const { listItem } = mappingParams;
 
   const {
-    parentTitle,
-    childTitle,
-    schemaType,
-    icon,
-    showIcons,
     apiVersion,
+    childTitle,
+    defaultLayout,
+    defaultOrdering,
     filter,
     filterParams,
-    defaultOrdering,
-    defaultLayout,
+    hideAddButton,
+    icon,
     menuItemGroups,
     menuItems,
-    hideAddButton,
+    parentTitle,
+    schemaType,
+    showIcons,
     templates,
   } = getComputedListItems({ listItem, context });
 

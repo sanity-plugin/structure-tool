@@ -13,21 +13,21 @@ type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
     WorkspacesAndRolesListItem<T>,
     Pick<
       ListItemCore<T>,
-      | 'id'
-      | 'title'
-      | 'icon'
-      | 'showIcons'
       | 'apiVersion'
+      | 'defaultLayout'
+      | 'defaultOrdering'
       | 'filter'
       | 'filterParams'
-      | 'defaultOrdering'
-      | 'defaultLayout'
-      | 'menuItemGroups'
-      | 'menuItems'
       | 'hideAddButton'
-      | 'templates'
+      | 'icon'
+      | 'id'
       | 'isPlural'
       | 'isVisible'
+      | 'menuItemGroups'
+      | 'menuItems'
+      | 'showIcons'
+      | 'templates'
+      | 'title'
     >,
   ]
 >;

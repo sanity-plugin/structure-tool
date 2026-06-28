@@ -65,7 +65,7 @@ export type GetComputedListItems = <T extends StructureToolParams>(
        */
       [K in Extract<
         keyof GetComputedListItemsParams<T>['listItem'],
-        'icon' | 'component' | 'raw'
+        'component' | 'icon' | 'raw'
       >]: ListItemCore<T>[K];
     },
     {
@@ -74,7 +74,7 @@ export type GetComputedListItems = <T extends StructureToolParams>(
        */
       [K in Extract<
         keyof GetComputedListItemsParams<T>['listItem'],
-        'singleton' | 'isDivider' | 'isPlural'
+        'isDivider' | 'isPlural' | 'singleton'
       >]: () => GetListItemOriginalType<ListItemCore<T>[K]>;
     },
     {
@@ -83,34 +83,26 @@ export type GetComputedListItems = <T extends StructureToolParams>(
        */
       [K in Extract<
         keyof GetComputedListItemsParams<T>['listItem'],
-        | 'showIcons'
-        | 'componentOptions'
-        | 'views'
         | 'apiVersion'
+        | 'componentOptions'
+        | 'defaultLayout'
         | 'filter'
         | 'filterParams'
-        | 'defaultLayout'
         | 'hideAddButton'
+        | 'showIcons'
         | 'templates'
+        | 'views'
       >]: (
         params: Pick<ListItemCallbackParams, 'childOptions'>,
       ) => GetListItemOriginalType<ListItemCore<T>[K]>;
     },
     {
       /**
-       * Statically resolves the display title seen in the parent pane.
-       */
-      parentTitle: () => NonNullable<GetListItemOriginalType<ListItemTitle<T>['parent']>>;
-      /**
        * Resolves the child pane display title, dynamically receiving childOptions.
        */
       childTitle: (
         params: Pick<ListItemCallbackParams, 'childOptions'>,
       ) => NonNullable<GetListItemOriginalType<ListItemTitle<T>['child']>>;
-      /**
-       * Statically resolves the document schema type name.
-       */
-      schemaType: () => NonNullable<GetListItemOriginalType<ListItemCore<T>['schemaType']>>;
       /**
        * Resolves nested child structural items, dynamically receiving childOptions.
        */
@@ -130,6 +122,10 @@ export type GetComputedListItems = <T extends StructureToolParams>(
         params: Pick<ListItemCallbackParams, 'childOptions' | 'defaultPaneViews'>,
       ) => GetListItemOriginalType<ListItemCore<T>['defaultPanes']>;
       /**
+       * Statically resolves whether this list item is visible in the pane menu hierarchy.
+       */
+      isVisible: () => NonNullable<GetListItemOriginalType<ListItemCore<T>['isVisible']>>;
+      /**
        * Resolves custom grouped menu actions, dynamically receiving childOptions and baseline prev groups.
        */
       menuItemGroups: (
@@ -142,9 +138,13 @@ export type GetComputedListItems = <T extends StructureToolParams>(
         params: Pick<ListItemCallbackParams, 'childOptions' | 'prevMenuItems'>,
       ) => GetListItemOriginalType<ListItemCore<T>['menuItems']>;
       /**
-       * Statically resolves whether this list item is visible in the pane menu hierarchy.
+       * Statically resolves the display title seen in the parent pane.
        */
-      isVisible: () => NonNullable<GetListItemOriginalType<ListItemCore<T>['isVisible']>>;
+      parentTitle: () => NonNullable<GetListItemOriginalType<ListItemTitle<T>['parent']>>;
+      /**
+       * Statically resolves the document schema type name.
+       */
+      schemaType: () => NonNullable<GetListItemOriginalType<ListItemCore<T>['schemaType']>>;
     },
   ]
 >;
@@ -160,46 +160,39 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
   const contextValues = getContextValues(context);
 
   const {
-    title,
-    schemaType,
-    icon,
-    showIcons,
-    singleton,
+    apiVersion,
+    children,
     component,
     componentOptions,
-    views,
-    children,
-    apiVersion,
+    defaultLayout,
+    defaultOrdering,
+    defaultPanes,
     filter,
     filterParams,
-    defaultOrdering,
-    defaultLayout,
-    defaultPanes,
-    menuItemGroups,
-    menuItems,
     hideAddButton,
-    templates,
-    raw,
+    icon,
     isDivider,
     isPlural,
     isVisible,
+    menuItemGroups,
+    menuItems,
+    raw,
+    schemaType,
+    showIcons,
+    singleton,
+    templates,
+    title,
+    views,
   } = listItem;
 
   const displayTitle = getValidListItem(title, contextValues);
 
   return {
     /**
-     * Resolves the list item display title as seen in the parent pane.
+     * Resolves the Sanity API version used for queries.
      */
-    parentTitle: () => {
-      if (typeof displayTitle === 'object') {
-        const { parent } = displayTitle;
-
-        return getValidListItem(parent, contextValues) ?? '';
-      }
-
-      return displayTitle ?? '';
-    },
+    apiVersion: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(apiVersion, { ...contextValues, ...params }),
     /**
      * Resolves the list item display title as seen in the child pane.
      */
@@ -213,22 +206,9 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
       return displayTitle ?? '';
     },
     /**
-     * Resolves the schema document type name.
+     * Resolves nested child list item definitions.
      */
-    schemaType: () => getValidListItem(schemaType, contextValues) ?? '',
-    /**
-     * The visual icon component/reference.
-     */
-    icon,
-    /**
-     * Resolves whether child document icons are visible.
-     */
-    showIcons: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(showIcons, { ...contextValues, ...params }),
-    /**
-     * Resolves whether this item is treated as a singleton.
-     */
-    singleton: () => getValidListItem(singleton, contextValues),
+    children: (params) => getValidListItem(children, { ...contextValues, ...params }) ?? [],
     /**
      * The custom React user component rendering this pane.
      */
@@ -238,31 +218,11 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
      */
     componentOptions: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
       getValidListItem(componentOptions, { ...contextValues, ...params }),
-
     /**
-     * Resolves custom pane view tabs (e.g. form, preview, components) configured for this document editor.
+     * Resolves the default listed preview layout style.
      */
-    views: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(views, { ...contextValues, ...params }),
-    /**
-     * Resolves nested child list item definitions.
-     */
-    children: (params) => getValidListItem(children, { ...contextValues, ...params }) ?? [],
-    /**
-     * Resolves the Sanity API version used for queries.
-     */
-    apiVersion: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(apiVersion, { ...contextValues, ...params }),
-    /**
-     * Resolves the GROQ query string filter.
-     */
-    filter: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(filter, { ...contextValues, ...params }),
-    /**
-     * Resolves the parameters for the GROQ filter query.
-     */
-    filterParams: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(filterParams, { ...contextValues, ...params }),
+    defaultLayout: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(defaultLayout, { ...contextValues, ...params }),
     /**
      * Resolves and parses default document sorting rules.
      */
@@ -282,12 +242,6 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
       return defaultOrderingValue;
     },
     /**
-     * Resolves the default listed preview layout style.
-     */
-    defaultLayout: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(defaultLayout, { ...contextValues, ...params }),
-
-    /**
      * Resolves the list of default active view tab IDs for this document editor pane.
      */
     defaultPanes: (params: Pick<ListItemCallbackParams, 'childOptions' | 'defaultPaneViews'>) => {
@@ -299,7 +253,37 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
         views: defaultPaneViews,
       });
     },
-
+    /**
+     * Resolves the GROQ query string filter.
+     */
+    filter: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(filter, { ...contextValues, ...params }),
+    /**
+     * Resolves the parameters for the GROQ filter query.
+     */
+    filterParams: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(filterParams, { ...contextValues, ...params }),
+    /**
+     * Resolves whether the document creation add button is hidden.
+     */
+    hideAddButton: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(hideAddButton, { ...contextValues, ...params }),
+    /**
+     * The visual icon component/reference.
+     */
+    icon,
+    /**
+     * Resolves whether the item is rendered as a visual list divider.
+     */
+    isDivider: () => getValidListItem(isDivider, contextValues),
+    /**
+     * Resolves whether the schema type name title should be pluralized.
+     */
+    isPlural: () => getValidListItem(isPlural, contextValues),
+    /**
+     * Resolves whether the list item is visible in the pane menu structure.
+     */
+    isVisible: () => getValidListItem(isVisible, contextValues) ?? true,
     /**
      * Resolves collapsed group actions in the pane header menu.
      */
@@ -327,30 +311,43 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
       });
     },
     /**
-     * Resolves whether the document creation add button is hidden.
+     * Resolves the list item display title as seen in the parent pane.
      */
-    hideAddButton: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
-      getValidListItem(hideAddButton, { ...contextValues, ...params }),
+    parentTitle: () => {
+      if (typeof displayTitle === 'object') {
+        const { parent } = displayTitle;
+
+        return getValidListItem(parent, contextValues) ?? '';
+      }
+
+      return displayTitle ?? '';
+    },
+    /**
+     * The imperative layout escape hatch callback.
+     */
+    raw,
+    /**
+     * Resolves the schema document type name.
+     */
+    schemaType: () => getValidListItem(schemaType, contextValues) ?? '',
+    /**
+     * Controls whether child document icons are displayed in the list view.
+     */
+    showIcons: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(showIcons, { ...contextValues, ...params }),
+    /**
+     * Resolves whether this item is treated as a singleton.
+     */
+    singleton: () => getValidListItem(singleton, contextValues),
     /**
      * Resolves initial value template overrides.
      */
     templates: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
       getValidListItem(templates, { ...contextValues, ...params }),
     /**
-     * The imperative layout escape hatch callback.
+     * Resolves custom pane view tabs (e.g. form, preview, components) configured for this document editor.
      */
-    raw,
-    /**
-     * Resolves whether the item is rendered as a visual list divider.
-     */
-    isDivider: () => getValidListItem(isDivider, contextValues),
-    /**
-     * Resolves whether the schema type name title should be pluralized.
-     */
-    isPlural: () => getValidListItem(isPlural, contextValues),
-    /**
-     * Resolves whether the list item is visible in the pane menu structure.
-     */
-    isVisible: () => getValidListItem(isVisible, contextValues) ?? true,
+    views: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
+      getValidListItem(views, { ...contextValues, ...params }),
   };
 };

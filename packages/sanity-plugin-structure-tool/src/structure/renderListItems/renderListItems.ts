@@ -53,7 +53,7 @@ export const renderListItems = <T extends StructureToolParams>(
 
       const { children, filter } = listItem;
 
-      const { schemaType, singleton, component, raw, isDivider, isVisible } = getComputedListItems({
+      const { component, isDivider, isVisible, raw, schemaType, singleton } = getComputedListItems({
         listItem,
         context,
       });

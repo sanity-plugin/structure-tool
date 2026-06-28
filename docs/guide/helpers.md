@@ -30,102 +30,6 @@ helpers.listing('post', {
 
 :::
 
-## `helpers.listing` {#listing}
-
-- **Shorthand Signature**: `(schemaType: string, params?: CoreParams) => ListingOutput`
-- **Object Signature**: `(params: ListingParams) => ListingOutput`
-- **Examples**: [See Examples](../examples/schema-type)
-
-Used to define a standard document list.
-
-::: code-group
-
-```ts [JSON]
-{
-  title: 'All Authors',
-  schemaType: 'author',
-  icon: UserIcon,
-}
-```
-
-```ts [Helpers (Short)]
-helpers.listing('author', {
-  title: 'All Authors',
-});
-```
-
-```ts [Helpers (Object)]
-helpers.listing({
-  title: 'All Authors',
-  schemaType: 'author',
-  icon: UserIcon,
-});
-```
-
-:::
-
-## `helpers.singleton` {#singleton}
-
-- **Shorthand Signature**: `(schemaType: string, params?: CoreParams) => SingletonOutput`
-- **Object Signature**: `(params: SingletonParams) => SingletonOutput`
-- **Examples**: [See Examples](../examples/singleton)
-
-Used for singleton documents (documents that only have one instance).
-
-::: code-group
-
-```ts [JSON]
-{
-  title: 'Global Settings',
-  schemaType: 'settings',
-  singleton: true,
-}
-```
-
-```ts [Helpers (Short)]
-helpers.singleton('settings', {
-  title: 'Global Settings',
-});
-```
-
-```ts [Helpers (Object)]
-helpers.singleton({
-  title: 'Global Settings',
-  schemaType: 'settings',
-});
-```
-
-:::
-
-## `helpers.divider` {#divider}
-
-- **Shorthand Signature**: `(title?: string, params?: CoreParams) => DividerOutput`
-- **Object Signature**: `(params?: DividerParams) => DividerOutput`
-- **Examples**: [See Examples](../examples/is-divider)
-
-Renders a visual separator in the desk list.
-
-::: code-group
-
-```ts [JSON]
-{
-  title: 'Content Section',
-  isDivider: true,
-}
-```
-
-```ts [Helpers (Short)]
-helpers.divider('Content Section');
-```
-
-```ts [Helpers (Object)]
-helpers.divider({
-  title: 'Content Section',
-});
-```
-
-:::
-
 ## `helpers.children` {#children}
 
 - **Shorthand Signature**: `(title: string, children: ListItem[], params?: CoreParams) => ChildrenOutput`
@@ -168,31 +72,6 @@ helpers.children({
 
 :::
 
-## `helpers.filters` {#filters}
-
-- **Type**: `(params: FiltersParams) => FiltersOutput`
-- **Examples**: [See Examples](../examples/filter)
-
-Creates a filtered list (e.g., "Drafts", "Published").
-
-::: code-group
-
-```ts [JSON]
-{
-  title: 'Published Posts',
-  filter: '_type == "post" && !(_id in path("drafts.**"))',
-}
-```
-
-```ts [Helpers]
-helpers.filters({
-  title: 'Published Posts',
-  filter: '_type == "post" && !(_id in path("drafts.**"))',
-});
-```
-
-:::
-
 ## `helpers.component` {#component}
 
 - **Shorthand Signature**: `(title: string, component: ComponentType, params?: CoreParams) => ComponentOutput`
@@ -223,6 +102,94 @@ helpers.component({
 
 :::
 
+## `helpers.divider` {#divider}
+
+- **Shorthand Signature**: `(title?: string, params?: CoreParams) => DividerOutput`
+- **Object Signature**: `(params?: DividerParams) => DividerOutput`
+- **Examples**: [See Examples](../examples/is-divider)
+
+Renders a visual separator in the desk list.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Content Section',
+  isDivider: true,
+}
+```
+
+```ts [Helpers (Short)]
+helpers.divider('Content Section');
+```
+
+```ts [Helpers (Object)]
+helpers.divider({
+  title: 'Content Section',
+});
+```
+
+:::
+
+## `helpers.filters` {#filters}
+
+- **Type**: `(params: FiltersParams) => FiltersOutput`
+- **Examples**: [See Examples](../examples/filter)
+
+Creates a filtered list (e.g., "Drafts", "Published").
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Published Posts',
+  filter: '_type == "post" && !(_id in path("drafts.**"))',
+}
+```
+
+```ts [Helpers]
+helpers.filters({
+  title: 'Published Posts',
+  filter: '_type == "post" && !(_id in path("drafts.**"))',
+});
+```
+
+:::
+
+## `helpers.listing` {#listing}
+
+- **Shorthand Signature**: `(schemaType: string, params?: CoreParams) => ListingOutput`
+- **Object Signature**: `(params: ListingParams) => ListingOutput`
+- **Examples**: [See Examples](../examples/schema-type)
+
+Used to define a standard document list.
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'All Authors',
+  schemaType: 'author',
+  icon: UserIcon,
+}
+```
+
+```ts [Helpers (Short)]
+helpers.listing('author', {
+  title: 'All Authors',
+});
+```
+
+```ts [Helpers (Object)]
+helpers.listing({
+  title: 'All Authors',
+  schemaType: 'author',
+  icon: UserIcon,
+});
+```
+
+:::
+
 ## `helpers.raw` {#raw}
 
 - **Shorthand Signature**: `(raw: (S: StructureBuilder, context: any) => any, params?: CoreParams) => RawOutput`
@@ -247,6 +214,39 @@ helpers.raw((S) => S.listItem().title('Advanced').child(...))
 helpers.raw({
   raw: (S) => S.listItem().title('Advanced').child(...)
 })
+```
+
+:::
+
+## `helpers.singleton` {#singleton}
+
+- **Shorthand Signature**: `(schemaType: string, params?: CoreParams) => SingletonOutput`
+- **Object Signature**: `(params: SingletonParams) => SingletonOutput`
+- **Examples**: [See Examples](../examples/singleton)
+
+Used for singleton documents (documents that only have one instance).
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Global Settings',
+  schemaType: 'settings',
+  singleton: true,
+}
+```
+
+```ts [Helpers (Short)]
+helpers.singleton('settings', {
+  title: 'Global Settings',
+});
+```
+
+```ts [Helpers (Object)]
+helpers.singleton({
+  title: 'Global Settings',
+  schemaType: 'settings',
+});
 ```
 
 :::

@@ -16,7 +16,7 @@ export const getSingleton: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { parentTitle, childTitle, schemaType, icon, views, defaultPanes, templates } =
+  const { childTitle, defaultPanes, icon, parentTitle, schemaType, templates, views } =
     getComputedListItems({
       listItem,
       context,

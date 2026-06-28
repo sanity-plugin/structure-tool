@@ -33,7 +33,7 @@ type GenerateDisplayTitle = <T extends StructureToolParams>(
 export const generateDisplayTitle: GenerateDisplayTitle = (title, params) => {
   const { listItem, S, context } = params;
 
-  const { schemaType, singleton, isPlural } = getComputedListItems({
+  const { isPlural, schemaType, singleton } = getComputedListItems({
     listItem,
     context,
   });

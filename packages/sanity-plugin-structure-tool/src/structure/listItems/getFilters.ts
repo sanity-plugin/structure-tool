@@ -17,17 +17,17 @@ export const getFilters: ListItemKey = (params) => {
   const { listItem } = mappingParams;
 
   const {
-    parentTitle,
-    childTitle,
-    icon,
-    showIcons,
     apiVersion,
+    childTitle,
+    defaultLayout,
+    defaultOrdering,
     filter,
     filterParams,
-    defaultOrdering,
-    defaultLayout,
+    icon,
     menuItemGroups,
     menuItems,
+    parentTitle,
+    showIcons,
   } = getComputedListItems({ listItem, context });
 
   const parentTitleValue = parentTitle();
