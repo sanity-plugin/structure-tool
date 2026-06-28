@@ -55,12 +55,14 @@ Click on any property name below to view its complete type definition, details, 
 | [`singleton`](../examples/singleton)                | Yes (Default: `false`) | Treats the item as a single document rather than a list.             |
 | [`component`](../examples/component)                | Yes                    | Renders a custom React component as the view for a list item.        |
 | [`componentOptions`](../examples/component-options) | Yes                    | Passes custom options or properties to your custom component.        |
+| [`views`](../examples/views)                        | Yes                    | Defines multiple pane tabs (views) for singletons or document editors. |
 | [`children`](../examples/children)                  | Yes                    | An array of `ListItem` objects to create a nested list.              |
 | [`apiVersion`](../examples/api-version)             | Yes                    | Specifies the Sanity API version to use for this specific list item. |
 | [`filter`](../examples/filter)                      | Yes                    | A GROQ filter string to limit which documents are shown.             |
 | [`filterParams`](../examples/filter)                | Yes                    | Parameters to be used within the `filter` GROQ string.               |
 | [`defaultOrdering`](../examples/default-ordering)   | Yes                    | Sets the default sorting order for document lists.                   |
 | [`defaultLayout`](../examples/default-layout)       | Yes                    | Specifies the default layout style for documents listed.             |
+| [`defaultPanes`](../examples/default-panes)         | Yes                    | Defines which view pane tabs are active/open side-by-side by default.  |
 | [`menuItemGroups`](../examples/menu-item-groups)    | Yes                    | Groups custom actions/items in the pane header menu.                 |
 | [`menuItems`](../examples/menu-items)               | Yes                    | Defines custom actions/items in the pane header menu.                |
 | [`workspaces`](../examples/workspaces)              | Yes                    | Restricts the visibility of the list item to specific workspaces.    |

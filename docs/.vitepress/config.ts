@@ -155,6 +155,10 @@ export default defineConfig({
                 link: '/examples/component-options',
               },
               {
+                text: 'views',
+                link: '/examples/views',
+              },
+              {
                 text: 'children',
                 link: '/examples/children',
               },
@@ -173,6 +177,10 @@ export default defineConfig({
               {
                 text: 'defaultLayout',
                 link: '/examples/default-layout',
+              },
+              {
+                text: 'defaultPanes',
+                link: '/examples/default-panes',
               },
               {
                 text: 'menuItemGroups',
