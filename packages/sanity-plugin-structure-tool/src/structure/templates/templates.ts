@@ -1,11 +1,6 @@
-import { getContextValues } from '@/helpers/getContextValues';
-import { getFlatListItems } from '@/helpers/getFlatListItems';
-import { getValidListItem } from '@/helpers/getValidListItem';
+import { getTemplateListItems } from '@/helpers/getTemplateListItems';
 
-import type { TemplateResolver } from 'sanity';
-
-import type { TemplatesParams } from '@/structure/templates/templates.types';
-import type { StructureToolParams } from '@/structure/types/common.types';
+import type { Templates } from '@/structure/templates/templates.types';
 
 /**
  * Initial value templates resolver function that hooks into Sanity's schema template resolution protocol.
@@ -15,41 +10,29 @@ import type { StructureToolParams } from '@/structure/types/common.types';
  * @param params - The template resolution parameters containing list items.
  * @returns A standard Sanity `TemplateResolver` function.
  */
-export const templates =
-  <T extends StructureToolParams>(params: TemplatesParams<T>): TemplateResolver =>
-  (prev, context) => {
-    const { listItems } = params;
+export const templates: Templates = (params) => (prev, context) => {
+  const { listItems } = params;
 
-    const contextValues = getContextValues(context);
-    const flatListItems = getFlatListItems<T>(listItems, context);
+  const flatListItems = getTemplateListItems(listItems, context);
 
-    const templatesItems = flatListItems
-      .map((item) => {
-        const { schemaType: schemaTypeFn, templates: templateFn } = item;
+  const templatesItems = flatListItems.map((item) => {
+    const { schemaType, templates: templatesValue } = item;
 
-        const schemaType = getValidListItem(schemaTypeFn, contextValues);
-        const template = getValidListItem(templateFn, contextValues);
+    return {
+      id: [schemaType, JSON.stringify(templatesValue)].join('-'),
+      title: [schemaType, ...Object.keys(templatesValue)].join(' '),
+      schemaType,
+      parameters: Object.entries(templatesValue).map((val) => {
+        const [key, value] = val;
 
-        if (template && schemaType) {
-          return {
-            id: [schemaType, ...Object.keys(template)].join('-'),
-            title: [schemaType, ...Object.keys(template)].join(' '),
-            schemaType,
-            parameters: Object.entries(template).map((val) => {
-              const [key, value] = val;
+        return {
+          name: key,
+          type: typeof value,
+        };
+      }),
+      value: (input: unknown) => input,
+    };
+  });
 
-              return {
-                name: key,
-                type: typeof value,
-              };
-            }),
-            value: (input: unknown) => input,
-          };
-        }
-
-        return null;
-      })
-      .filter((item) => item !== null);
-
-    return [...prev, ...templatesItems];
-  };
+  return [...prev, ...templatesItems];
+};

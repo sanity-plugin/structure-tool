@@ -1,6 +1,6 @@
 # `menuItems` {#menu-items}
 
-- **Type**: `MenuItem[] | ((params: CallbackParams & { prev: MenuItem[] }) => MenuItem[])`
+- **Type**: `MenuItem[] | ((params: CallbackParams & { prev: MenuItem[]; childOptions: ChildResolverOptions }) => MenuItem[])`
 - **Optional**: Yes
 
 The `menuItems` property allows you to define custom actions in the pane header menu of document lists, custom components, or standard lists.

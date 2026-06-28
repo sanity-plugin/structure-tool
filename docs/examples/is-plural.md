@@ -1,7 +1,7 @@
 # `isPlural` {#is-plural}
 
 - **Type**: `boolean | ((params: CallbackParams) => boolean)`
-- **Optional**: Yes (Default: `true`)
+- **Optional**: Yes
 
 The `isPlural` property controls whether the auto-generated title should be pluralized when no custom `title` is provided. When it is set to `false`, the plugin will showcase the exact same name you have defined in your schema, without any pluralization logic applied.
 

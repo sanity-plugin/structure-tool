@@ -1,3 +1,5 @@
+import type { TemplateResolver } from 'sanity';
+
 import type { StructureToolParams } from '@/structure/types/common.types';
 import type { ListItem } from '@/structure/types/listItem.types';
 
@@ -12,3 +14,14 @@ export interface TemplatesParams<T extends StructureToolParams> {
    */
   listItems: ListItem<T>[];
 }
+
+/**
+ * Function type representing the templates resolver generator.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ * @param params - Configuration list items parameters.
+ * @returns A TemplateResolver function.
+ */
+export type Templates = <T extends StructureToolParams>(
+  params: TemplatesParams<T>,
+) => TemplateResolver;

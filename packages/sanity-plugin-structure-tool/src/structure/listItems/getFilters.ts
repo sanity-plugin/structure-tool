@@ -2,9 +2,6 @@ import { MenuItemBuilder, MenuItemGroupBuilder } from 'sanity/structure';
 
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
-import { getContextValues } from '@/helpers/getContextValues';
-import { getTitle } from '@/helpers/getTitle';
-import { getValidListItem } from '@/helpers/getValidListItem';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -18,68 +15,81 @@ export const getFilters: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { icon, menuItems: listItemMenuItems, menuItemGroups: listItemMenuItemGroups } = listItem;
 
-  const contextValues = getContextValues(context);
+  const {
+    apiVersion,
+    childTitle,
+    defaultLayout,
+    defaultOrdering,
+    filter,
+    filterParams,
+    icon,
+    menuItemGroups,
+    menuItems,
+    parentTitle,
+    showIcons,
+  } = getComputedListItems({ listItem, context });
 
-  const { title, showIcons, apiVersion, filter, filterParams, defaultOrdering, defaultLayout } =
-    getComputedListItems({ listItem, context });
+  const parentTitleValue = parentTitle();
 
-  const { parentTitle, childTitle } = getTitle(title, context);
-  const { id } = generateId(parentTitle, params);
+  const { id } = generateId(parentTitleValue, params);
 
   return S.listItem()
-    .title(parentTitle)
+    .title(parentTitleValue)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
-    .child(() => {
-      let schemaBuilder = S.documentList().title(childTitle).showIcons(showIcons);
+    .child((_, childOptions) => {
+      let schemaBuilder = S.documentList()
+        .title(childTitle({ childOptions }))
+        .showIcons(showIcons({ childOptions }));
 
-      if (filter) {
+      const filterValue = filter({ childOptions });
+      const filterParamsValue = filterParams({ childOptions });
+
+      if (filterValue) {
         // eslint-disable-next-line unicorn/no-array-callback-reference
-        schemaBuilder = schemaBuilder.filter(filter).params({ ...filterParams });
+        schemaBuilder = schemaBuilder.filter(filterValue).params({ ...filterParamsValue });
       }
 
-      if (apiVersion) {
-        schemaBuilder = schemaBuilder.apiVersion(apiVersion);
+      const apiVersionValue = apiVersion({ childOptions });
+
+      if (apiVersionValue) {
+        schemaBuilder = schemaBuilder.apiVersion(apiVersionValue);
       }
 
-      if (defaultOrdering) {
-        schemaBuilder = schemaBuilder.defaultOrdering(
-          Object.entries(defaultOrdering).map(([field, value]) => ({
-            field,
-            ...(typeof value === 'string' ? { direction: value } : value),
-          })),
-        );
+      const defaultOrderingValue = defaultOrdering({ childOptions });
+
+      if (defaultOrderingValue) {
+        schemaBuilder = schemaBuilder.defaultOrdering(defaultOrderingValue);
       }
 
-      if (defaultLayout) {
-        schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+      const defaultLayoutValue = defaultLayout({ childOptions });
+
+      if (defaultLayoutValue) {
+        schemaBuilder = schemaBuilder.defaultLayout(defaultLayoutValue);
       }
 
-      const menuItemGroups = (() => {
-        const prev = (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
+      const menuItemGroupsValue = menuItemGroups({
+        childOptions,
+        prevMenuItemGroups: (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
           item instanceof MenuItemGroupBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItemGroups, { ...contextValues, prev });
-      })();
-
-      if (menuItemGroups) {
-        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      if (menuItemGroupsValue) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroupsValue);
       }
 
-      const menuItems = (() => {
-        const prev = (schemaBuilder.getMenuItems() ?? []).map((item) =>
+      const menuItemsValue = menuItems({
+        childOptions,
+        prevMenuItems: (schemaBuilder.getMenuItems() ?? []).map((item) =>
           item instanceof MenuItemBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItems, { ...contextValues, prev });
-      })();
-
-      if (menuItems) {
-        schemaBuilder = schemaBuilder.menuItems(menuItems);
+      if (menuItemsValue) {
+        schemaBuilder = schemaBuilder.menuItems(menuItemsValue);
       }
 
       return schemaBuilder.initialValueTemplates([]);

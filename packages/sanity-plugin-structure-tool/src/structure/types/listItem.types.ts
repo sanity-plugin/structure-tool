@@ -1,12 +1,13 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { PreviewLayoutKey } from 'sanity';
-import type { MenuItem, MenuItemGroup, UserComponent } from 'sanity/structure';
+import type { MenuItem, MenuItemGroup, UserComponent, View } from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
   StructureToolParams,
 } from '@/structure/types/common.types';
 import type {
+  ListItemChildOptions,
   ListItemChildren,
   ListItemDefaultOrdering,
   ListItemId,
@@ -24,29 +25,9 @@ import type { IconComponent, SimpleMerge } from '@/types/lib.types';
  */
 export interface ListItemCore<T extends StructureToolParams> {
   /**
-   * The unique identifier for this list item. Can be a static string or a dynamic callback function.
+   * The Sanity API version used for queries in this list.
    */
-  id?: StructureToolGenericParam<T, string, ListItemId>;
-  /**
-   * The display title of the item. Can be a static string, a dynamic callback function, or a parent/child titles configuration object.
-   */
-  title?: StructureToolGenericParam<T, string | ListItemTitle<T>>;
-  /**
-   * The schema document type associated with this list item.
-   */
-  schemaType?: StructureToolGenericParam<T, string>;
-  /**
-   * An optional icon component to render alongside the item. Set to false to hide.
-   */
-  icon?: IconComponent | ComponentType | ReactNode | false;
-  /**
-   * Controls whether child document icons are displayed in the list view.
-   */
-  showIcons?: StructureToolGenericParam<T, boolean>;
-  /**
-   * If true, treats the item as a single document instance rather than a list of documents.
-   */
-  singleton?: StructureToolGenericParam<T, boolean>;
+  apiVersion?: StructureToolGenericParam<T, string, ListItemChildOptions>;
   /**
    * Custom React component to render instead of the standard document list.
    */
@@ -54,47 +35,50 @@ export interface ListItemCore<T extends StructureToolParams> {
   /**
    * Options to pass to the custom React component.
    */
-  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>>;
-  /**
-   * The Sanity API version used for queries in this list.
-   */
-  apiVersion?: StructureToolGenericParam<T, string>;
-  /**
-   * GROQ filter to apply to the document list.
-   */
-  filter?: StructureToolGenericParam<T, string>;
-  /**
-   * Parameters passed to the GROQ filter.
-   */
-  filterParams?: StructureToolGenericParam<T, Record<string, unknown>>;
-  /**
-   * The default sort ordering of items in the list.
-   */
-  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering>;
+  componentOptions?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
    * Default layout style for document previews (e.g. card, detail, media, default).
    */
-  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey>;
+  defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey, ListItemChildOptions>;
   /**
-   * Groupings of menu actions.
+   * The default sort ordering of items in the list.
    */
-  menuItemGroups?: StructureToolGenericParam<T, MenuItemGroup[], Record<'prev', MenuItemGroup[]>>;
+  defaultOrdering?: StructureToolGenericParam<T, ListItemDefaultOrdering, ListItemChildOptions>;
   /**
-   * Action items shown in the pane header menu.
+   * List of default active view tab IDs for this document editor pane.
    */
-  menuItems?: StructureToolGenericParam<T, MenuItem[], Record<'prev', MenuItem[]>>;
+  defaultPanes?: StructureToolGenericParam<
+    T,
+    string[],
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          views: string[];
+        },
+      ]
+    >
+  >;
+  /**
+   * GROQ filter to apply to the document list.
+   */
+  filter?: StructureToolGenericParam<T, string, ListItemChildOptions>;
+  /**
+   * Parameters passed to the GROQ filter.
+   */
+  filterParams?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
    * If true, hides the "Add document" action in the pane header.
    */
-  hideAddButton?: StructureToolGenericParam<T, boolean>;
+  hideAddButton?: StructureToolGenericParam<T, boolean, ListItemChildOptions>;
   /**
-   * Initial value template options and overrides.
+   * An optional icon component to render alongside the item. Set to false to hide.
    */
-  templates?: StructureToolGenericParam<T, Record<string, unknown>>;
+  icon?: IconComponent | ComponentType | ReactNode | false;
   /**
-   * A raw renderer function to bypass the declarative builder and construct the list item imperatively.
+   * The unique identifier for this list item. Can be a static string or a dynamic callback function.
    */
-  raw?: ListItemRaw;
+  id?: StructureToolGenericParam<T, string, ListItemId>;
   /**
    * If true, this item renders as a visual separator line in the menu.
    */
@@ -107,6 +91,64 @@ export interface ListItemCore<T extends StructureToolParams> {
    * Optional helper or callback indicating if the list item should be visible in the navigation menu.
    */
   isVisible?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Groupings of menu actions.
+   */
+  menuItemGroups?: StructureToolGenericParam<
+    T,
+    MenuItemGroup[],
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          prev: MenuItemGroup[];
+        },
+      ]
+    >
+  >;
+  /**
+   * Action items shown in the pane header menu.
+   */
+  menuItems?: StructureToolGenericParam<
+    T,
+    MenuItem[],
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          prev: MenuItem[];
+        },
+      ]
+    >
+  >;
+  /**
+   * A raw renderer function to bypass the declarative builder and construct the list item imperatively.
+   */
+  raw?: ListItemRaw;
+  /**
+   * The schema document type associated with this list item.
+   */
+  schemaType?: StructureToolGenericParam<T, string>;
+  /**
+   * Controls whether child document icons are displayed in the list view.
+   */
+  showIcons?: StructureToolGenericParam<T, boolean, ListItemChildOptions>;
+  /**
+   * If true, treats the item as a single document instance rather than a list of documents.
+   */
+  singleton?: StructureToolGenericParam<T, boolean>;
+  /**
+   * Initial value template options and overrides.
+   */
+  templates?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
+  /**
+   * The display title of the item. Can be a static string, a dynamic callback function, or a parent/child titles configuration object.
+   */
+  title?: StructureToolGenericParam<T, string | ListItemTitle<T>>;
+  /**
+   * Custom pane view tabs (e.g. form, preview, components) configured for this document editor.
+   */
+  views?: StructureToolGenericParam<T, View[], ListItemChildOptions>;
 }
 
 /**

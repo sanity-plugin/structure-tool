@@ -11,7 +11,7 @@ const config = (...params: Parameters<UserConfigFn>): UserConfig => {
     platform: 'node',
     treeshake: !watch,
     sourcemap: !!watch,
-    minify: !watch,
+    minify: false,
     exports: true,
     nodeProtocol: true,
   };

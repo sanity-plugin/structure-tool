@@ -1,7 +1,7 @@
 import { constants } from '@/constants';
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
-import { getDisplayTitle } from '@/helpers/getDisplayTitle';
+import { generateDisplayTitle } from '@/helpers/getDisplayTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -15,29 +15,57 @@ export const getSingleton: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { icon } = listItem;
 
-  const { schemaType = '', templates } = getComputedListItems({ listItem, context });
+  const { childTitle, defaultPanes, icon, parentTitle, schemaType, templates, views } =
+    getComputedListItems({
+      listItem,
+      context,
+    });
 
-  const { parentTitle, childTitle } = getDisplayTitle({ ...listItemsParams, listItem });
-  const { id } = generateId(parentTitle, params);
+  const parentTitleValue = generateDisplayTitle(parentTitle(), { listItem, S, context });
+  const schemaTypeValue = schemaType();
+
+  const { id } = generateId(parentTitleValue, params);
 
   return S.listItem()
-    .title(parentTitle)
+    .title(parentTitleValue)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
-    .schemaType(schemaType)
-    .child(() => {
-      let schemaBuilder = S.editor()
-        .title(childTitle)
-        .id([schemaType, constants.SINGLETON_KEY].join('-'))
-        .schemaType(schemaType);
+    .schemaType(schemaTypeValue)
+    .child((_, childOptions) => {
+      const childTitleValue = generateDisplayTitle(childTitle({ childOptions }), {
+        listItem,
+        S,
+        context,
+      });
 
-      if (templates) {
+      let schemaBuilder = S.editor()
+        .title(childTitleValue)
+        .id([schemaTypeValue, constants.SINGLETON_KEY].join('-'))
+        .schemaType(schemaTypeValue);
+
+      const viewsValue = views({ childOptions });
+
+      if (viewsValue) {
+        schemaBuilder = schemaBuilder.views(viewsValue);
+      }
+
+      const defaultPanesValue = defaultPanes({
+        childOptions,
+        defaultPaneViews: (viewsValue ?? []).map((view) => view.id),
+      });
+
+      if (defaultPanesValue) {
+        schemaBuilder = schemaBuilder.defaultPanes(defaultPanesValue);
+      }
+
+      const templatesValue = templates({ childOptions });
+
+      if (templatesValue) {
         schemaBuilder = schemaBuilder.initialValueTemplate(
-          [schemaType, ...Object.keys(templates)].join('-'),
-          templates,
+          [schemaTypeValue, JSON.stringify(templatesValue)].join('-'),
+          templatesValue,
         );
       }
 

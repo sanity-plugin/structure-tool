@@ -1,3 +1,5 @@
+import { getComputedListItems } from '@/helpers/getComputedListItems';
+
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
 /**
@@ -10,7 +12,8 @@ export const getRaw: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { raw } = listItem;
+
+  const { raw } = getComputedListItems({ listItem, context });
 
   return raw ? raw(S, context) : null;
 };

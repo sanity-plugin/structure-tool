@@ -2,9 +2,7 @@ import { MenuItemBuilder, MenuItemGroupBuilder } from 'sanity/structure';
 
 import { generateId } from '@/helpers/generateId';
 import { getComputedListItems } from '@/helpers/getComputedListItems';
-import { getContextValues } from '@/helpers/getContextValues';
-import { getDisplayTitle } from '@/helpers/getDisplayTitle';
-import { getValidListItem } from '@/helpers/getValidListItem';
+import { generateDisplayTitle } from '@/helpers/getDisplayTitle';
 
 import type { ListItemKey } from '@/structure/listItems/listItems.types';
 
@@ -18,90 +16,109 @@ export const getListing: ListItemKey = (params) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { icon, menuItems: listItemMenuItems, menuItemGroups: listItemMenuItemGroups } = listItem;
-
-  const contextValues = getContextValues(context);
 
   const {
-    schemaType = '',
-    showIcons,
     apiVersion,
+    childTitle,
+    defaultLayout,
+    defaultOrdering,
     filter,
     filterParams,
-    defaultOrdering,
-    defaultLayout,
     hideAddButton,
+    icon,
+    menuItemGroups,
+    menuItems,
+    parentTitle,
+    schemaType,
+    showIcons,
     templates,
   } = getComputedListItems({ listItem, context });
 
-  const { parentTitle, childTitle } = getDisplayTitle({ ...listItemsParams, listItem });
-  const { id } = generateId(parentTitle, params);
+  const parentTitleValue = generateDisplayTitle(parentTitle(), { listItem, S, context });
+  const schemaTypeValue = schemaType();
+
+  const { id } = generateId(parentTitleValue, params);
 
   return S.listItem()
-    .title(parentTitle)
+    .title(parentTitleValue)
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
-    .schemaType(schemaType)
-    .child(() => {
-      let schemaBuilder = S.documentTypeList(schemaType)
-        .title(childTitle)
+    .schemaType(schemaTypeValue)
+    .child((_, childOptions) => {
+      const childTitleValue = generateDisplayTitle(childTitle({ childOptions }), {
+        listItem,
+        S,
+        context,
+      });
+
+      const filterValue = filter({ childOptions });
+      const filterParamsValue = filterParams({ childOptions });
+
+      let schemaBuilder = S.documentTypeList(schemaTypeValue)
+        .title(childTitleValue)
         .id(id)
-        .filter(['_type == $schemaType', ...(filter ? [filter] : [])].join(' && '))
+        .filter(['_type == $schemaType', ...(filterValue ? [filterValue] : [])].join(' && '))
         .params({
-          schemaType,
-          ...filterParams,
+          schemaType: schemaTypeValue,
+          ...filterParamsValue,
         })
-        .showIcons(showIcons);
+        .showIcons(showIcons({ childOptions }));
 
-      if (apiVersion) {
-        schemaBuilder = schemaBuilder.apiVersion(apiVersion);
+      const apiVersionValue = apiVersion({ childOptions });
+
+      if (apiVersionValue) {
+        schemaBuilder = schemaBuilder.apiVersion(apiVersionValue);
       }
 
-      if (defaultOrdering) {
-        schemaBuilder = schemaBuilder.defaultOrdering(
-          Object.entries(defaultOrdering).map(([field, value]) => ({
-            field,
-            ...(typeof value === 'string' ? { direction: value } : value),
-          })),
-        );
+      const defaultOrderingValue = defaultOrdering({ childOptions });
+
+      if (defaultOrderingValue) {
+        schemaBuilder = schemaBuilder.defaultOrdering(defaultOrderingValue);
       }
 
-      if (defaultLayout) {
-        schemaBuilder = schemaBuilder.defaultLayout(defaultLayout);
+      const defaultLayoutValue = defaultLayout({ childOptions });
+
+      if (defaultLayoutValue) {
+        schemaBuilder = schemaBuilder.defaultLayout(defaultLayoutValue);
       }
 
-      const menuItemGroups = (() => {
-        const prev = (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
+      const menuItemGroupsValue = menuItemGroups({
+        childOptions,
+        prevMenuItemGroups: (schemaBuilder.getMenuItemGroups() ?? []).map((item) =>
           item instanceof MenuItemGroupBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItemGroups, { ...contextValues, prev });
-      })();
-
-      if (menuItemGroups) {
-        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroups);
+      if (menuItemGroupsValue) {
+        schemaBuilder = schemaBuilder.menuItemGroups(menuItemGroupsValue);
       }
 
-      const menuItems = (() => {
-        const prev = (schemaBuilder.getMenuItems() ?? []).map((item) =>
+      const menuItemsValue = menuItems({
+        childOptions,
+        prevMenuItems: (schemaBuilder.getMenuItems() ?? []).map((item) =>
           item instanceof MenuItemBuilder ? item.serialize() : item,
-        );
+        ),
+      });
 
-        return getValidListItem(listItemMenuItems, { ...contextValues, prev });
-      })();
-
-      if (menuItems) {
-        schemaBuilder = schemaBuilder.menuItems(menuItems);
+      if (menuItemsValue) {
+        schemaBuilder = schemaBuilder.menuItems(menuItemsValue);
       }
 
-      if (hideAddButton) {
+      const hideAddButtonValue = hideAddButton({ childOptions });
+
+      if (hideAddButtonValue) {
         return schemaBuilder.initialValueTemplates([]);
       }
 
-      if (templates) {
+      const templatesValue = templates({ childOptions });
+
+      if (templatesValue) {
         return schemaBuilder.initialValueTemplates([
-          S.initialValueTemplateItem([schemaType, ...Object.keys(templates)].join('-'), templates),
+          S.initialValueTemplateItem(
+            [schemaTypeValue, JSON.stringify(templatesValue)].join('-'),
+            templatesValue,
+          ),
         ]);
       }
 

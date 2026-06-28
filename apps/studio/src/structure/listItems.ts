@@ -1,7 +1,7 @@
-import { AddUserIcon, BookIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
+import { AddUserIcon, BookIcon, CogIcon, ComponentIcon, LogoTsIcon } from '@sanity/icons';
 import { constants } from 'sanity-plugin-structure-tool';
 
-import { IframeComponent } from '@/components/Components';
+import { IframeComponent, IframeViewComponent } from '@/components/Components';
 import { userRoles, workspaceTypes } from '@/constants/common';
 import { schemaNames } from '@/constants/schemaNames';
 import { defineListItems } from '@/structure';
@@ -24,17 +24,66 @@ const listItems = defineListItems(({ helpers }) => [
           child: 'Child Title',
         },
       }),
-      helpers.divider('Singleton View'),
-      helpers.singleton(schemaNames.SETTING),
       helpers.divider('Custom Id (id: custom-static-id)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Custom Id',
         id: 'custom-static-id',
       }),
       helpers.divider('API Version (2025-02-19)'),
       helpers.listing(schemaNames.AUTHOR, {
         title: 'Authors',
         apiVersion: '2025-02-19',
+      }),
+    ],
+  },
+  {
+    title: 'Singleton',
+    children: [
+      helpers.divider('Singleton View'),
+      helpers.singleton(schemaNames.SETTING),
+      helpers.divider('Views (See Tabs)'),
+      helpers.singleton(schemaNames.SETTING, {
+        title: 'Setting + Documentation',
+        views: [
+          {
+            title: 'Setting Form',
+            type: 'form',
+            id: 'setting-form',
+            icon: CogIcon,
+          },
+          {
+            title: 'Documentation',
+            type: 'component',
+            id: 'documentation',
+            icon: BookIcon,
+            component: IframeViewComponent,
+            options: {
+              url: 'https://sanity-structure-tool.nishargshah.dev',
+            },
+          },
+        ],
+      }),
+      helpers.divider('Views (Tabs + Multiple Panes)'),
+      helpers.singleton(schemaNames.SETTING, {
+        title: 'Setting + Documentation',
+        views: [
+          {
+            title: 'Setting Form',
+            type: 'form',
+            id: 'setting-form',
+            icon: CogIcon,
+          },
+          {
+            title: 'Documentation',
+            type: 'component',
+            id: 'documentation',
+            icon: BookIcon,
+            component: IframeViewComponent,
+            options: {
+              url: 'https://sanity-structure-tool.nishargshah.dev',
+            },
+          },
+        ],
+        defaultPanes: ({ views }) => views,
       }),
     ],
   },
@@ -48,12 +97,10 @@ const listItems = defineListItems(({ helpers }) => [
       }),
       helpers.divider('No Icon for List Item (icon: false)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Author Listing (Hidden Icon)',
         icon: false,
       }),
       helpers.divider('No Icons for Child List (showIcons: false)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors (No Icons)',
         showIcons: false,
       }),
     ],
@@ -165,16 +212,14 @@ const listItems = defineListItems(({ helpers }) => [
   {
     title: 'Default Ordering',
     children: [
-      helpers.divider('Sorting: Author by Name'),
+      helpers.divider('Sort by Name (Asc)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Sort by Name (Asc)',
         defaultOrdering: {
           name: 'asc',
         },
       }),
-      helpers.divider('Sorting: Author by Updated At'),
+      helpers.divider('Sort by Updated At (desc)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Sort by Updated At (desc)',
         defaultOrdering: {
           _updatedAt: 'desc',
         },
@@ -186,22 +231,18 @@ const listItems = defineListItems(({ helpers }) => [
     children: [
       helpers.divider('Default Layout'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Default Layout',
         defaultLayout: 'default',
       }),
       helpers.divider('Block Layout'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Block Layout',
         defaultLayout: 'block',
       }),
       helpers.divider('Detail Layout'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Detail Layout',
         defaultLayout: 'detail',
       }),
       helpers.divider('Media Layout'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Media Layout',
         defaultLayout: 'media',
       }),
     ],
@@ -211,7 +252,6 @@ const listItems = defineListItems(({ helpers }) => [
     children: [
       helpers.divider('Grouped Menu Actions (menuItemGroups)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Grouped Actions',
         menuItemGroups: [
           {
             id: 'export-group',
@@ -233,7 +273,6 @@ const listItems = defineListItems(({ helpers }) => [
       }),
       helpers.divider('Menu Action (menuItems)'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Menu Action',
         menuItems: [
           {
             title: 'Export to CSV',
@@ -242,9 +281,8 @@ const listItems = defineListItems(({ helpers }) => [
           },
         ],
       }),
-      helpers.divider('Custom Action with Existing'),
+      helpers.divider('Custom Menu Action with Existing Actions'),
       helpers.listing(schemaNames.AUTHOR, {
-        title: 'Authors with Menu Action',
         menuItemGroups: [
           {
             id: 'export-group',
@@ -366,27 +404,20 @@ const listItems = defineListItems(({ helpers }) => [
   {
     title: 'Templates',
     children: [
-      {
-        title: 'Authors',
-        children: [
-          helpers.divider('Restricted To: Active State'),
-          helpers.listing(schemaNames.AUTHOR, {
-            title: 'Active',
-            filter: 'isActive == true',
-            templates: {
-              isActive: true,
-            },
-          }),
-          helpers.divider('Restricted To: Inactive State'),
-          helpers.listing(schemaNames.AUTHOR, {
-            title: 'Inactive',
-            filter: 'isActive != true',
-            templates: {
-              isActive: false,
-            },
-          }),
-        ],
-      },
+      helpers.divider('Authors Restricted To: Active State'),
+      helpers.listing(schemaNames.AUTHOR, {
+        filter: 'isActive == true',
+        templates: {
+          isActive: true,
+        },
+      }),
+      helpers.divider('Authors Restricted To: Inactive State'),
+      helpers.listing(schemaNames.AUTHOR, {
+        filter: 'isActive != true',
+        templates: {
+          isActive: false,
+        },
+      }),
     ],
   },
   {

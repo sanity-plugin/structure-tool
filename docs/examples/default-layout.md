@@ -1,6 +1,6 @@
 # `defaultLayout` {#default-layout}
 
-- **Type**: `'default' | 'card' | 'media' | 'detail' | 'block' | ((params: CallbackParams) => 'default' | 'card' | 'media' | 'detail' | 'block')`
+- **Type**: `'default' | 'card' | 'media' | 'detail' | 'block' | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => 'default' | 'card' | 'media' | 'detail' | 'block')`
 - **Optional**: Yes
 
 The `defaultLayout` property specifies the default layout style for documents listed in the desk menu.

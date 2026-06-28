@@ -1,6 +1,6 @@
 # `templates` {#templates}
 
-- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Type**: `Record<string, unknown> | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => Record<string, unknown>)`
 - **Optional**: Yes
 
 The `templates` property allows you to define default values for new documents created from a specific list item. These are automatically mapped to [Sanity Initial Value Templates](https://www.sanity.io/docs/studio/initial-value-templates).

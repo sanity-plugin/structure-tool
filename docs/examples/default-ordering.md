@@ -1,6 +1,6 @@
 # `defaultOrdering` {#default-ordering}
 
-- **Type**: `Record<string, 'asc' | 'desc' | SortOrderingItem> | ((params: CallbackParams) => Record<string, 'asc' | 'desc' | SortOrderingItem>)`
+- **Type**: `Record<string, 'asc' | 'desc' | Omit<SortOrderingItem, 'field'>> | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => Record<string, 'asc' | 'desc' | Omit<SortOrderingItem, 'field'>>)`
 - **Optional**: Yes
 
 The `defaultOrdering` property sets the default sorting order for document lists. You can specify one or more fields to sort by, in ascending or descending order.
