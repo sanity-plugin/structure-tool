@@ -6,49 +6,7 @@ Here is a glimpse of what's coming in future releases:
 
 ## Planned Features {#planned-features}
 
-### 1. View Customization (`views`) {#view-customization}
-
-Support for defining multiple document views (e.g., Editor, Preview, and custom components) for both standard and singleton items.
-
-::: code-group
-
-```ts [JSON]
-{
-  schemaType: 'post',
-  singleton: true,
-  views: [
-    {
-      title: 'Editor',
-      type: 'form',
-    },
-    {
-      title: 'Preview',
-      type: 'component',
-      component: MyPreviewComponent,
-    },
-  ],
-}
-```
-
-```ts [Helpers]
-helpers.singleton('post', {
-  views: [
-    {
-      title: 'Editor',
-      type: 'form',
-    },
-    {
-      title: 'Preview',
-      type: 'component',
-      component: MyPreviewComponent,
-    },
-  ],
-});
-```
-
-:::
-
-### 2. Internationalization (`i18n`) {#i18n}
+### 1. Internationalization (`i18n`) {#i18n}
 
 Support for internationalizing display titles, menu labels, and structural descriptors using Sanity Studio's native i18n translation system. This will support passing custom translation namespace keys that dynamically adapt to the user's active studio locale.
 
