@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { PreviewLayoutKey } from 'sanity';
-import type { MenuItem, MenuItemGroup, UserComponent } from 'sanity/structure';
+import type { MenuItem, MenuItemGroup, UserComponent, View } from 'sanity/structure';
 
 import type {
   StructureToolGenericParam,
@@ -57,6 +57,10 @@ export interface ListItemCore<T extends StructureToolParams> {
    */
   componentOptions?: StructureToolGenericParam<T, Record<string, unknown>, ListItemChildOptions>;
   /**
+   * Custom pane view tabs (e.g. form, preview, components) configured for this document editor.
+   */
+  views?: StructureToolGenericParam<T, View[], ListItemChildOptions>;
+  /**
    * The Sanity API version used for queries in this list.
    */
   apiVersion?: StructureToolGenericParam<T, string, ListItemChildOptions>;
@@ -77,12 +81,34 @@ export interface ListItemCore<T extends StructureToolParams> {
    */
   defaultLayout?: StructureToolGenericParam<T, PreviewLayoutKey, ListItemChildOptions>;
   /**
+   * List of default active view tab IDs for this document editor pane.
+   */
+  defaultPanes?: StructureToolGenericParam<
+    T,
+    string[],
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          views: string[];
+        },
+      ]
+    >
+  >;
+  /**
    * Groupings of menu actions.
    */
   menuItemGroups?: StructureToolGenericParam<
     T,
     MenuItemGroup[],
-    SimpleMerge<[Record<'prev', MenuItemGroup[]>, ListItemChildOptions]>
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          prev: MenuItemGroup[];
+        },
+      ]
+    >
   >;
   /**
    * Action items shown in the pane header menu.
@@ -90,7 +116,14 @@ export interface ListItemCore<T extends StructureToolParams> {
   menuItems?: StructureToolGenericParam<
     T,
     MenuItem[],
-    SimpleMerge<[Record<'prev', MenuItem[]>, ListItemChildOptions]>
+    SimpleMerge<
+      [
+        ListItemChildOptions,
+        {
+          prev: MenuItem[];
+        },
+      ]
+    >
   >;
   /**
    * If true, hides the "Add document" action in the pane header.

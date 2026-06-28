@@ -16,10 +16,11 @@ export const getSingleton: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { parentTitle, childTitle, schemaType, icon, templates } = getComputedListItems({
-    listItem,
-    context,
-  });
+  const { parentTitle, childTitle, schemaType, icon, views, defaultPanes, templates } =
+    getComputedListItems({
+      listItem,
+      context,
+    });
 
   const parentTitleValue = generateDisplayTitle(parentTitle(), { listItem, S, context });
   const schemaTypeValue = schemaType();
@@ -43,6 +44,21 @@ export const getSingleton: ListItemKey = (params) => {
         .title(childTitleValue)
         .id([schemaTypeValue, constants.SINGLETON_KEY].join('-'))
         .schemaType(schemaTypeValue);
+
+      const viewsValue = views({ childOptions });
+
+      if (viewsValue) {
+        schemaBuilder = schemaBuilder.views(viewsValue);
+      }
+
+      const defaultPanesValue = defaultPanes({
+        childOptions,
+        defaultPaneViews: (viewsValue ?? []).map((view) => view.id),
+      });
+
+      if (defaultPanesValue) {
+        schemaBuilder = schemaBuilder.defaultPanes(defaultPanesValue);
+      }
 
       const templatesValue = templates({ childOptions });
 

@@ -11,7 +11,10 @@ import type { SimpleMerge } from '@/types/lib.types';
 type SingletonHelperRestParams<T extends StructureToolParams> = SimpleMerge<
   [
     WorkspacesAndRolesListItem<T>,
-    Pick<ListItemCore<T>, 'id' | 'title' | 'icon' | 'templates' | 'isPlural' | 'isVisible'>,
+    Pick<
+      ListItemCore<T>,
+      'id' | 'title' | 'icon' | 'views' | 'defaultPanes' | 'templates' | 'isPlural' | 'isVisible'
+    >,
   ]
 >;
 
