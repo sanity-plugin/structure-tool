@@ -123,28 +123,12 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: 'id',
-                link: '/examples/id',
+                text: 'apiVersion',
+                link: '/examples/api-version',
               },
               {
-                text: 'title',
-                link: '/examples/title',
-              },
-              {
-                text: 'schemaType',
-                link: '/examples/schema-type',
-              },
-              {
-                text: 'icon',
-                link: '/examples/icon',
-              },
-              {
-                text: 'showIcons',
-                link: '/examples/show-icons',
-              },
-              {
-                text: 'singleton',
-                link: '/examples/singleton',
+                text: 'children',
+                link: '/examples/children',
               },
               {
                 text: 'component',
@@ -155,60 +139,32 @@ export default defineConfig({
                 link: '/examples/component-options',
               },
               {
-                text: 'views',
-                link: '/examples/views',
-              },
-              {
-                text: 'children',
-                link: '/examples/children',
-              },
-              {
-                text: 'apiVersion',
-                link: '/examples/api-version',
-              },
-              {
-                text: 'filter + filterParams',
-                link: '/examples/filter',
+                text: 'defaultLayout',
+                link: '/examples/default-layout',
               },
               {
                 text: 'defaultOrdering',
                 link: '/examples/default-ordering',
               },
               {
-                text: 'defaultLayout',
-                link: '/examples/default-layout',
-              },
-              {
                 text: 'defaultPanes',
                 link: '/examples/default-panes',
               },
               {
-                text: 'menuItemGroups',
-                link: '/examples/menu-item-groups',
-              },
-              {
-                text: 'menuItems',
-                link: '/examples/menu-items',
-              },
-              {
-                text: 'workspaces',
-                link: '/examples/workspaces',
-              },
-              {
-                text: 'roles',
-                link: '/examples/roles',
+                text: 'filter + filterParams',
+                link: '/examples/filter',
               },
               {
                 text: 'hideAddButton',
                 link: '/examples/hide-add-button',
               },
               {
-                text: 'templates',
-                link: '/examples/templates',
+                text: 'icon',
+                link: '/examples/icon',
               },
               {
-                text: 'raw',
-                link: '/examples/raw',
+                text: 'id',
+                link: '/examples/id',
               },
               {
                 text: 'isDivider',
@@ -221,6 +177,50 @@ export default defineConfig({
               {
                 text: 'isVisible',
                 link: '/examples/is-visible',
+              },
+              {
+                text: 'menuItemGroups',
+                link: '/examples/menu-item-groups',
+              },
+              {
+                text: 'menuItems',
+                link: '/examples/menu-items',
+              },
+              {
+                text: 'raw',
+                link: '/examples/raw',
+              },
+              {
+                text: 'roles',
+                link: '/examples/roles',
+              },
+              {
+                text: 'schemaType',
+                link: '/examples/schema-type',
+              },
+              {
+                text: 'showIcons',
+                link: '/examples/show-icons',
+              },
+              {
+                text: 'singleton',
+                link: '/examples/singleton',
+              },
+              {
+                text: 'templates',
+                link: '/examples/templates',
+              },
+              {
+                text: 'title',
+                link: '/examples/title',
+              },
+              {
+                text: 'views',
+                link: '/examples/views',
+              },
+              {
+                text: 'workspaces',
+                link: '/examples/workspaces',
               },
             ],
           },

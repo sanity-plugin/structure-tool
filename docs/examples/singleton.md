@@ -1,7 +1,7 @@
 # `singleton` {#singleton}
 
 - **Type**: `boolean | ((params: CallbackParams) => boolean)`
-- **Optional**: Yes (Default: `false`)
+- **Optional**: Yes
 
 The `singleton` property treats the item as a single document rather than a list. The plugin will automatically handle the document ID and editor view.
 
