@@ -25,6 +25,10 @@ export interface StructureToolCoreParams<T extends StructureToolParams> {
    * Optional title shown when a list is empty. Can be a static string or a dynamic function.
    */
   emptyListTitle?: StructureToolGenericParam<T, string>;
+  /**
+   * If true (default), automatically registers initial value templates for singleton/listing documents.
+   */
+  enableAutoGenerateTemplates?: boolean;
 }
 
 /**

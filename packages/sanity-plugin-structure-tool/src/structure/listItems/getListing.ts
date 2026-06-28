@@ -116,7 +116,7 @@ export const getListing: ListItemKey = (params) => {
       if (templatesValue) {
         return schemaBuilder.initialValueTemplates([
           S.initialValueTemplateItem(
-            [schemaTypeValue, ...Object.keys(templatesValue)].join('-'),
+            [schemaTypeValue, JSON.stringify(templatesValue)].join('-'),
             templatesValue,
           ),
         ]);

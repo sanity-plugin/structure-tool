@@ -38,6 +38,8 @@ export const structureToolPlugin = <
   Roles: Roles;
   DefaultRoles: DefaultRoles;
 }> => {
+  const { enableAutoGenerateTemplates = true, ...restParams } = params;
+
   /**
    * Internal type parameters map capturing the inferred generic arguments for workspaces and roles.
    */
@@ -54,13 +56,17 @@ export const structureToolPlugin = <
       plugins: [
         structureTool({
           structure: structure<DefaultsStructureToolParams>({
-            ...params,
+            ...restParams,
             listItems,
           }),
         }),
       ],
       schema: {
-        templates: templates<DefaultsStructureToolParams>({ listItems }),
+        ...(enableAutoGenerateTemplates
+          ? {
+              templates: templates<DefaultsStructureToolParams>({ listItems }),
+            }
+          : null),
       },
     })),
     templates,

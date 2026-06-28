@@ -211,9 +211,9 @@ import listItems from './src/structure/listItems';
 export default defineConfig({
   // ...
   schema: {
-    templates: (prev) => {
+    templates: (prev, context) => {
       // 1. Get templates from this plugin
-      const pluginTemplates = templates({ listItems })(prev);
+      const pluginTemplates = templates({ listItems })(prev, context);
 
       // 2. Add your own custom templates
       return [

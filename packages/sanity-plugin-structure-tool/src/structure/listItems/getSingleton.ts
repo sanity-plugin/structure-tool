@@ -48,7 +48,7 @@ export const getSingleton: ListItemKey = (params) => {
 
       if (templatesValue) {
         schemaBuilder = schemaBuilder.initialValueTemplate(
-          [schemaTypeValue, ...Object.keys(templatesValue)].join('-'),
+          [schemaTypeValue, JSON.stringify(templatesValue)].join('-'),
           templatesValue,
         );
       }
