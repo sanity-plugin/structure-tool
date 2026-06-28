@@ -1,6 +1,6 @@
 # `hideAddButton` {#hide-add-button}
 
-- **Type**: `boolean | ((params: CallbackParams) => boolean)`
+- **Type**: `boolean | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => boolean)`
 - **Optional**: Yes (Default: `false`)
 
 The `hideAddButton` property removes the "Add" (plus) icon from the document list.

@@ -1,6 +1,6 @@
 # `menuItemGroups` {#menu-item-groups}
 
-- **Type**: `MenuItemGroup[] | ((params: CallbackParams & { prev: MenuItemGroup[] }) => MenuItemGroup[])`
+- **Type**: `MenuItemGroup[] | ((params: CallbackParams & { prev: MenuItemGroup[]; childOptions: ChildResolverOptions }) => MenuItemGroup[])`
 - **Optional**: Yes
 
 The `menuItemGroups` property allows you to group multiple custom menu items under collapsible sections or specific categories in the pane header menu.

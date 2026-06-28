@@ -4,14 +4,14 @@ The `filter` and `filterParams` properties allow you to customize and limit the 
 
 ## `filter`
 
-- **Type**: `string | ((params: CallbackParams) => string)`
+- **Type**: `string | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => string)`
 - **Optional**: Yes
 
 A GROQ filter string to limit which documents are shown in the list. You can also pass a function that returns a filter string based on the current user.
 
 ## `filterParams`
 
-- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Type**: `Record<string, unknown> | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => Record<string, unknown>)`
 - **Optional**: Yes
 
 Parameters to be used within the `filter` GROQ string.

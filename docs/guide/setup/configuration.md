@@ -116,6 +116,23 @@ The baseline roles for all items.
 defaultRoles: ['administrator'],
 ```
 
+### `enableAutoGenerateTemplates` {#enable-auto-generate-templates}
+
+- **Type**: `boolean`
+- **Optional**: Yes (Default: `true`)
+
+Controls whether the plugin automatically generates initial value templates for singletons or listing documents.
+
+::: warning Limitations with `childOptions`
+Auto-generation of templates **will not work** for list items that dynamically resolve their `schemaType`, `children`, or `templates` properties using `childOptions` in callback functions. Because initial value templates are registered globally at schema compilation time outside of a desk route path, `childOptions` context is not available.
+
+If you rely on `childOptions` for these properties, you must set `enableAutoGenerateTemplates: false` and register/configure your templates manually.
+:::
+
+```ts
+enableAutoGenerateTemplates: false,
+```
+
 ## Returns {#returns}
 
 The `structureToolPlugin` function returns a set of utilities that are internally bound to your configuration (including custom types for workspaces and roles).
@@ -198,9 +215,17 @@ A utility for registering **Initial Value Templates**. [Initial value templates]
 The `structure` utility handles template registration automatically for you. In most cases, you **do not** need to use this `templates` utility manually.
 :::
 
+::: warning Limitations with childOptions
+Automatic template generation does not support list items that define `schemaType`, `children`, or `templates` dynamically based on route-dependent `childOptions`. For these items, you must set `enableAutoGenerateTemplates: false` and register templates manually.
+:::
+
 #### Advanced Use Case {#return-advanced-use-case}
 
 You only need this utility if you want to manually merge the plugin-generated templates with your own custom templates or templates from other plugins in your `sanity.config.ts`:
+
+::: warning Prevent Duplicated Templates
+When manually merging templates as shown below, you **must** disable automatic template generation by setting `enableAutoGenerateTemplates: false` in your main plugin configuration. Otherwise, Sanity will register the generated templates twice, resulting in duplicates in the studio.
+:::
 
 ::: code-group
 

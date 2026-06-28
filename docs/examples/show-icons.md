@@ -1,6 +1,6 @@
 # `showIcons` {#show-icons}
 
-- **Type**: `boolean | ((params: CallbackParams) => boolean)`
+- **Type**: `boolean | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => boolean)`
 - **Optional**: Yes
 
 The `showIcons` property determines whether icons are displayed for items inside a list or document list. This corresponds to the `.showIcons(showIcons)` builder method in the Sanity Structure Builder API.

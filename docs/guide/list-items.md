@@ -18,11 +18,16 @@ This dynamic callback pattern allows you to compute structure values dynamically
 
 ### Callback Parameters
 
-| Parameter     | Type            | Description                          |
-| :------------ | :-------------- | :----------------------------------- |
-| `workspace`   | `string`        | The active workspace name.           |
-| `currentUser` | `CurrentUser`   | The currently logged-in Sanity user. |
-| `context`     | `ConfigContext` | The raw Sanity config context.       |
+| Parameter      | Type                   | Description                                                                                         |
+| :------------- | :--------------------- | :-------------------------------------------------------------------------------------------------- |
+| `workspace`    | `string`               | The active workspace name.                                                                          |
+| `currentUser`  | `CurrentUser`          | The currently logged-in Sanity user.                                                                |
+| `context`      | `ConfigContext`        | The raw Sanity config context.                                                                      |
+| `childOptions` | `ChildResolverOptions` | Optional. Resolver options from the active child pane structure resolution context (Sanity Studio). |
+
+::: info Resolver-level Callback Parameters
+The `childOptions` parameter is passed to callback properties that resolve recursively down a structural path (e.g. `children`, `showIcons`, `filter`, `componentOptions`, `menuItems`, etc.). This enables access to current route parameters, parent structure references, or payload values.
+:::
 
 ### Example
 

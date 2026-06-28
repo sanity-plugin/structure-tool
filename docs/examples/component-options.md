@@ -1,6 +1,6 @@
 # `componentOptions` {#component-options}
 
-- **Type**: `Record<string, unknown> | ((params: CallbackParams) => Record<string, unknown>)`
+- **Type**: `Record<string, unknown> | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => Record<string, unknown>)`
 - **Optional**: Yes
 
 The `componentOptions` property allows you to pass custom configuration options or parameters to your custom React component rendered via the `component` property.

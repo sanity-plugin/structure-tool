@@ -1,6 +1,6 @@
 # `apiVersion` {#api-version}
 
-- **Type**: `string | ((params: CallbackParams) => string)`
+- **Type**: `string | ((params: CallbackParams & { childOptions: ChildResolverOptions }) => string)`
 - **Optional**: Yes
 
 The `apiVersion` property allows you to specify the Sanity API version for a specific list item.

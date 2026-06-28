@@ -97,3 +97,39 @@ helpers.children('Content', ({ workspace }) =>
 ```
 
 :::
+
+## With Child Resolver Options {#with-child-resolver-options}
+
+You can access the `childOptions` passed by Sanity Studio's structure resolver to inspect current route parameters, parent pane references, or custom payload:
+
+::: code-group
+
+```ts [JSON]
+{
+  title: 'Dynamic Comments',
+  children: ({ childOptions }) => {
+    const parentId = childOptions.parent?.id;
+    return [
+      {
+        schemaType: 'comment',
+        filter: `post._ref == $parentId`,
+        filterParams: { parentId },
+      }
+    ];
+  }
+}
+```
+
+```ts [Helpers]
+helpers.children('Dynamic Comments', ({ childOptions }) => {
+  const parentId = childOptions.parent?.id;
+  return [
+    helpers.listing('comment', {
+      filter: `post._ref == $parentId`,
+      filterParams: { parentId },
+    }),
+  ];
+});
+```
+
+:::
