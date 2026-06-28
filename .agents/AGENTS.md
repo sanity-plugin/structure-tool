@@ -57,6 +57,20 @@ When modifying, adding, or documenting properties on `ListItemCore` or helper me
 - Always sort the sidebar entries and property reference lists in the VitePress documentation (`docs/.vitepress/config.ts`, `docs/guide/list-items.md`, etc.) alphabetically.
 - Always sort helper declarations (`Helpers` interface, `helpers` export mapping, and documentation sections in `docs/guide/helpers.md`) alphabetically.
 
+### Changelog Formatting Rules
+
+When writing changelog entries (e.g. in `CHANGELOG.md`):
+
+- **Categories**: Use the following headers exactly, in this order:
+  - `### 🚨 Breaking Changes`
+  - `### 🚀 Features`
+  - `### 🩹 Fixes`
+  - `### ❤️ Thank You`
+- **Sub-category Ordering**: Within each category, bullet points must follow this exact order:
+  1. `- **sanity-plugin-structure-tool:**`
+  2. `- **docs:**`
+  3. `- **studio:**`
+
 ---
 
 ## Agent Tool Constraints

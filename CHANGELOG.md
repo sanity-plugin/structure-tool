@@ -1,3 +1,21 @@
+## 0.5.0 (2026-06-29)
+
+### 🚀 Features
+
+- **sanity-plugin-structure-tool:**
+  - Added support for custom editor pane view tabs (`views`) and default pane layouts (`defaultPanes`) to singletons and custom editor items.
+  - Added support for `childOptions` parameter context inside `ListItem` callback resolver functions.
+- **docs:**
+  - Added reference documentation and code examples for the new `views` and `defaultPanes` properties.
+  - Aligned all `ListItem` property callback signatures to explicitly document and type `childOptions` context parameters.
+- **studio:**
+  - Added singleton examples in the reference studio demonstrating custom views and multiple panes opened side-by-side by default.
+
+### 🩹 Fixes
+
+- **docs:**
+  - Sorted properties and helpers alphabetically in all reference tables, sidebars, and guide files.
+
 ## 0.4.0 (2026-06-25)
 
 ### 🚀 Features
