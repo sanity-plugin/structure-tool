@@ -71,6 +71,20 @@ When writing changelog entries (e.g. in `CHANGELOG.md`):
   2. `- **docs:**`
   3. `- **studio:**`
 
+### Internationalization (i18n) Rules
+
+When adding translation keys for features, dividers, folders, or component parameters:
+
+- Keep all localization keys (in `en.json`, `es.json`, etc.) sorted alphabetically at every level of the JSON dictionary structures.
+- For documentation sections illustrating `i18n` configurations, always include the `JSON`, `Helpers (Import)`, and `Helpers (Callback)` block examples to satisfy helper guidelines.
+
+### Documentation Sidebar Structure Rule
+
+When configuring nested sidebar hierarchies in VitePress config (`config.ts`):
+
+- Do not bind a page `link` directly to collapsible folder headers. This avoids double-click conflicts (expanding/collapsing vs. navigating).
+- Add a dedicated `'Overview'` child link as the first item under the folder group to direct the user to the category introduction page.
+
 ---
 
 ## Agent Tool Constraints
