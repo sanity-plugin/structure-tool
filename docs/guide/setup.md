@@ -1,4 +1,4 @@
-# Setup {#setup}
+# Overview {#overview}
 
 After [installing](/introduction/getting-started#installation) the package, follow these three simple steps to integrate **Sanity Structure Tool** into your studio.
 

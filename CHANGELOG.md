@@ -1,3 +1,19 @@
+## 1.0.0 (2026-07-02)
+
+### 🚀 Features
+
+- **sanity-plugin-structure-tool:**
+  - Added support for internationalization (`i18n`) on list items, folders, components, and dividers.
+  - Added `i18n` configuration option to register locale translation resource bundles mapping.
+  - Added support for parent/child separate title translation mapping.
+  - Added `I18N_NAMESPACE` and `UNIQUE_ID_FIRST_VALUE` constants.
+- **docs:**
+  - Added comprehensive guide and examples for internationalization (`i18n`) configuration and localization bundle setup.
+  - Documented `I18N_NAMESPACE` and `UNIQUE_ID_FIRST_VALUE` constants.
+  - Updated upcoming features and roadmap targeting the v2.0.0 release.
+- **studio:**
+  - Added interactive internationalization examples with English (`en`) and Spanish (`es`) workspaces, translation json dictionaries, and nested layout drawer lists.
+
 ## 0.5.0 (2026-06-29)
 
 ### 🚀 Features

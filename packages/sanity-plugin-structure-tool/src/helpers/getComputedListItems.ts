@@ -1,7 +1,8 @@
+import { constants } from '@/constants';
 import { getContextValues } from '@/helpers/getContextValues';
 import { getValidListItem } from '@/helpers/getValidListItem';
 
-import type { ConfigContext, SortOrderingItem } from 'sanity';
+import type { ConfigContext, I18nTextRecord, SortOrderingItem } from 'sanity';
 import type { ChildResolverOptions, MenuItem, MenuItemGroup } from 'sanity/structure';
 
 import type { GetListItemOriginalType, StructureToolParams } from '@/structure/types/common.types';
@@ -29,6 +30,10 @@ interface ListItemCallbackParams {
    * List of default pane view IDs.
    */
   defaultPaneViews: string[];
+  /**
+   * The display title string mapped to the translation key.
+   */
+  i18nTitle: string;
 }
 
 /**
@@ -125,6 +130,10 @@ export type GetComputedListItems = <T extends StructureToolParams>(
         params: Pick<ListItemCallbackParams, 'childOptions' | 'defaultPaneViews'>,
       ) => GetListItemOriginalType<ListItemCore<T>['defaultPanes']>;
       /**
+       * Resolves the internationalized text record for this item's display titles.
+       */
+      i18n: (params: Pick<ListItemCallbackParams, 'i18nTitle'>) => I18nTextRecord<'title'>;
+      /**
        * Statically resolves whether this list item is visible in the pane menu hierarchy.
        */
       isVisible: () => NonNullable<GetListItemOriginalType<ListItemCore<T>['isVisible']>>;
@@ -173,6 +182,7 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
     filter,
     filterParams,
     hideAddButton,
+    i18n,
     icon,
     isDivider,
     isPlural,
@@ -271,6 +281,23 @@ export const getComputedListItems: GetComputedListItems = ({ listItem, context }
      */
     hideAddButton: (params: Pick<ListItemCallbackParams, 'childOptions'>) =>
       getValidListItem(hideAddButton, { ...contextValues, ...params }),
+    /**
+     * Resolves translation configurations mapping the list item titles to translation bundles.
+     */
+    i18n: (params: Pick<ListItemCallbackParams, 'i18nTitle'>) => {
+      const value = getValidListItem(i18n, contextValues);
+
+      if (value) {
+        return {
+          title: {
+            key: params.i18nTitle,
+            ns: constants.I18N_NAMESPACE,
+          },
+        };
+      }
+
+      return {};
+    },
     /**
      * The visual icon component/reference.
      */

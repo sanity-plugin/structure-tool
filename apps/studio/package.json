@@ -1,6 +1,6 @@
 {
   "name": "@structure-tool/studio",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Structure Builder Examples",
   "type": "module",
@@ -18,11 +18,12 @@
   },
   "dependencies": {
     "@sanity/assist": "^6.1.3",
-    "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^6.2.0",
+    "@sanity/icons": "^4.0.0",
+    "@sanity/locale-es-es": "^1.2.35",
+    "@sanity/vision": "^6.3.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sanity": "^6.2.0",
+    "sanity": "^6.3.0",
     "sanity-plugin-structure-tool": "workspace:*",
     "styled-components": "^6.4.3"
   },

@@ -21,6 +21,7 @@ type FiltersHelperParams<T extends StructureToolParams> = SimpleMerge<
         | 'defaultOrdering'
         | 'filter'
         | 'filterParams'
+        | 'i18n'
         | 'icon'
         | 'id'
         | 'isVisible'

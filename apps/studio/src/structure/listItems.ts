@@ -138,6 +138,208 @@ const listItems = defineListItems(({ helpers }) => [
   },
   helpers.divider('Feature Demonstrations'),
   {
+    title: 'i18n',
+    i18n: true,
+    workspaces: [
+      workspaceTypes.SANITY_STRUCTURE_TOOL,
+      workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+    ],
+    children: [
+      helpers.divider('standard_listing', {
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'authors',
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.divider('parent_child_title', {
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: {
+          parent: 'parent_title',
+          child: 'child_title',
+        },
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.divider('singleton_view', {
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.singleton(schemaNames.SETTING, {
+        title: 'settings',
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.divider('custom_title_icon', {
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.listing(schemaNames.AUTHOR, {
+        title: 'contributors',
+        icon: AddUserIcon,
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      helpers.divider('drawer.divider', {
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+      }),
+      {
+        title: 'drawer.folder',
+        i18n: true,
+        workspaces: [
+          workspaceTypes.SANITY_STRUCTURE_TOOL,
+          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+        ],
+        children: [
+          helpers.divider('drawer.level_1', {
+            i18n: true,
+            workspaces: [
+              workspaceTypes.SANITY_STRUCTURE_TOOL,
+              workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+            ],
+          }),
+          helpers.listing(schemaNames.AUTHOR, {
+            title: 'authors',
+            i18n: true,
+            workspaces: [
+              workspaceTypes.SANITY_STRUCTURE_TOOL,
+              workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+            ],
+          }),
+          helpers.divider('drawer.next_level', {
+            i18n: true,
+            workspaces: [
+              workspaceTypes.SANITY_STRUCTURE_TOOL,
+              workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+            ],
+          }),
+          {
+            title: 'drawer.nested',
+            i18n: true,
+            workspaces: [
+              workspaceTypes.SANITY_STRUCTURE_TOOL,
+              workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+            ],
+            children: [
+              helpers.divider('drawer.level_2', {
+                i18n: true,
+                workspaces: [
+                  workspaceTypes.SANITY_STRUCTURE_TOOL,
+                  workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                ],
+              }),
+              helpers.listing(schemaNames.AUTHOR, {
+                title: 'authors',
+                i18n: true,
+                workspaces: [
+                  workspaceTypes.SANITY_STRUCTURE_TOOL,
+                  workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                ],
+              }),
+              helpers.divider('drawer.next_level', {
+                i18n: true,
+                workspaces: [
+                  workspaceTypes.SANITY_STRUCTURE_TOOL,
+                  workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                ],
+              }),
+              {
+                title: 'drawer.nested',
+                i18n: true,
+                workspaces: [
+                  workspaceTypes.SANITY_STRUCTURE_TOOL,
+                  workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                ],
+                children: [
+                  helpers.divider('drawer.level_3', {
+                    i18n: true,
+                    workspaces: [
+                      workspaceTypes.SANITY_STRUCTURE_TOOL,
+                      workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                    ],
+                  }),
+                  helpers.listing(schemaNames.AUTHOR, {
+                    title: 'authors',
+                    i18n: true,
+                    workspaces: [
+                      workspaceTypes.SANITY_STRUCTURE_TOOL,
+                      workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                    ],
+                  }),
+                  helpers.divider('drawer.next_level', {
+                    i18n: true,
+                    workspaces: [
+                      workspaceTypes.SANITY_STRUCTURE_TOOL,
+                      workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                    ],
+                  }),
+                  {
+                    title: 'drawer.nested',
+                    i18n: true,
+                    workspaces: [
+                      workspaceTypes.SANITY_STRUCTURE_TOOL,
+                      workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                    ],
+                    children: [
+                      helpers.divider('drawer.deeply_nested', {
+                        i18n: true,
+                        workspaces: [
+                          workspaceTypes.SANITY_STRUCTURE_TOOL,
+                          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                        ],
+                      }),
+                      helpers.listing(schemaNames.AUTHOR, {
+                        title: 'authors',
+                        i18n: true,
+                        workspaces: [
+                          workspaceTypes.SANITY_STRUCTURE_TOOL,
+                          workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+                        ],
+                      }),
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: 'Components',
     children: [
       helpers.divider('Documentation'),

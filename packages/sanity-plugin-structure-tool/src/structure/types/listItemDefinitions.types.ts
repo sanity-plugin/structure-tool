@@ -146,6 +146,7 @@ export type WorkspacesAndRolesListItem<T extends StructureToolParams> = SimpleMe
               DefaultWorkspaces: T['DefaultWorkspaces'];
               Roles: T['Roles'];
               DefaultRoles: T['DefaultRoles'];
+              Locale: T['Locale'];
             }>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -163,6 +164,7 @@ export type WorkspacesAndRolesListItem<T extends StructureToolParams> = SimpleMe
               DefaultWorkspaces: T['DefaultWorkspaces'];
               Roles: T['Roles'];
               DefaultRoles: T['DefaultRoles'];
+              Locale: T['Locale'];
             }>;
           }
         : // eslint-disable-next-line @typescript-eslint/no-empty-object-type

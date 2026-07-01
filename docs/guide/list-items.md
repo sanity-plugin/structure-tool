@@ -57,6 +57,7 @@ Click on any property name below to view its complete type definition, details, 
 | [`filter`](../examples/filter)                      | Yes                   | A GROQ filter string to limit which documents are shown.               |
 | [`filterParams`](../examples/filter)                | Yes                   | Parameters to be used within the `filter` GROQ string.                 |
 | [`hideAddButton`](../examples/hide-add-button)      | Yes                   | Hides the "Add" button (plus icon) for the document list.              |
+| [`i18n`](../examples/i18n)                          | Yes                   | Enables automatic translation of display titles using locale bundles.  |
 | [`icon`](../examples/icon)                          | Yes                   | The icon to display to the left of the title.                          |
 | [`id`](../examples/id)                              | Yes                   | Uniquely identifies the list item in the desk menu path.               |
 | [`isDivider`](../examples/is-divider)               | Yes                   | Renders as a visual separator in the desk list.                        |

@@ -13,7 +13,11 @@ export const getDivider: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { parentTitle } = getComputedListItems({ listItem, context });
+  const { i18n, parentTitle } = getComputedListItems({ listItem, context });
 
-  return S.divider().title(parentTitle());
+  const parentTitleValue = parentTitle();
+
+  return S.divider()
+    .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }));
 };

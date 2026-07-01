@@ -50,37 +50,15 @@ export const { structure, defineListItems, helpers } = structureToolPlugin({
 
 The `structureToolPlugin` function accepts a configuration object with the following properties:
 
-### `title` {#title}
-
-- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
-- **Required**: Yes
-
-The title of the structure in the Sanity desk.
-
-```ts
-title: 'Project Name',
-```
-
-### `emptyListTitle` {#empty-list-title}
-
-- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
-- **Optional**: Yes
-
-The title shown when a document list has no items configured.
-
-```ts
-emptyListTitle: 'Nothing to see here',
-```
-
-### `workspaces` {#workspaces}
+### `defaultRoles` {#default-roles}
 
 - **Type**: `readonly string[]`
-- **Optional**: Yes
+- **Optional**: Yes (Required if `roles` is provided)
 
-An array of all workspace names. Enabling this allows you to use the `workspaces` property in `ListItem`.
+The baseline roles for all items.
 
 ```ts
-workspaces: ['workspace-1', 'workspace-2'],
+defaultRoles: ['administrator'],
 ```
 
 ### `defaultWorkspaces` {#default-workspaces}
@@ -94,26 +72,15 @@ The baseline workspaces for all items.
 defaultWorkspaces: ['workspace-1'],
 ```
 
-### `roles` {#roles}
+### `emptyListTitle` {#empty-list-title}
 
-- **Type**: `readonly string[]`
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
 - **Optional**: Yes
 
-An array of all user roles. Enabling this allows you to use the `roles` property in `ListItem`.
+The title shown when a document list has no items configured.
 
 ```ts
-roles: ['administrator', 'editor', 'viewer'],
-```
-
-### `defaultRoles` {#default-roles}
-
-- **Type**: `readonly string[]`
-- **Optional**: Yes (Required if `roles` is provided)
-
-The baseline roles for all items.
-
-```ts
-defaultRoles: ['administrator'],
+emptyListTitle: 'Nothing to see here',
 ```
 
 ### `enableAutoGenerateTemplates` {#enable-auto-generate-templates}
@@ -131,6 +98,48 @@ If you rely on `childOptions` for these properties, you must set `enableAutoGene
 
 ```ts
 enableAutoGenerateTemplates: false,
+```
+
+### `i18n` {#i18n}
+
+- **Type**: `Record<string, Pick<LocaleResourceBundle, 'resources' | 'deep' | 'overwrite'>>`
+- **Optional**: Yes
+
+Locale resource bundles mapping custom translation keys for each translation locale code.
+
+For more information, see the [Internationalization (i18n) Setup](./i18n) guide.
+
+### `roles` {#roles}
+
+- **Type**: `readonly string[]`
+- **Optional**: Yes
+
+An array of all user roles. Enabling this allows you to use the `roles` property in `ListItem`.
+
+```ts
+roles: ['administrator', 'editor', 'viewer'],
+```
+
+### `title` {#title}
+
+- **Type**: `string | ((params: { workspace: string, currentUser: CurrentUser, context: ConfigContext }) => string)`
+- **Required**: Yes
+
+The title of the structure in the Sanity desk.
+
+```ts
+title: 'Project Name',
+```
+
+### `workspaces` {#workspaces}
+
+- **Type**: `readonly string[]`
+- **Optional**: Yes
+
+An array of all workspace names. Enabling this allows you to use the `workspaces` property in `ListItem`.
+
+```ts
+workspaces: ['workspace-1', 'workspace-2'],
 ```
 
 ## Returns {#returns}

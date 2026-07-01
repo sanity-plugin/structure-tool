@@ -16,11 +16,19 @@ export const getComponent: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { childTitle, component, componentOptions, icon, menuItemGroups, menuItems, parentTitle } =
-    getComputedListItems({
-      listItem,
-      context,
-    });
+  const {
+    childTitle,
+    component,
+    componentOptions,
+    i18n,
+    icon,
+    menuItemGroups,
+    menuItems,
+    parentTitle,
+  } = getComputedListItems({
+    listItem,
+    context,
+  });
 
   const parentTitleValue = parentTitle();
 
@@ -28,18 +36,21 @@ export const getComponent: ListItemKey = (params) => {
 
   return S.listItem()
     .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }))
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .child((_, childOptions) => {
-      const title = childTitle({ childOptions });
+      const childTitleValue = childTitle({ childOptions });
 
       let schemaBuilder = S.component(component)
         .id(id)
         .options({ childOptions, ...componentOptions({ childOptions }) });
 
-      if (title) {
-        schemaBuilder = schemaBuilder.title(title);
+      if (childTitleValue) {
+        schemaBuilder = schemaBuilder
+          .title(childTitleValue)
+          .i18n(i18n({ i18nTitle: childTitleValue }));
       }
 
       const menuItemGroupsValue = menuItemGroups({

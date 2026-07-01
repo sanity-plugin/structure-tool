@@ -13,7 +13,15 @@ type SingletonHelperRestParams<T extends StructureToolParams> = SimpleMerge<
     WorkspacesAndRolesListItem<T>,
     Pick<
       ListItemCore<T>,
-      'defaultPanes' | 'icon' | 'id' | 'isPlural' | 'isVisible' | 'templates' | 'title' | 'views'
+      | 'defaultPanes'
+      | 'i18n'
+      | 'icon'
+      | 'id'
+      | 'isPlural'
+      | 'isVisible'
+      | 'templates'
+      | 'title'
+      | 'views'
     >,
   ]
 >;

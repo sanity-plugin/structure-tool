@@ -28,7 +28,7 @@ type ChildrenHelperRestParams<T extends StructureToolParams> = SimpleMerge<
     WorkspacesAndRolesListItem<T>,
     Pick<
       ListItemCore<T>,
-      'icon' | 'id' | 'isVisible' | 'menuItemGroups' | 'menuItems' | 'showIcons'
+      'i18n' | 'icon' | 'id' | 'isVisible' | 'menuItemGroups' | 'menuItems' | 'showIcons'
     >,
   ]
 >;

@@ -1,0 +1,21 @@
+{
+  "authors": "Authors",
+  "child_title": "Child Title",
+  "contributors": "Contributors",
+  "drawer": {
+    "deeply_nested": "Deeply Nested Navigation",
+    "divider": "Drawer",
+    "folder": "Drawer",
+    "level_1": "Level 1 Depth",
+    "level_2": "Level 2 Depth",
+    "level_3": "Level 3 Depth",
+    "nested": "Nested Drawer",
+    "next_level": "Next Level"
+  },
+  "i18n": "i18n",
+  "parent_child_title": "Different title for Parent/Child",
+  "parent_title": "Parent Title",
+  "settings": "Settings",
+  "singleton_view": "Singleton View",
+  "standard_listing": "Standard Listing"
+}
