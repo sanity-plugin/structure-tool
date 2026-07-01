@@ -80,9 +80,12 @@ export default defineConfig({
         items: [
           {
             text: 'Setup',
-            link: '/guide/setup',
             collapsed: true,
             items: [
+              {
+                text: 'Overview',
+                link: '/guide/setup',
+              },
               {
                 text: 'Configuration',
                 link: '/guide/setup/configuration',
