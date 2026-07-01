@@ -11,6 +11,10 @@ const baseWorkspaces = [
     title: constants.APP_NAME,
   },
   {
+    name: workspaceTypes.SANITY_STRUCTURE_TOOL_SPANISH,
+    title: `${constants.APP_NAME} - Spanish`,
+  },
+  {
     name: workspaceTypes.TESTING,
     title: 'Testing',
   },

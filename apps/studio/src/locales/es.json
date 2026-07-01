@@ -1,0 +1,21 @@
+{
+  "authors": "Autores",
+  "child_title": "Título Hijo",
+  "contributors": "Colaboradores",
+  "drawer": {
+    "deeply_nested": "Navegación Profundamente Anidada",
+    "divider": "Cajón",
+    "folder": "Cajón",
+    "level_1": "Nivel de Profundidad 1",
+    "level_2": "Nivel de Profundidad 2",
+    "level_3": "Nivel de Profundidad 3",
+    "nested": "Cajón Anidado",
+    "next_level": "Siguiente Nivel"
+  },
+  "i18n": "i18n (spanish)",
+  "parent_child_title": "Título diferente para Padre/Hijo",
+  "parent_title": "Título Padre",
+  "settings": "Configuraciones",
+  "singleton_view": "Vista Única",
+  "standard_listing": "Listado Estándar"
+}
