@@ -91,6 +91,10 @@ export default defineConfig({
                 text: 'Define List Items',
                 link: '/guide/setup/define-list-items',
               },
+              {
+                text: 'Internationalization (i18n)',
+                link: '/guide/setup/i18n',
+              },
             ],
           },
           {
@@ -157,6 +161,10 @@ export default defineConfig({
               {
                 text: 'hideAddButton',
                 link: '/examples/hide-add-button',
+              },
+              {
+                text: 'i18n',
+                link: '/examples/i18n',
               },
               {
                 text: 'icon',
