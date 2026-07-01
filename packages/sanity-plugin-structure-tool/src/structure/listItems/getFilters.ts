@@ -23,6 +23,7 @@ export const getFilters: ListItemKey = (params) => {
     defaultOrdering,
     filter,
     filterParams,
+    i18n,
     icon,
     menuItemGroups,
     menuItems,
@@ -36,12 +37,16 @@ export const getFilters: ListItemKey = (params) => {
 
   return S.listItem()
     .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }))
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .child((_, childOptions) => {
+      const childTitleValue = childTitle({ childOptions });
+
       let schemaBuilder = S.documentList()
-        .title(childTitle({ childOptions }))
+        .title(childTitleValue)
+        .i18n(i18n({ i18nTitle: childTitleValue }))
         .showIcons(showIcons({ childOptions }));
 
       const filterValue = filter({ childOptions });

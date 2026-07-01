@@ -25,6 +25,10 @@ export interface StructureToolParams {
    * The default user roles to fallback to when no roles are found/configured on the user.
    */
   DefaultRoles: readonly string[] | undefined;
+  /**
+   * The translation locale codes as a string literal union type.
+   */
+  Locale: string | undefined;
 }
 
 /**

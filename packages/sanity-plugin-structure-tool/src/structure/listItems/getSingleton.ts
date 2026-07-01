@@ -16,7 +16,7 @@ export const getSingleton: ListItemKey = (params) => {
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
 
-  const { childTitle, defaultPanes, icon, parentTitle, schemaType, templates, views } =
+  const { childTitle, defaultPanes, i18n, icon, parentTitle, schemaType, templates, views } =
     getComputedListItems({
       listItem,
       context,
@@ -29,6 +29,7 @@ export const getSingleton: ListItemKey = (params) => {
 
   return S.listItem()
     .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }))
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
@@ -42,6 +43,7 @@ export const getSingleton: ListItemKey = (params) => {
 
       let schemaBuilder = S.editor()
         .title(childTitleValue)
+        .i18n(i18n({ i18nTitle: childTitleValue }))
         .id([schemaTypeValue, constants.SINGLETON_KEY].join('-'))
         .schemaType(schemaTypeValue);
 

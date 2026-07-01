@@ -21,7 +21,7 @@ export interface DividerHelperTitle<T extends StructureToolParams> {
  * @template T - The structure tool configuration parameters schema.
  */
 type DividerHelperRestParams<T extends StructureToolParams> = SimpleMerge<
-  [WorkspacesAndRolesListItem<T>, Pick<ListItemCore<T>, 'isVisible'>]
+  [WorkspacesAndRolesListItem<T>, Pick<ListItemCore<T>, 'i18n' | 'isVisible'>]
 >;
 
 /**

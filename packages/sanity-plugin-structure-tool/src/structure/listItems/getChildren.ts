@@ -26,7 +26,7 @@ export const getChildren: GetChildren = (params, renderItems) => {
   const { listItemsParams, mappingParams } = params;
   const { S, context } = listItemsParams;
   const { listItem } = mappingParams;
-  const { childTitle, children, icon, menuItemGroups, menuItems, parentTitle, showIcons } =
+  const { childTitle, children, i18n, icon, menuItemGroups, menuItems, parentTitle, showIcons } =
     getComputedListItems({ listItem, context });
 
   const parentTitleValue = parentTitle();
@@ -35,12 +35,16 @@ export const getChildren: GetChildren = (params, renderItems) => {
 
   return S.listItem()
     .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }))
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
     .child((_, childOptions) => {
+      const childTitleValue = childTitle({ childOptions });
+
       let schemaBuilder = S.list()
-        .title(childTitle({ childOptions }))
+        .title(childTitleValue)
+        .i18n(i18n({ i18nTitle: childTitleValue }))
         .showIcons(showIcons({ childOptions }))
         .items(
           renderItems({

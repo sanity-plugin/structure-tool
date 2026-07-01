@@ -19,6 +19,7 @@ type ListingHelperRestParams<T extends StructureToolParams> = SimpleMerge<
       | 'filter'
       | 'filterParams'
       | 'hideAddButton'
+      | 'i18n'
       | 'icon'
       | 'id'
       | 'isPlural'

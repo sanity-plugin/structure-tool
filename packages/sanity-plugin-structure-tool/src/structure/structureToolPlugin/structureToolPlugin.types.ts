@@ -1,4 +1,4 @@
-import type { Plugin, TemplateResolver } from 'sanity';
+import type { LocaleResourceBundle, Plugin, TemplateResolver } from 'sanity';
 import type { RequireAllOrNone } from 'type-fest';
 
 import type { DefineListItem } from '@/factories/defineListItem';
@@ -29,6 +29,21 @@ export interface StructureToolCoreParams<T extends StructureToolParams> {
    * If true (default), automatically registers initial value templates for singleton/listing documents.
    */
   enableAutoGenerateTemplates?: boolean;
+}
+
+/**
+ * Parameters for configuring internationalization locale bundles on the structure tool.
+ *
+ * @template T - The structure tool configuration parameters schema.
+ */
+export interface StructureToolI18nParams<T extends StructureToolParams> {
+  /**
+   * Locale resource bundles mapping custom translation keys for each supported locale code.
+   */
+  i18n?: Record<
+    NonNullable<T['Locale']>,
+    Pick<LocaleResourceBundle, 'resources' | 'deep' | 'overwrite'>
+  >;
 }
 
 /**
@@ -85,6 +100,7 @@ export type PluginParams<T extends StructureToolParams> = SimpleMerge<
 export type StructureToolPluginParams<T extends StructureToolParams> = SimpleMerge<
   [
     StructureToolCoreParams<T>,
+    StructureToolI18nParams<T>,
     RequireAllOrNone<StructureToolWorkspaceParams<T>>,
     RequireAllOrNone<StructureToolRoleParams<T>>,
   ]

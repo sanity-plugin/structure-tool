@@ -25,6 +25,7 @@ export const getListing: ListItemKey = (params) => {
     filter,
     filterParams,
     hideAddButton,
+    i18n,
     icon,
     menuItemGroups,
     menuItems,
@@ -41,6 +42,7 @@ export const getListing: ListItemKey = (params) => {
 
   return S.listItem()
     .title(parentTitleValue)
+    .i18n(i18n({ i18nTitle: parentTitleValue }))
     .id(id)
     .icon(icon)
     .showIcon(icon !== false)
@@ -57,6 +59,7 @@ export const getListing: ListItemKey = (params) => {
 
       let schemaBuilder = S.documentTypeList(schemaTypeValue)
         .title(childTitleValue)
+        .i18n(i18n({ i18nTitle: childTitleValue }))
         .id(id)
         .filter(['_type == $schemaType', ...(filterValue ? [filterValue] : [])].join(' && '))
         .params({

@@ -72,6 +72,10 @@ export interface ListItemCore<T extends StructureToolParams> {
    */
   hideAddButton?: StructureToolGenericParam<T, boolean, ListItemChildOptions>;
   /**
+   * If true, enables automatic internationalization for this list item's display titles using translation resource bundles.
+   */
+  i18n?: StructureToolGenericParam<T, boolean>;
+  /**
    * An optional icon component to render alongside the item. Set to false to hide.
    */
   icon?: IconComponent | ComponentType | ReactNode | false;
